@@ -12,7 +12,7 @@ exports.up = function(knex, Promise) {
       .inTable('cities')
       .onDelete('CASCADE')
       .onUpdate('CASCADE');
-  })
+  });
 };
 
 exports.down = function(knex, Promise) {

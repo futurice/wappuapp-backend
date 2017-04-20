@@ -9,6 +9,7 @@ import errorLogger from './middleware/error-logger';
 import requireClientHeaders from './middleware/require-client-headers';
 import requireApiToken from './middleware/require-api-token';
 import * as throttleCore from './core/throttle-core';
+import * as teamCore from './core/team-core';
 import * as fb from './util/fb';
 import * as feedAggregator from './worker/feed-aggregator';
 
@@ -75,6 +76,7 @@ function createApp() {
 
   // Initialize internal stuff
   throttleCore.initialize();
+  teamCore.initialize();
   fb.initialize();
   feedAggregator.start();
 

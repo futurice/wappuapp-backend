@@ -13,7 +13,7 @@ let putVote = createJsonRoute(function(req, res) {
     feedItemId: req.body.feedItemId,
   }, 'vote');
 
-  return voteCore.createOrUpdateVote(_.merge(vote, { client: req.client }));
+  return voteCore.createOrUpdateVote(_.merge(vote, { client: req.client, ip: req.ip }));
 });
 
 export {

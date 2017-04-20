@@ -13,7 +13,7 @@ exports.seed = function(knex, Promise) {
       id: 2,
       code: 'SIMA',
       name: 'Grab a sima',
-      value: 1,
+      value: 0.1,
       cooldown: 5 * 60 * 1000
     });
   })
