@@ -4,7 +4,7 @@
 
 Dependencies:
 
-* Node 4.x or 5.x + npm 2.x
+* Node 4.x or 5.x + npm 2.x - Use NVM to manage different Node versions
 
  *Use NPM 2*.x, the current Babel configuration has issues with NPM 3.x and doesn't work ~~properly~~ at all with it
 
@@ -22,6 +22,14 @@ Dependencies:
   ```
 
 * Heroku toolbelt
+
+* Docker
+
+  Using Docker to run wappuapp-backend with wappuapp-adminpanel requires
+  - Docker 17.0.6 =>
+  - Docker Compose 1.11.2 =>
+
+  Clone this repo into the wappuapp-adminpanel folder and look for instructions there
 
 ## Get started
 
@@ -52,6 +60,8 @@ Environments:
 
 * `qa` https://wappuapp-backend-qa.herokuapp.com
 * `prod` https://wappuapp-backend.herokuapp.com
+
+Instructions for running wappuapp-backend with wappuapp-adminpanel are in the adminpanel's README.
 
 ## Techstack
 
