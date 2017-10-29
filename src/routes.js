@@ -1,4 +1,6 @@
 import express from 'express';
+import passport from 'passport';
+import * from './util/passport';
 import * as eventHttp from './http/event-http';
 import * as actionHttp from './http/action-http';
 import * as teamHttp from './http/team-http';
@@ -12,7 +14,10 @@ import * as citiesHttp from './http/cities-http';
 import * as radioHttp from './http/radio-http';
 import * as wappuMood from './http/wappu-mood-http';
 import * as imageHttp from './http/image-http';
+import * as loginHttp from './http/login-http';
 
+const requireAuth = passport.authenticate('jwt', {session: false});
+const requireLogin = passport.authenticate('local', {session: false});
 
 function createRouter() {
   const router = express.Router();
@@ -47,6 +52,12 @@ function createRouter() {
 
   router.put('/mood', wappuMood.putMood);
   router.get('/mood', wappuMood.getMood);
+
+  router.post('/login', requireLogin, loginHttp.login);
+  router.get('/logout', loginHttp.logout);
+  router.post('/register', loginHttp.register);
+  //Protected endpoint
+  //router.get('/protected', requireAuth);
 
   return router;
 }
