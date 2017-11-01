@@ -17,13 +17,13 @@ const localLogin = new LocalStrategy(localOptions, (username, password, done) =>
     if (_.isEmpty(rows)) {
       return done(null, false)
     }
-    let sqlString = `
+    sqlString = `
     (SELECT users.password FROM users WHERE users.username = ${username})
     `;
     return knex.raw(sqlString)
     .then(result => {
       const pw = result.rows;
-      if (pw[0] != crypto.createHash('md5').update(password).digest("hex")) {
+      if (pw != crypto.createHash('md5').update(password).digest("hex")) {
         return done(null, false);
       }
       return done(null, user)
