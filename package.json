@@ -20,6 +20,7 @@
     "change-case": "^2.3.1",
     "compression": "^1.6.1",
     "cors": "^2.7.1",
+    "crypto": "^1.0.1",
     "express": "^4.13.4",
     "fb": "^1.0.2",
     "gcloud": "^0.29.0",

@@ -2,7 +2,8 @@ import _ from 'lodash';
 import * as feedCore from '../core/login-core';
 import {createJsonRoute, throwStatus} from '../util/express';
 import {assert} from '../validation';
-import * from '../util/passport'
+import * from '../util/passport';
+import jwt from 'jwt-simple';
 
 function tokenForUser(user) {
   const timestamp = new Date().getTime();
