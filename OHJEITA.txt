@@ -1,0 +1,4 @@
+redis pitää olla päällä:
+redis-server --port 2345
+redis-cli ping
+
