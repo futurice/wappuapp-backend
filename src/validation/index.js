@@ -32,6 +32,11 @@ const schemas = {
     team: common.team.required()
   },
 
+  heila: {
+    uuid: common.userUuid.required(),
+    imageData: Joi.string().when('type', { is: 'IMAGE', then: Joi.required() }),
+  },
+
   userQueryParams: {
     userId: common.primaryKeyId.required(),
   },
