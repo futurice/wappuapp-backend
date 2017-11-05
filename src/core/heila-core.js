@@ -1,10 +1,13 @@
 import _ from 'lodash';
 import * as feedCore from './feed-core.js';
+import { GCS_CONFIG } from '../util/gcs';
 const BPromise = require('bluebird');
 const {knex} = require('../util/database').connect();
 
+
 function createOrUpdateHeila(heila) {
   console.log('createOrUpdateHeila')
+  console.log(heila)
   return findByUuid(heila.uuid)
   .then(foundHeila => {
     if (foundHeila === null) {
@@ -127,6 +130,7 @@ function _queryHeilaDetails(heilaId) {
 function _makeHeilaDbRow(heila) {
   const dbRow = {
     'uuid': heila.uuid,
+    'image_path': heila.image_path
   };
 
   return dbRow;
@@ -134,10 +138,20 @@ function _makeHeilaDbRow(heila) {
 
 // jscs:disable requireCamelCaseOrUpperCaseIdentifiers
 function _heilaRowToObject(row) {
+
+  // jos kuvaa ei ole uploadattu, palautetaan tyhjä merkkijono
+  let url = '';
+  if (row.image_path) {
+    url = `${GCS_CONFIG.baseUrl}/${GCS_CONFIG.bucketName}/${row.image_path}`;
+  }
+ 
   return {
     id: row.id,
     uuid: row.uuid,
-    image_path: row.image_path
+    image_path: row.image_path || '',
+    // tässä asetetaan image_urli, jolla sen voi hakea verkosta ja näyttää
+    // urlia ei oikeasti ole laitettu kantaan, siellä on vain image_path
+    image_url: url
   };
 }
 

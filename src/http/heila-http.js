@@ -5,7 +5,6 @@ import {assert} from '../validation';
 
 const putHeila = createJsonRoute(function(req, res) {
   console.log('putHeila');
-  
   const heila = assert(req.body, 'heila');
   console.log(heila);
 
@@ -13,8 +12,9 @@ const putHeila = createJsonRoute(function(req, res) {
     .then(rowsInserted => undefined);
 });
 
+// TODO: ei futaa
 const getHeilas = createJsonRoute(function(req, res) {
-  console.log('getHeilas')
+  console.log('getHeilas FIX ME')
   return new Promise();
 });
 
@@ -34,6 +34,7 @@ const getHeilaByUuid = createJsonRoute(function(req, res) {
 
 
 
+// TODO: onko tarve
 const getUserById = createJsonRoute(function(req, res) {
   const userParams = assert(req.query, 'userQueryParams');
 
