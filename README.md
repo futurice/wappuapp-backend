@@ -171,9 +171,15 @@ UPDATE users SET is_banned = true WHERE uuid='D47DA01C-51BB-4F96-90B6-D64B77225E
 ## OMAT ENDPOINTIT, ALUKSI VAIN HEILA 
 * Tässä omia endpointteja lisättynä, siistitään teksti kun kaikki oikeasti futaa
 
-* Heilan toiminta nyt tällainen: 1. käyttäjällä pitää olla jo profiili 2. luo putilla
-  heila-profiili 3. aseta postilla heila-profiiliin kuva 4. hae heilan tiedot getillä
+Heilan toiminta nyt tällainen:
+* käyttäjällä pitää olla jo profiili
+* luo putilla heila-profiili
+* aseta postilla heila-profiiliin kuva 
+* hae heilan tiedot getillä
  
+Heila-profiilia ei siis automaattisesti luoda jokaiselle, se on erillinen kokonaisuus
+profiilin ulkopuolella.
+
 ### `PUT /api/heila/:uuid`
 
 * Luo heila-profiilin. Tätä ennen käyttäjäprofiili pitää olla luotuna. Käytännössä
