@@ -37,6 +37,11 @@ const schemas = {
     imageData: Joi.string().when('type', { is: 'IMAGE', then: Joi.required() }),
   },
 
+  heilaImage: {
+    uuid: common.userUuid.required(),
+    imageData: Joi.string().when('type', { is: 'IMAGE', then: Joi.required() }),
+  },
+
   userQueryParams: {
     userId: common.primaryKeyId.required(),
   },
