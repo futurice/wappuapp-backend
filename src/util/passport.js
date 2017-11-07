@@ -1,3 +1,4 @@
+import _ from 'lodash';
 import passport from 'passport';
 import {Strategy, ExtractJwt} from 'passport-jwt';
 import LocalStrategy from 'passport-local';
@@ -9,7 +10,7 @@ const localOptions = {
 };
 const localLogin = new LocalStrategy(localOptions, (username, password, done) => {
   let sqlString = `
-  (SELECT users.username FROM users WHERE users.username = ${username})
+  (SELECT userit.username FROM userit WHERE userit.username = '${username}')
   `;
   return knex.raw(sqlString)
   .then(result => {
@@ -18,15 +19,16 @@ const localLogin = new LocalStrategy(localOptions, (username, password, done) =>
       return done(null, false)
     }
     sqlString = `
-    (SELECT users.password FROM users WHERE users.username = ${username})
+    (SELECT userit.password FROM userit WHERE userit.username = '${username}')
     `;
     return knex.raw(sqlString)
     .then(result => {
-      const pw = result.rows;
+      const pw = result.rows[0].password;
+      console.log(pw)
       if (pw != crypto.createHash('md5').update(password).digest("hex")) {
         return done(null, false);
       }
-      return done(null, user)
+      return done(null, true)
     });
   });
 });
@@ -36,9 +38,9 @@ const jwtOptions = {
   secretOrKey: "SECRET"
 };
 
-const jwtLogin = new JwtStrategy(jwtOptions, (payload, done) => {
+const jwtLogin = new Strategy(jwtOptions, (payload, done) => {
   let sqlString = `
-  (SELECT users.is FROM users WHERE users.id = ${payload.sub})
+  (SELECT userit.id FROM userit WHERE userit.id = '${payload.sub}')
   `;
   return knex.raw(sqlString)
   .then(result => {
@@ -46,7 +48,7 @@ const jwtLogin = new JwtStrategy(jwtOptions, (payload, done) => {
     if (_.isEmpty(rows)) {
       return done(null, false)
     }
-    return done(null, user)
+    return done(null, true)
   });
 });
 
