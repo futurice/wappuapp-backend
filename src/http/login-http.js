@@ -23,26 +23,25 @@ const register = createJsonRoute(function(req, res, next) {
   if (!username || !email || !password) {
     return throwStatus(400, 'All fields must be provided');
   }
-  let sqlString = `
-  (SELECT admin.id FROM admin WHERE admin.username = '${username}');
-  `;
-  return knex.raw(sqlString)
+  return knex('admin').select('id').where('username', username)
   .then(result => {
     const rows = result.rows;
     if (_.isEmpty(rows)) {
-      let sqlString = `
-      INSERT INTO admin (username, email, password) VALUES ('${username}', '${email}', '${password}');
-      `;
-      return knex.raw(sqlString)
+      return knex('admin').select('id').where('email', email)
       .then(result => {
-        let sqlString = `
-        (SELECT admin.id FROM admin WHERE admin.username = '${username}')
-        `
-        return knex.raw(sqlString)
-        .then(result => {
-          const id = result.rows[0].id;
-          return { token: tokenForUser({id: id}) };
-        })
+        const rows = result.rows;
+        if (_.isEmpty(rows)) {
+          return knex('admin').insert({ username: username, email: email, password: password })
+          .then(result => {
+            return knex('admin').select('id').where('username', username).first()
+            .then(result => {
+              const id = result.id;
+              return { token: tokenForUser({id: id}) };
+            })
+          })
+        } else {
+          return throwStatus(422, 'Email exists');
+        }
       })
     } else {
       return throwStatus(422, 'Username exists');

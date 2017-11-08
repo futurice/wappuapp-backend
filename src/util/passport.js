@@ -1,5 +1,6 @@
 import _ from 'lodash';
 import passport from 'passport';
+import moment from 'moment';
 import {Strategy, ExtractJwt} from 'passport-jwt';
 import LocalStrategy from 'passport-local';
 const {knex} = require('../util/database').connect();
@@ -9,21 +10,15 @@ const localOptions = {
   usernameField: 'username'
 };
 const localLogin = new LocalStrategy(localOptions, (username, password, done) => {
-  let sqlString = `
-  (SELECT admin.username FROM admin WHERE admin.username = '${username}')
-  `;
-  return knex.raw(sqlString)
+  return knex('admin').select('username').where('username', username)
   .then(result => {
     const rows = result.rows;
     if (_.isEmpty(rows)) {
       return done(null, false)
     }
-    sqlString = `
-    (SELECT admin.password FROM admin WHERE admin.username = '${username}')
-    `;
-    return knex.raw(sqlString)
+    return knex('admin').select('password').where('username', username).first()
     .then(result => {
-      const pw = result.rows[0].password;
+      const pw = result.password;
       console.log(pw)
       if (pw != crypto.createHash('md5').update(password).digest("hex")) {
         return done(null, false);
@@ -39,16 +34,20 @@ const jwtOptions = {
 };
 
 const jwtLogin = new Strategy(jwtOptions, (payload, done) => {
-  let sqlString = `
-  (SELECT admin.id FROM admin WHERE admin.id = '${payload.sub}')
-  `;
-  return knex.raw(sqlString)
+  return knex('admin').select('id').where('id', payload.sub)
   .then(result => {
     const rows = result.rows;
     if (_.isEmpty(rows)) {
       return done(null, false)
     }
-    return done(null, true)
+    const startTime = moment(payload.iat)
+    const nowTime = moment(new Date().getTime())
+    const timeSpent = nowTime.diff(startTime, 'hours')
+    if (timeSpent > 24) {
+      return done(null, false)
+    } else {
+      return done(null, true)
+    }
   });
 });
 
