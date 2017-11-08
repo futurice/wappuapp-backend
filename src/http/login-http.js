@@ -7,9 +7,9 @@ import passport from 'passport';
 import crypto from 'crypto';
 const {knex} = require('../util/database').connect();
 
-function tokenForUser(user) {
+function tokenForUser(id) {
   const timestamp = new Date().getTime();
-  return jwt.encode({ sub: user, iat: timestamp }, "SECRET");
+  return jwt.encode({ sub: id, iat: timestamp }, "SECRET");
 };
 
 const login = createJsonRoute(function(req, res) {
@@ -24,18 +24,25 @@ const register = createJsonRoute(function(req, res, next) {
     return throwStatus(400, 'All fields must be provided');
   }
   let sqlString = `
-  (SELECT userit.username FROM userit WHERE userit.username = '${username}');
+  (SELECT admin.id FROM admin WHERE admin.username = '${username}');
   `;
   return knex.raw(sqlString)
   .then(result => {
     const rows = result.rows;
     if (_.isEmpty(rows)) {
       let sqlString = `
-      INSERT INTO userit (username, email, password) VALUES ('${username}', '${email}', '${password}');
+      INSERT INTO admin (username, email, password) VALUES ('${username}', '${email}', '${password}');
       `;
       return knex.raw(sqlString)
       .then(result => {
-        return { token: tokenForUser({username: username, password: password}) };
+        let sqlString = `
+        (SELECT admin.id FROM admin WHERE admin.username = '${username}')
+        `
+        return knex.raw(sqlString)
+        .then(result => {
+          const id = result.rows[0].id;
+          return { token: tokenForUser({id: id}) };
+        })
       })
     } else {
       return throwStatus(422, 'Username exists');

@@ -10,7 +10,7 @@ const localOptions = {
 };
 const localLogin = new LocalStrategy(localOptions, (username, password, done) => {
   let sqlString = `
-  (SELECT userit.username FROM userit WHERE userit.username = '${username}')
+  (SELECT admin.username FROM admin WHERE admin.username = '${username}')
   `;
   return knex.raw(sqlString)
   .then(result => {
@@ -19,7 +19,7 @@ const localLogin = new LocalStrategy(localOptions, (username, password, done) =>
       return done(null, false)
     }
     sqlString = `
-    (SELECT userit.password FROM userit WHERE userit.username = '${username}')
+    (SELECT admin.password FROM admin WHERE admin.username = '${username}')
     `;
     return knex.raw(sqlString)
     .then(result => {
@@ -40,7 +40,7 @@ const jwtOptions = {
 
 const jwtLogin = new Strategy(jwtOptions, (payload, done) => {
   let sqlString = `
-  (SELECT userit.id FROM userit WHERE userit.id = '${payload.sub}')
+  (SELECT admin.id FROM admin WHERE admin.id = '${payload.sub}')
   `;
   return knex.raw(sqlString)
   .then(result => {
