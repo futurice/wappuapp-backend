@@ -5,6 +5,7 @@ import {Strategy, ExtractJwt} from 'passport-jwt';
 import LocalStrategy from 'passport-local';
 const {knex} = require('../util/database').connect();
 import crypto from 'crypto';
+require('./init-env-variables');
 
 const localOptions = {
   usernameField: 'username'
@@ -28,7 +29,7 @@ const localLogin = new LocalStrategy(localOptions, (username, password, done) =>
 
 const jwtOptions = {
   jwtFromRequest: ExtractJwt.fromHeader('authorization'),
-  secretOrKey: "SECRET"
+  secretOrKey: process.env.JWT_SECRET
 };
 
 const jwtLogin = new Strategy(jwtOptions, (payload, done) => {
@@ -40,7 +41,6 @@ const jwtLogin = new Strategy(jwtOptions, (payload, done) => {
     const startTime = moment(payload.iat)
     const nowTime = moment(new Date().getTime())
     const timeSpent = nowTime.diff(startTime, 'hours')
-    console.log(timeSpent)
     if (timeSpent > 24) {
       return done(null, false)
     } else {

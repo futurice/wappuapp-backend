@@ -6,10 +6,11 @@ import jwt from 'jwt-simple';
 import passport from 'passport';
 import crypto from 'crypto';
 const {knex} = require('../util/database').connect();
+require('./init-env-variables');
 
 function tokenForUser(id) {
   const timestamp = new Date().getTime();
-  return jwt.encode({ sub: id, iat: timestamp }, "SECRET");
+  return jwt.encode({ sub: id, iat: timestamp }, process.env.JWT_SECRET);
 };
 
 const login = createJsonRoute(function(req, res) {
