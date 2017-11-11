@@ -9,7 +9,6 @@ const {knex} = require('../util/database').connect();
 
 function tokenForUser(id) {
   const timestamp = new Date().getTime();
-  console.log(id)
   return jwt.encode({ sub: id, iat: timestamp }, "SECRET");
 };
 
