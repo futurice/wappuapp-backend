@@ -57,8 +57,10 @@ function createRouter() {
 
   router.post('/login', requireLogin, loginHttp.login);
   router.post('/register', loginHttp.register);
-  //Protected endpoint
-  //router.get('/protected', requireAuth);
+  //Protected endpoint example
+  router.get('/protected', requireAuth, (req, res, next) => {
+    res.send("Success");
+  });
 
   return router;
 }
