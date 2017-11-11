@@ -6,7 +6,7 @@ import jwt from 'jwt-simple';
 import passport from 'passport';
 import crypto from 'crypto';
 const {knex} = require('../util/database').connect();
-require('./init-env-variables');
+require('../init-env-variables');
 
 function tokenForUser(id) {
   const timestamp = new Date().getTime();

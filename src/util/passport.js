@@ -5,7 +5,7 @@ import {Strategy, ExtractJwt} from 'passport-jwt';
 import LocalStrategy from 'passport-local';
 const {knex} = require('../util/database').connect();
 import crypto from 'crypto';
-require('./init-env-variables');
+require('../init-env-variables');
 
 const localOptions = {
   usernameField: 'username'
