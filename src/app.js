@@ -14,11 +14,10 @@ import * as feedAggregator from './worker/feed-aggregator';
 
 function createApp() {
   const app = express();
-
   // Heroku's load balancer can be trusted
   app.enable('trust proxy');
   app.disable('x-powered-by');
-
+  app.use('*', cors());
   const isVerboseTests =
     process.env.NODE_ENV === 'test' && process.env.VERBOSE_TESTS === 'true';
   if (process.env.NODE_ENV === 'development' || isVerboseTests) {
@@ -60,7 +59,6 @@ function createApp() {
   app.use(bodyParser.json({
     limit: '20mb'
   }));
-  app.use(cors());
   app.use(compression({
     // Compress everything over 10 bytes
     threshold: 10
