@@ -11,19 +11,16 @@ const localOptions = {
   usernameField: 'username'
 };
 const localLogin = new LocalStrategy(localOptions, (username, password, done) => {
-  return knex('admin').select('username').where('username', username)
-  .then(rows => {
-    if (_.isEmpty(rows)) {
+  return knex('admin').where('username', username).first()
+  .then(row => {
+    if (_.isEmpty(row)) {
       return done(null, false)
     }
-    return knex('admin').select('password').where('username', username).first()
-    .then(pw => {
-      pw = pw.password
-      if (pw != crypto.createHash('md5').update(password).digest("hex")) {
-        return done(null, false);
-      }
-      return done(null, true)
-    });
+    const pw = row.password
+    if (pw != crypto.createHash('md5').update(password).digest("hex")) {
+      return done(null, false);
+    }
+    return done(null, true)
   });
 });
 

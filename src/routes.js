@@ -1,7 +1,7 @@
 import express from 'express';
 import passport from 'passport';
 
-import passportService from './util/passport';
+import passportService from './util/passport'; //eslint-disable-line
 import * as eventHttp from './http/event-http';
 import * as actionHttp from './http/action-http';
 import * as teamHttp from './http/team-http';

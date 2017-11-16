@@ -1,9 +1,7 @@
 import _ from 'lodash';
 import {createJsonRoute, throwStatus} from '../util/express';
-import {assert} from '../validation';
-import * as passportService from '../util/passport';
+
 import jwt from 'jwt-simple';
-import passport from 'passport';
 import crypto from 'crypto';
 const {knex} = require('../util/database').connect();
 require('../init-env-variables');
@@ -27,26 +25,16 @@ const register = createJsonRoute(function(req, res, next) {
   if (!username || !email || !password) {
     return throwStatus(400, 'All fields must be provided');
   }
-  return knex('admin').select('id').where('username', username)
+  return knex('admin').select('id').where('username', username).orWhere('email', email)
   .then(rows => {
     if (_.isEmpty(rows)) {
-      return knex('admin').select('id').where('email', email)
-      .then(rows => {
-        if (_.isEmpty(rows)) {
-          return knex('admin').insert({ username: username, email: email, password: password })
-          .then(result => {
-            return knex('admin').select('id').where('username', username).first()
-            .then(result => {
-              const id = result.id;
-              return { token: tokenForUser(id) };
-            })
-          })
-        } else {
-          return throwStatus(422, 'Email exists');
-        }
+      return knex('admin').insert({ username: username, email: email, password: password }).returning('id')
+      .then(result => {
+        const id = result.id;
+        return { token: tokenForUser(id) };
       })
     } else {
-      return throwStatus(422, 'Username exists');
+      return throwStatus(422, 'User with the given email or username already exists');
     }
   });
 });
