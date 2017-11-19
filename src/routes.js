@@ -13,7 +13,7 @@ import * as radioHttp from './http/radio-http';
 import * as wappuMood from './http/wappu-mood-http';
 import * as imageHttp from './http/image-http';
 import * as heilaHttp from './http/heila-http';
-import * as heilaImageHttp from './http/heila-image-http';
+import * as userImageHttp from './http/user-image-http';
 
 function createRouter() {
   const router = express.Router();
@@ -21,7 +21,6 @@ function createRouter() {
   router.get('/heila', heilaHttp.getHeilas);
   router.get('/heila/:uuid', heilaHttp.getHeilaByUuid);
   router.put('/heila/:uuid', heilaHttp.putHeila);
-  router.post('/heila/:uuid/image', heilaImageHttp.postHeilaImage);
 
   router.get('/events', eventHttp.getEvents);
   router.get('/events/:id', eventHttp.getEvent);
@@ -32,6 +31,7 @@ function createRouter() {
   router.get('/users', userHttp.getUserById);
   router.put('/users/:uuid', userHttp.putUser);
   router.get('/users/:uuid', userHttp.getUserByUuid);
+  router.post('/users/:uuid/image', userImageHttp.postUserImage);
 
   router.get('/action_types', actionTypeHttp.getActionTypes);
 
