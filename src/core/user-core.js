@@ -27,6 +27,8 @@ function createUser(user) {
 }
 
 function updateUser(user) {
+  console.log('updateUser')
+  console.log(user)
   const dbRow = _makeUserDbRow(user);
   return knex('users').returning('id').update(dbRow)
     .where('uuid', user.uuid)
@@ -125,7 +127,9 @@ function _makeUserDbRow(user) {
   const dbRow = {
     'uuid': user.uuid,
     'name': user.name,
-    'team_id': user.team
+    'team_id': user.team,
+    'image_path': user.image_path,
+    'heila': user.heila
   };
 
   return dbRow;
@@ -133,12 +137,15 @@ function _makeUserDbRow(user) {
 
 // jscs:disable requireCamelCaseOrUpperCaseIdentifiers
 function _userRowToObject(row) {
+  console.log(row)
   return {
     id: row.id,
     name: row.name,
     uuid: row.uuid,
     team: row.team_id,
-    isBanned: row.is_banned
+    isBanned: row.is_banned,
+    image_path: row.image_path, // this is "" if the user hasn't set profile photo
+    heila: row.heila,
   };
 }
 

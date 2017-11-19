@@ -2,7 +2,7 @@ import _ from 'lodash';
 const {knex} = require('../util/database').connect();
 import {GCS_CONFIG} from '../util/gcs';
 
-const targetFolder = 'heilas';
+const targetFolder = 'profile_pictures';
 
 /**
  * Get image by it's id.

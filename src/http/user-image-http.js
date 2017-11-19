@@ -6,13 +6,13 @@
 import * as gcs from '../util/gcs';
 import * as actionCore from '../core/action-core';
 import {createJsonRoute, throwStatus} from '../util/express';
-import * as heilaCore from '../core/heila-core';
-import * as heilaImageCore from '../core/heila-image-core';
+import * as userCore from '../core/user-core';
+import * as userImageCore from '../core/user-image-core';
 import {assert} from '../validation';
 import {decodeBase64Image} from '../util/base64';
 import { processImage } from '../util/image-processor';
 
-import { createOrUpdateHeila } from '../core/heila-core';
+import { createOrUpdateUser } from '../core/user-core';
 
 const logger = require('../util/logger')(__filename);
 const uuidV1 = require('uuid/v1');
@@ -31,12 +31,12 @@ function getAndValidateActionType(typeName) {
     });
 }
 
-function getAndValidateHeila(uuid) {
-  console.log('getAndValidateHeila')
-  return heilaCore.findByUuid(uuid)
+function getAndValidateUser(uuid) {
+  console.log('getAndValidateUser')
+  return userCore.findByUuid(uuid)
     .then(user => {
       if (user === null) {
-        throwStatus(400, `Heila with uuid ${ uuid } does not exist`);
+        throwStatus(400, `User with uuid ${ uuid } does not exist`);
       }
 
       return user;
@@ -66,12 +66,44 @@ function validateMimeType(mimetype) {
   }
 }
 
+function postUserImage(req, res) {
+  console.log('\n\npostUserImage')
+  // TODO: ASSERTTI
+  const action = assert(req.body, 'userImage');
+
+  const image = decodeBase64Image(req.body.imageData);
+  //const { imageText, imageTextPosition } = req.body;
+  //const imageOpts = { imageText, imageTextPosition };
+  const imageOpts = {};
+  const inputData = {};
+
+  return getAndValidateUser(action.uuid)
+    .then(user => {
+      inputData.user = user;
+
+      const fileName = `${ userImageCore.targetFolder }/${ uuidV1() }`;
+      return uploadImage(fileName, image, imageOpts);
+    })
+    .then(uploadedImage => {
+      console.log(uploadedImage)
+      return createOrUpdateUser({
+        uuid: action.uuid,
+        image_path: uploadedImage.imageName
+      }).then(rowsInserted => {
+        //console.log('rowsInserted postUserImage handler')
+        //console.log(rowsInserted)
+        res.sendStatus(200);
+      })
+    });
+};
+
+// TODO: tarpeeton ehkä?
 const getHeilaImage = createJsonRoute(function(req, res) {
   const params = assert({
     imageId: req.params.id
   }, 'imageParams');
 
-  return heilaImageCore.getImageById(params.imageId)
+  return userImageCore.getImageById(params.imageId)
     .then(image => {
       if (!image) {
         throwStatus(404, 'No such image id');
@@ -81,33 +113,6 @@ const getHeilaImage = createJsonRoute(function(req, res) {
     });
 });
 
-function postHeilaImage(req, res) {
-  // TODO: ASSERTTI
-  const action = assert(req.body, 'heilaImage');
-
-  const image = decodeBase64Image(req.body.imageData);
-  //const { imageText, imageTextPosition } = req.body;
-  //const imageOpts = { imageText, imageTextPosition };
-  const imageOpts = {};
-  const inputData = {};
-
-  return getAndValidateHeila(action.uuid)
-    .then(user => {
-      inputData.user = user;
-
-      const fileName = `${ heilaImageCore.targetFolder }/${ uuidV1() }`;
-      return uploadImage(fileName, image, imageOpts);
-    })
-    .then(uploadedImage => {
-      console.log(uploadedImage)
-      return createOrUpdateHeila({
-        uuid: action.uuid,
-        image_path: uploadedImage.imageName
-      })
-    });
-};
-
 export {
-  getHeilaImage,
-  postHeilaImage
+  postUserImage
 };
