@@ -28,9 +28,9 @@ const register = createJsonRoute(function(req, res, next) {
   return knex('admin').select('id').where('username', username).orWhere('email', email)
   .then(rows => {
     if (_.isEmpty(rows)) {
-      return knex('admin').insert({ username: username, email: email, password: password }).first()
+      return knex('admin').insert({ username: username, email: email, password: password }).returning('id')
       .then(result => {
-        const id = result.id;
+        const [id] = result;
         return { token: tokenForUser(id) };
       })
     } else {
