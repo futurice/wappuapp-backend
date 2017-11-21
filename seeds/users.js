@@ -5,6 +5,8 @@ exports.seed = function(knex, Promise) {
     id: 1,
     team_id: 1,
     name: 'Hessu Kypärä',
-    uuid: 'hessu'
+    uuid: 'hessu',
+    buddy: 'false',
+    buddyBio: 'Minulla on wappufiilis, ota musta kiinni tai ryyppään aamuun asti'
   });
 };

@@ -2,7 +2,7 @@
   "name": "wappuapp-backend",
   "version": "1.0.0",
   "engines": {
-    "node": "5.7.x",
+    "node": "6.x.x",
     "npm": "2.x.x"
   },
   "license": "MIT",
