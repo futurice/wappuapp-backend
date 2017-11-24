@@ -20,6 +20,7 @@ import * as loginHttp from './http/login-http';
 
 const requireAuth = passport.authenticate('jwt', {session: false});
 const requireLogin = passport.authenticate('local', {session: false});
+const requireAdmin = passport.authenticate('admin', {session: false});
 
 function createRouter() {
   const router = express.Router();
@@ -60,6 +61,9 @@ function createRouter() {
   //Protected endpoint example
   router.get('/protected', requireAuth, (req, res, next) => {
     res.send("Success");
+  });
+  router.get('/protectedadmin', requireAdmin, (req, res, next) => {
+    res.send("Admin Success");
   });
 
   return router;
