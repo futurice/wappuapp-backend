@@ -5,7 +5,12 @@ import {GCS_CONFIG} from '../util/gcs';
 const logger = require('../util/logger')(__filename);
 //import moment from 'moment-timezone';
 
+
+
 //Admin deleteFeedItem same as in feed-core.js but doesn't need opts.client.uuid 
+//to test
+//DELETE localhost:3001/api/admin/feed/:id
+//put in header token:[admintokenFromLocalStorage]
 function deleteFeedItem(id) {
   return knex('feed_items').delete().where({
     'id': id,

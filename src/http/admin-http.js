@@ -6,6 +6,7 @@ import * as adminCore from '../core/admin-core';
 const deleteFeedItem = createJsonRoute(function(req, res) {
   const id = assert(req.params.id, 'common.primaryKeyId');
 
+//Same as in feed-http.js, except this doesn't use opts.uuid parameter.
   return adminCore.deleteFeedItem(id)
   .then(deletedCount => {
     if (deletedCount === 0) {
