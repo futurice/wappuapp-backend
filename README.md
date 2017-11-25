@@ -363,6 +363,13 @@ Responses:
 `:id` Is the id of an item in the feed.
 
 
+### `DELETE /api/admin/feed/:id`
+
+> Delete item from feed as admin
+
+`:id` Is the id of an item in the feed.
+
+
 ### `GET /api/mood`
 
 > Get list of day by day mood
