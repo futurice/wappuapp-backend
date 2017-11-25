@@ -47,5 +47,28 @@ const jwtLogin = new Strategy(jwtOptions, (payload, done) => {
   });
 });
 
+const adminLogin = new Strategy(jwtOptions, (payload, done) => {
+  return knex('admin').select('power').where('id', payload.sub)
+  .then(row => {
+    if (_.isEmpty(row)) {
+      return done(null, false)
+    }
+    const [power] = row
+    if (power.power != 1) {
+      return done(null, false)
+    }
+    const startTime = moment(payload.iat)
+    const nowTime = moment(new Date().getTime())
+    const timeSpent = nowTime.diff(startTime, 'hours')
+    if (timeSpent > 24) {
+      return done(null, false)
+    } else {
+      const id = payload.sub;
+      return done(null, id)
+    }
+  });
+});
+
 passport.use(jwtLogin);
+passport.use('admin', adminLogin);
 passport.use(localLogin);
