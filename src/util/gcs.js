@@ -70,7 +70,7 @@ function uploadImageBuffer(imageName, imageBuffer) {
   logger.info('Uploading image to Google Cloud Storage..');
   return new Promise(function(resolve, reject) {
     const file = bucket.file(imageName);
-    console.log(file)
+    // console.log(file)
     streamifier.createReadStream(imageBuffer)
       .pipe(file.createWriteStream({
         metadata: { contentType: 'image/jpeg' }
