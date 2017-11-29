@@ -1,9 +1,14 @@
 import _ from 'lodash';
 import * as feedCore from './feed-core.js';
+import { putUserImage } from '../http/user-image-http.js';
+import { prefixImageWithGCS } from './image-core.js';
+
 const BPromise = require('bluebird');
 const {knex} = require('../util/database').connect();
 
 function createOrUpdateUser(user) {
+  console.log('createOrUpdateUser');
+  console.log(user.uuid);
   return findByUuid(user.uuid)
   .then(foundUser => {
     if (foundUser === null) {
@@ -15,6 +20,8 @@ function createOrUpdateUser(user) {
 }
 
 function createUser(user) {
+  console.log('createUser')
+  console.log(user)
   const dbRow = _makeUserDbRow(user);
   return knex('users').returning('id').insert(dbRow)
     .then(rows => {
@@ -26,19 +33,42 @@ function createUser(user) {
     });
 }
 
-function updateUser(user) {
-  console.log('updateUser')
-  console.log(user)
+function runDbUpdate(user) {
+  console.log('runDbUpdate');
+  console.log(user);
   const dbRow = _makeUserDbRow(user);
+  console.log('dbRow')
+  console.log(dbRow)
   return knex('users').returning('id').update(dbRow)
     .where('uuid', user.uuid)
     .then(rows => {
       if (_.isEmpty(rows)) {
         throw new Error('User row update failed: ' + dbRow);
       }
-
       return rows.length;
     });
+}
+
+function updateUser(user) {
+  console.log('updateUser')
+  // console.log(user)
+
+  if (user.imageData) {
+    console.log('imageData found!')
+    // putUserImage asettaa kuvan kantaan itsenäisesti
+    putUserImage(user.imageData, user.uuid)
+    .then(uploadedImageName => {
+      // alkup. user-objektissa ei image_pathia mukana
+      // asetetaan image_path
+      user["image_path"] = uploadedImageName;
+      delete user["imageData"];
+      runDbUpdate(user);
+    })
+  } else {
+    console.log('no imageData found')
+    runDbUpdate(user);
+  }
+
 }
 
 function findByUuid(uuid) {
@@ -137,16 +167,22 @@ function _makeUserDbRow(user) {
 
 // jscs:disable requireCamelCaseOrUpperCaseIdentifiers
 function _userRowToObject(row) {
-  console.log(row)
-  return {
+  let obj = {
     id: row.id,
     name: row.name,
     uuid: row.uuid,
     team: row.team_id,
     isBanned: row.is_banned,
-    image_path: row.image_path, // this is "" if the user hasn't set profile photo
     heila: row.heila,
   };
+
+  if (row.image_path !== "") {
+    obj["image_url"] = prefixImageWithGCS(row.image_path);
+  } else {
+    obj["image_url"] = "";
+  }
+
+  return obj;
 }
 
 export {
