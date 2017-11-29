@@ -57,18 +57,22 @@ function _rowToImage(row) {
 
   const imagePath = row['image_path'];
 
-  if (process.env.DISABLE_IMGIX === 'true' || _.endsWith(imagePath, 'gif')) {
-    imageObj.url = GCS_CONFIG.baseUrl + '/' + GCS_CONFIG.bucketName + '/' + imagePath;
-  } else {
-    imageObj.url =
-      'https://' + GCS_CONFIG.bucketName + '.imgix.net/' + imagePath +
-      process.env.IMGIX_QUERY;
-  }
+  imageObj.url = prefixImageWithGCS(imagePath);
 
   return imageObj;
 }
 
+function prefixImageWithGCS(imagePath) {
+  if (process.env.DISABLE_IMGIX === 'true' || _.endsWith(imagePath, 'gif')) {
+    return GCS_CONFIG.baseUrl + '/' + GCS_CONFIG.bucketName + '/' + imagePath;
+  } else {
+    return 'https://' + GCS_CONFIG.bucketName + '.imgix.net/' + imagePath +
+      process.env.IMGIX_QUERY;
+  }
+}
+
 export {
   targetFolder,
-  getImageById
+  getImageById,
+  prefixImageWithGCS,
 };
