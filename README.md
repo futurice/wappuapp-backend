@@ -493,7 +493,7 @@ If you're getting the user with a GET from the backend:
 {
   "uuid": "de305d54-75b4-431b-adb2-eb6b9e546014",
   "name": "Hessu Kypärä",
-  "image_url": "https://..." | "",
+  "image_url": "https://..." | "", // if image_url is an empty string, no photo has been set
   "heila": true|false
 }
 ```
