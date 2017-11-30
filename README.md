@@ -470,7 +470,8 @@ Images is an array of [feed objects](#feed-objects).
       "url": "https://storage.googleapis.com/wappuapp/user_content/123.jpg"
     }
   ]
-}```
+}
+```
 
 ### User object
 
