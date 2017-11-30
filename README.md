@@ -168,58 +168,6 @@ UPDATE users SET is_banned = true WHERE uuid='D47DA01C-51BB-4F96-90B6-D64B77225E
 * Token authentication is required. Token is sent in `x-token` header.
 
 
-## TÄMÄ HEILA-DOKUMENTAATIO ON KESKEN
-* Tässä omia endpointteja lisättynä, siistitään teksti kun kaikki oikeasti futaa
-
-Heilan toiminta nyt tällainen:
-* käyttäjällä pitää olla jo profiili
-* luo putilla heila-profiili
-* aseta postilla heila-profiiliin kuva 
-* hae heilan tiedot getillä
- 
-Heila-profiilia ei siis automaattisesti luoda jokaiselle, se on erillinen kokonaisuus
-profiilin ulkopuolella.
-
-### `PUT /api/heila/:uuid`
-
-* Luo heila-profiilin. Tätä ennen käyttäjäprofiili pitää olla luotuna. Käytännössä
-  sovelluksen avaus luo käyttäjäprofiilin, mutta paikallisessa debuggauksessa pitää
-  huomioida, että kantaan on ensin tehty profiili uuid:llä ennen kuin voi tehdä
-  sille heila-profiilin.
-
-* Body on ihan vain { uuid: '...' }
-
-* TODO: Pitäisikö luonnin yhteydessä mennä tieto A omasta sukupuolesta B sukupuolesta,
-  jonka kuvia haluaa katsella?
-
-### `POST /api/heila/:uuid/image`
-
-* Uploadaa kuvan jo aiemmin luodulle heila-profiilille. Ylempi apikutsu on siis pakko
-  tehdä ennen tätä.
-
-* Uusi POST päivittää (eli ylikirjoittaa) vanhan heilakuvan
-
-* Body on { uuid: '...', imageData: *base64-enkoodattu kuva, kuten image-apissa* }
-
-### `GET /api/heila/:uuid`
-
-* Palauttaa yhden heilan tiedot (tällä hetkellä vain uuid, image_path ja image_url)
-
-* Body on { uuid: '...' }
-
-### `GET /api/heila/feed`
-
-* Tätä ei ole toteutettu ja tätä pitää vähän miettiä. Mutta jokin endpoint pitää 
-  olla, josta voi pyytää listan seuraavista heiloista, joita voi pällistellä.
-  Jonnekin pitänee tallettaa tieto, onko kiinnostunut miehistä vai naisista jne.
-
-
-
-
-
-
-## Tästä alkaa alkup. endpointit
-
 ### `GET /api/events`
 
 > List events
