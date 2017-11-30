@@ -167,6 +167,7 @@ UPDATE users SET is_banned = true WHERE uuid='D47DA01C-51BB-4F96-90B6-D64B77225E
 * Be prepared that some of these endpoints are not documented correctly
 * Token authentication is required. Token is sent in `x-token` header.
 
+
 ### `GET /api/events`
 
 > List events
@@ -469,14 +470,31 @@ Images is an array of [feed objects](#feed-objects).
       "url": "https://storage.googleapis.com/wappuapp/user_content/123.jpg"
     }
   ]
-}```
+}
+```
 
 ### User object
+
+If you're updating the user with a PUT from the client:
+
+
+```js
+{
+  "uuid": "UUID",
+  "name": "NAME",
+  "imageData": 'base64encodedimage',
+  "heila": true|false
+}
+```
+
+If you're getting the user with a GET from the backend:
 
 ```js
 {
   "uuid": "de305d54-75b4-431b-adb2-eb6b9e546014",
-  "name": "Hessu Kypärä"
+  "name": "Hessu Kypärä",
+  "image_url": "https://..." | "", // if image_url is an empty string, no photo has been set
+  "heila": true|false
 }
 ```
 

@@ -43,7 +43,22 @@ const GCS_CONFIG = {
     'client_email': process.env.GCS_CLIENT_EMAIL
   }
 };
-const gcloud = require('gcloud')(GCS_CONFIG);
+
+let gcloud;
+if (process.env.GCS_ORIGINAL_WAY_OF_LOADING === "true") {
+  console.log('gcs konffattu futuricen alkup. tavalla')
+  gcloud = require('gcloud')(GCS_CONFIG);
+} else {
+  console.log('gcs konffattu käyttäen keyfilea (json)')
+  // tämä on siksi, että pietari ei saanut alkup. tapaa mitenkään
+  // toimimaan
+  // keyfile on siis gcs-paneelista ladattu privakeyn yms. sisältävä
+  // json möhkäle
+  gcloud = require('gcloud')({
+    projectId: process.env.GCS_PROJECT_ID,
+    keyFilename: process.env.GCS_KEYFILE_NAME ,
+  });
+}
 
 const gcs = gcloud.storage();
 const bucket = gcs.bucket(process.env.GCS_BUCKET_NAME);
@@ -55,7 +70,7 @@ function uploadImageBuffer(imageName, imageBuffer) {
   logger.info('Uploading image to Google Cloud Storage..');
   return new Promise(function(resolve, reject) {
     const file = bucket.file(imageName);
-
+    // console.log(file)
     streamifier.createReadStream(imageBuffer)
       .pipe(file.createWriteStream({
         metadata: { contentType: 'image/jpeg' }
