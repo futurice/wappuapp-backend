@@ -21,7 +21,6 @@ requireEnvs([
   'GCS_CLIENT_EMAIL'
 ]);
 
-const PRIVATE_KEY = base64.decodeBase64String(process.env.GCS_PRIVATE_KEY);
 const GCS_CONFIG = {
   bucketName: process.env.GCS_BUCKET_NAME,
   baseUrl: 'https://storage.googleapis.com',
@@ -30,7 +29,9 @@ const GCS_CONFIG = {
   'projectId': process.env.GCS_PROJECT_ID,
   'project_id': process.env.GCS_PROJECT_ID,
   'private_key_id': process.env.GCS_PRIVATE_KEY_ID,
-  'private_key': process.env.GCS_PRIVATE_KEY,
+  //'private_key': process.env.GCS_PRIVATE_KEY,
+  // seuraava rivi olettaa, että env var on suoraan gcs accounting credentials jsonin stringi
+  'private_key': process.env.GCS_PRIVATE_KEY_STRING.replace(/\\n/g, '\n'),
   'client_email': process.env.GCS_CLIENT_EMAIL,
   'client_id': process.env.GCS_CLIENT_ID,
   'auth_uri': process.env.GCS_AUTH_URI,
@@ -39,7 +40,9 @@ const GCS_CONFIG = {
   'client_x509_cert_url': process.env.GCS_CLIENT_X509_CERT_URL,
 
   credentials: {
-    'private_key': PRIVATE_KEY,
+    //'private_key': PRIVATE_KEY,
+    // seuraava rivi olettaa, että env var on suoraan gcs accounting credentials jsonin stringi
+    'private_key': process.env.GCS_PRIVATE_KEY_STRING.replace(/\\n/g, '\n'),
     'client_email': process.env.GCS_CLIENT_EMAIL
   }
 };
@@ -47,6 +50,7 @@ const GCS_CONFIG = {
 let gcloud;
 if (process.env.GCS_ORIGINAL_WAY_OF_LOADING === "true") {
   console.log('gcs konffattu futuricen alkup. tavalla')
+  console.log(GCS_CONFIG)
   gcloud = require('gcloud')(GCS_CONFIG);
 } else {
   console.log('gcs konffattu käyttäen keyfilea (json)')
@@ -76,10 +80,12 @@ function uploadImageBuffer(imageName, imageBuffer) {
         metadata: { contentType: 'image/jpeg' }
       }))
       .on('error', function(error) {
+        console.log(error);
         reject(error);
       })
       .on('finish', function() {
         file.makePublic(function(error, response) {
+          console.log(error)
           if (error) {
             return reject(error);
           }
