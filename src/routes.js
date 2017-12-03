@@ -12,10 +12,17 @@ import * as citiesHttp from './http/cities-http';
 import * as radioHttp from './http/radio-http';
 import * as wappuMood from './http/wappu-mood-http';
 import * as imageHttp from './http/image-http';
-
+import * as heilaHttp from './http/heila-http';
 
 function createRouter() {
   const router = express.Router();
+
+  // palauttaa listan heiloja, joita voi frontissa näyttää heilanselauksessa
+  router.get('/heila', heilaHttp.getHeilas);
+  // palauttaa yhden heilan tiedot (käytännössä ne samat tiedot, joita ylempi palauttaa listassa)
+  router.get('/heila/:uuid', heilaHttp.getHeilaByUuid);
+  // päivittää oman heilaprofiilin tekstikenttätietoja
+  router.put('/heila/:uuid', heilaHttp.putHeila);
 
   router.get('/events', eventHttp.getEvents);
   router.get('/events/:id', eventHttp.getEvent);
