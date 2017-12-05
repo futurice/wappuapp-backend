@@ -13,11 +13,13 @@ const putHeila = createJsonRoute(function(req, res) {
 });
 
 // TODO: ei futaa
-const getHeilas = createJsonRoute(function(req, res) {
-  console.log('getHeilas FIX ME')
-  return new Promise();
+const getHeilaList = createJsonRoute(function(req, res) {
+  console.log('getHeilaList')
+  return heilaCore.getAllHeilas()
+    .then(heilaList => {
+      return heilaList;
+    })
 });
-
 
 const getHeilaByUuid = createJsonRoute(function(req, res) {
   return heilaCore.findByUuid(req.params.uuid)
@@ -31,8 +33,6 @@ const getHeilaByUuid = createJsonRoute(function(req, res) {
     return heila;
   });
 });
-
-
 
 // TODO: onko tarve
 const getUserById = createJsonRoute(function(req, res) {
@@ -56,6 +56,6 @@ const getUserById = createJsonRoute(function(req, res) {
 
 export {
   putHeila,
-  getHeilas,
+  getHeilaList,
   getHeilaByUuid,
 };
