@@ -92,7 +92,7 @@ const schemas = {
 
   teamsParams: {
     city: common.primaryKeyId,
-  },
+  }
 };
 
 const conversions = {};
