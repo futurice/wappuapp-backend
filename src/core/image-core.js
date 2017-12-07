@@ -63,6 +63,9 @@ function _rowToImage(row) {
 }
 
 function prefixImageWithGCS(imagePath) {
+  if (imagePath === "") {
+    return "";
+  }
   if (process.env.DISABLE_IMGIX === 'true' || _.endsWith(imagePath, 'gif')) {
     return GCS_CONFIG.baseUrl + '/' + GCS_CONFIG.bucketName + '/' + imagePath;
   } else {

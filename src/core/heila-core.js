@@ -1,5 +1,6 @@
 import _ from 'lodash';
 import * as feedCore from './feed-core.js';
+import { prefixImageWithGCS } from './image-core.js'
 import { GCS_CONFIG } from '../util/gcs';
 const BPromise = require('bluebird');
 const {knex} = require('../util/database').connect();
@@ -59,6 +60,44 @@ function findByUuid(uuid) {
 
       return _heilaRowToObject(rows[0]);
     });
+}
+
+function getAllHeilas() {
+  console.log('getAllHeilas');
+
+  // palauttaa listan, jossa tällaisia objekteja:
+  // { id: string, name: string, image_url: string,
+  //   team_id: int, bio_text: string, bio_looking_for: string }
+
+  return knex('users')
+    .select('users.*')
+    .where({ heila: true })
+    .then(rows => {
+      if (_.isEmpty(rows)) {
+        return [];
+      }
+      return _heilaRowsToObjectList(rows);
+    })
+}
+
+function _heilaRowsToObjectList(userList) {
+
+  // userList sisältää _VAIN_ heila: true -tyyppisiä profiileja
+
+  const heilaList = userList
+    .map(user => {
+      return {
+        id: user.id,
+        name: user.name,
+        team_id: user.team_id,
+        image_url: prefixImageWithGCS(user.image_path),
+        bio_text: "lorem ipsum bibibibibi",
+        bio_looking_for: "something nice"
+      }
+    })
+  console.log("heilaList")
+  console.log(heilaList)
+  return heilaList;
 }
 
 /**
@@ -158,5 +197,6 @@ function _heilaRowToObject(row) {
 export {
   createOrUpdateHeila,
   findByUuid,
-  getHeilaDetails
+  getHeilaDetails,
+  getAllHeilas,
 };

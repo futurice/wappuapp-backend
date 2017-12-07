@@ -168,6 +168,22 @@ UPDATE users SET is_banned = true WHERE uuid='D47DA01C-51BB-4F96-90B6-D64B77225E
 * Token authentication is required. Token is sent in `x-token` header.
 
 
+
+
+
+### `GET /api/heila`
+
+> List heila profiles
+
+Query parameters:
+
+* Nothing implemented yet. The query returns full list of all heilas.
+
+Responses:
+
+* `200 OK` List of [heila objects](#heila-object).
+
+
 ### `GET /api/events`
 
 > List events
@@ -401,6 +417,20 @@ Responses:
 * `200 OK` Body is one of [radio objects](#radio-object).
 
 ## Response objects
+
+### Heila object
+
+```js
+{
+  "id": 2002,
+  "name": "Pate Papparainen",
+  "team_id": 1,
+  "image_url": "https://..." | "", // if no image, then ""
+  "bio_text": "I'm very nice",
+  "bio_looking_for": "Very nice!"
+}
+
+```
 
 ### Event object
 

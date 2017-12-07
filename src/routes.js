@@ -18,11 +18,11 @@ function createRouter() {
   const router = express.Router();
 
   // palauttaa listan heiloja, joita voi frontissa näyttää heilanselauksessa
-  router.get('/heila', heilaHttp.getHeilas);
+  router.get('/heila', heilaHttp.getHeilaList);
   // palauttaa yhden heilan tiedot (käytännössä ne samat tiedot, joita ylempi palauttaa listassa)
-  router.get('/heila/:uuid', heilaHttp.getHeilaByUuid);
+  // router.get('/heila/:uuid', heilaHttp.getHeilaByUuid);
   // päivittää oman heilaprofiilin tekstikenttätietoja
-  router.put('/heila/:uuid', heilaHttp.putHeila);
+  // router.put('/heila/:uuid', heilaHttp.putHeila);
 
   router.get('/events', eventHttp.getEvents);
   router.get('/events/:id', eventHttp.getEvent);
