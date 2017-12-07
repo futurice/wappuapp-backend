@@ -1,7 +1,7 @@
 
 exports.up = function(knex, Promise) {
   return knex.schema.table('actions', function(table) {
-    table.integer('parent_id').defaultTo(0);
+    table.integer('parent_id').defaultTo(null);
   });
 };
 
