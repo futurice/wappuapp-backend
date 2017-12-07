@@ -6,12 +6,12 @@ const logger = require('./logger')(__filename);
 
 const requireEnvs = require('./require-envs');
 requireEnvs([
-  'GCS_PRIVATE_KEY',
   'GCS_BUCKET_NAME',
   'GCS_TYPE',
   'GCS_PROJECT_ID',
   'GCS_PRIVATE_KEY_ID',
-  'GCS_PRIVATE_KEY',
+  // 'GCS_PRIVATE_KEY',
+  'GCS_PRIVATE_KEY_STRING',
   'GCS_CLIENT_EMAIL',
   'GCS_CLIENT_ID',
   'GCS_AUTH_URI',
@@ -47,25 +47,19 @@ const GCS_CONFIG = {
   }
 };
 
-let gcloud;
-if (process.env.GCS_ORIGINAL_WAY_OF_LOADING === "true") {
-  console.log('gcs konffattu futuricen alkup. tavalla')
-  console.log(GCS_CONFIG)
-  gcloud = require('gcloud')(GCS_CONFIG);
+let gcloudStorage;
+if (process.env.GCS_ORIGINAL_WAY_OF_LOADING === 'true') {
+  console.log('gcs configured using env variables')
+  gcloudStorage = require('@google-cloud/storage')(GCS_CONFIG);
 } else {
-  console.log('gcs konffattu käyttäen keyfilea (json)')
-  // tämä on siksi, että pietari ei saanut alkup. tapaa mitenkään
-  // toimimaan
-  // keyfile on siis gcs-paneelista ladattu privakeyn yms. sisältävä
-  // json möhkäle
-  gcloud = require('gcloud')({
+  console.log('gcs configure using keyfile.json dled from google cloud console')
+  gcloudStorage = require('gcloud')({
     projectId: process.env.GCS_PROJECT_ID,
     keyFilename: process.env.GCS_KEYFILE_NAME ,
   });
 }
 
-const gcs = gcloud.storage();
-const bucket = gcs.bucket(process.env.GCS_BUCKET_NAME);
+const bucket = gcloudStorage.bucket(process.env.GCS_BUCKET_NAME);
 
 // # API
 //
