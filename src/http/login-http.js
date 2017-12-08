@@ -18,7 +18,7 @@ const login = createJsonRoute(function(req, res) {
     })
 });
 
-const register = createJsonRoute(function(req, res, next) {
+const addmoderator = createJsonRoute(function(req, res, next) {
   const username = req.body.username;
   const email = req.body.email;
   const password = crypto.createHash('md5').update(req.body.password).digest("hex");
