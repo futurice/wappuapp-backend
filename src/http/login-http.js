@@ -39,7 +39,43 @@ const addmoderator = createJsonRoute(function(req, res, next) {
   });
 });
 
+const changepw = createJsonRoute(function(req, res, next) {
+  //TODO
+};
+
+const forgottenpw = createJsonRoute(function(req, res, next) {
+  //TODO
+};
+
+const promote = createJsonRoute(function(req, res, next) {
+  email = req.params.email;
+  return knex('admin').where('email', email).update({admin: true}).returning('id')
+  .then(row => {
+    if (_.isEmpty(row)) {
+      return throwStatus(404, 'Moderator with given email does not exist');
+    } else {
+      return throwStatus(200, 'User promoted to admin');
+    }
+  });
+};
+
+const demote = createJsonRoute(function(req, res, next) {
+  email = req.params.email;
+  return knex('admin').where('email', email).update({admin: false}).returning('id')
+  .then(row => {
+    if (_.isEmpty(row)) {
+      return throwStatus(404, 'Moderator with given email does not exist');
+    } else {
+      return throwStatus(200, 'User demoted to moderator');
+    }
+  });
+};
+
 export {
+  promote,
+  demote,
+  changepw,
+  forgottenpw,
   login,
-  register
+  addmoderator
 };
