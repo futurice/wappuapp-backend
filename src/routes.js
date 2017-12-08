@@ -63,9 +63,9 @@ function createRouter() {
   router.get('/forgottenpassword/:email', loginHttp.forgottenpw);
   router.put('/promote/:email', requireAdmin, loginHttp.promote);
   router.put('/demote/:email', requireAdmin, loginHttp.demote);
-  });
   router.put('/admin/users/:uuid/ban', requireAuth, adminHttp.shadowBanUser);
   router.put('/admin/users/:uuid/unban', requireAuth, adminHttp.unBanUser);
+  router.delete('/deletemoderator/:email', requireAdmin, loginHttp.deletemoderator);
 
   return router;
 }
