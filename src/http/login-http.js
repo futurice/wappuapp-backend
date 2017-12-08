@@ -40,13 +40,22 @@ const addmoderator = createJsonRoute(function(req, res, next) {
 });
 
 const deletemoderator = createJsonRoute(function(req, res, next) {
-  //TODO
+  return knex('admin').where('email', req.params.email).del()
+  .then(result => {
+    if (result == 1) {
+      return throwStatus(200, 'User deleted');
+    } else {
+      return throwStatus(404, 'Email not found');
+    }
+  });
 });
 
 const changepw = createJsonRoute(function(req, res, next) {
-  password = crypto.createHash('md5').update(req.body.password).digest("hex");
+  const password = crypto.createHash('md5').update(req.body.password).digest("hex");
+  console.log(password)
   return knex('admin').where('id', req.user).update({password: password}).returning('id')
   .then(row => {
+    console.log(row)
     if (_.isEmpty(row)) {
       return throwStatus(404, 'There was an error');
     } else {
