@@ -273,6 +273,15 @@ Responses:
 
 * `200 OK`
 
+### `PUT /api/users/:uuid/image`
+
+> Saves user profile picture. If a picture was already set, overwrites it.
+
+Body is one of [user image object](#user-image-object).
+
+Responses:
+
+* `200 OK`
 
 ### `GET /api/users/:uuid`
 
@@ -425,7 +434,7 @@ Responses:
   "id": 2002,
   "name": "Pate Papparainen",
   "team_id": 1,
-  "image_url": "https://..." | "", // if no image, then ""
+  "image_url": "https://..." | null // if no image, then null
   "bio_text": "I'm very nice",
   "bio_looking_for": "Very nice!"
 }
@@ -512,7 +521,7 @@ If you're updating the user with a PUT from the client:
 {
   "uuid": "UUID",
   "name": "NAME",
-  "imageData": 'base64encodedimage',
+  "team": team number,
   "heila": true|false
 }
 ```
@@ -523,8 +532,17 @@ If you're getting the user with a GET from the backend:
 {
   "uuid": "de305d54-75b4-431b-adb2-eb6b9e546014",
   "name": "Hessu Kypärä",
-  "image_url": "https://..." | "", // if image_url is an empty string, no photo has been set
+  "image_url": "https://..." | null , // if no image, null
   "heila": true|false
+}
+```
+
+### User image object
+
+```
+{ 
+  "uuid": "UUID",
+  "imageData": 'base64encodedimage'
 }
 ```
 
