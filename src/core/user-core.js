@@ -14,7 +14,11 @@ function createOrUpdateUser(user) {
     if (foundUser === null) {
       return createUser(user);
     } else {
-      return updateUser(user);
+      if (user.imageData) {
+        return updateUserImage(user);
+      } else {
+        return updateUser(user);
+      }
     }
   });
 }
@@ -51,24 +55,20 @@ function runDbUpdate(user) {
 
 function updateUser(user) {
   console.log('updateUser')
-  // console.log(user)
+  return runDbUpdate(user);
+}
 
-  if (user.imageData) {
-    console.log('imageData found!')
+function updateUserImage(user) {
+  console.log('updateUserImage')
     // putUserImage asettaa kuvan kantaan itsenäisesti
-    putUserImage(user.imageData, user.uuid)
-    .then(uploadedImageName => {
-      // alkup. user-objektissa ei image_pathia mukana
-      // asetetaan image_path
-      user["image_path"] = uploadedImageName;
-      delete user["imageData"];
-      runDbUpdate(user);
-    })
-  } else {
-    console.log('no imageData found')
+  return putUserImage(user.imageData, user.uuid)
+  .then(uploadedImageName => {
+    // alkup. user-objektissa ei image_pathia mukana
+    // asetetaan image_path
+    user['image_path'] = uploadedImageName;
+    delete user['imageData'];
     runDbUpdate(user);
-  }
-
+  })
 }
 
 function findByUuid(uuid) {

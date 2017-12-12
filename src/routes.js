@@ -33,6 +33,7 @@ function createRouter() {
   router.get('/users', userHttp.getUserById);
   router.put('/users/:uuid', userHttp.putUser);
   router.get('/users/:uuid', userHttp.getUserByUuid);
+  router.put('/users/:uuid/image', userHttp.putUserImage);
 
   router.get('/action_types', actionTypeHttp.getActionTypes);
 
