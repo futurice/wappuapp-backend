@@ -90,7 +90,7 @@ function _heilaRowsToObjectList(userList) {
         id: user.id,
         name: user.name,
         team_id: user.team_id,
-        image_url: prefixImageWithGCS(user.image_path),
+        image_url: user.image_path ? prefixImageWithGCS(user.image_path) : null,
         bio_text: "lorem ipsum bibibibibi",
         bio_looking_for: "something nice"
       }
