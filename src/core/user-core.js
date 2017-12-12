@@ -179,7 +179,7 @@ function _userRowToObject(row) {
   if (row.image_path !== "") {
     obj["image_url"] = prefixImageWithGCS(row.image_path);
   } else {
-    obj["image_url"] = "";
+    obj["image_url"] = null; 
   }
 
   return obj;
