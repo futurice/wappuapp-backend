@@ -30,7 +30,6 @@ const schemas = {
     uuid: common.userUuid.required(),
     name: Joi.string().min(1, 'utf8').max(50, 'utf8').required(),
     team: common.team.required(),
-    imageData: Joi.string().when('type', { is: 'IMAGE', then: Joi.required() }),
     heila: Joi.boolean().optional()
   },
 
@@ -41,7 +40,7 @@ const schemas = {
 
   userImage: {
     uuid: common.userUuid.required(),
-    imageData: Joi.string().when('type', { is: 'IMAGE', then: Joi.required() }),
+    imageData: Joi.string().required(),
   },
 
   userQueryParams: {
