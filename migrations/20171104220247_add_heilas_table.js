@@ -9,7 +9,8 @@ exports.up = function(knex, Promise) {
         .onDelete('RESTRICT')
         .onUpdate('CASCADE');
 
-      table.string('image_path');
+      table.string('bio_text', 250);
+      table.string('bio_looking_for', 250);
       table.timestamp('created_at').index().notNullable().defaultTo(knex.fn.now());
       table.timestamp('updated_at').index().notNullable().defaultTo(knex.fn.now());
     });
