@@ -181,7 +181,13 @@ Query parameters:
 
 Responses:
 
-* `200 OK` List of [heila objects](#heila-object).
+* `200 OK` List of [heila object](#heila-object).
+
+### `PUT /api/heila/:uuid`
+
+> Update heila profile text fields.
+
+* Body is [heila bio object](#heila-bio-object).
 
 
 ### `GET /api/events`
@@ -437,6 +443,17 @@ Responses:
   "image_url": "https://..." | null // if no image, then null
   "bio_text": "I'm very nice",
   "bio_looking_for": "Very nice!"
+}
+
+```
+
+### Heila bio object
+
+```js
+{
+  "uuid": "UUID",
+  "bio_text": string, // size of 0 is fine
+  "bio_looking_for": string  // size of 0 is fine
 }
 
 ```
