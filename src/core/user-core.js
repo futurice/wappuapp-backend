@@ -2,6 +2,7 @@ import _ from 'lodash';
 import * as feedCore from './feed-core.js';
 import { putUserImage } from '../http/user-image-http.js';
 import { prefixImageWithGCS } from './image-core.js';
+import * as heilaCore from './heila-core.js';
 
 const BPromise = require('bluebird');
 const {knex} = require('../util/database').connect();
@@ -49,7 +50,9 @@ function runDbUpdate(user) {
       if (_.isEmpty(rows)) {
         throw new Error('User row update failed: ' + dbRow);
       }
-      return rows.length;
+      // if user.heila === true ==> make sure a row exists in heilas table
+      // if user.heila === false ==> make sure no rows exists in heilas table
+      return heilaCore.checkHeilaTableStatus(user);
     });
 }
 

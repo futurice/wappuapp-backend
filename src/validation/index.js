@@ -35,7 +35,8 @@ const schemas = {
 
   heila: {
     uuid: common.userUuid.required(),
-    imageData: Joi.string().when('type', { is: 'IMAGE', then: Joi.required() }),
+    bio_text: Joi.string().min(0, 'utf8').max(250, 'utf8').required(),
+    bio_looking_for: Joi.string().min(0, 'utf8').max(250, 'utf8').required(),
   },
 
   userImage: {

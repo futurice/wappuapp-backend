@@ -6,6 +6,38 @@ const BPromise = require('bluebird');
 const {knex} = require('../util/database').connect();
 
 
+function checkHeilaTableStatus(user) {
+  return findByUuid(user.uuid)
+    .then(foundHeila => {
+      
+      // if heila table row doesn't exist -> create it
+      if (foundHeila === null && user.heila === true) {
+        console.log('heila not found + heila = true --> add table row');
+        return createHeila(user);
+      // if heila table row exists but it shouldn't -> delete it
+      } else if (foundHeila !== null && user.heila === false) {
+        console.log('heila found + heila = false --> drop table row');
+        return deleteHeila(user);
+      } else {
+        console.log(`heila: ${user.heila} + foundHeila: ${foundHeila} --> doing nothing`);
+        return 1;
+      }
+    })
+}
+
+function deleteHeila(heila) {
+  return knex('heilas')
+    .where({ uuid: heila.uuid })
+    .del()
+    .then(delCount => {
+      console.log('deleted this many heila rows:');
+      console.log(delCount);
+      if (delCount === 0) {
+        throw new Error(`Couldn't del heila uuid ${heila.uuid}`);
+      }
+    })
+}
+
 function createOrUpdateHeila(heila) {
   console.log('createOrUpdateHeila')
   console.log(heila)
@@ -35,6 +67,7 @@ function createHeila(heila) {
 function updateHeila(heila) {
   console.log('updateHeila')
   const dbRow = _makeHeilaDbRow(heila);
+  console.log(dbRow)
   return knex('heilas').returning('id').update(dbRow)
     .where('uuid', heila.uuid)
     .then(rows => {
@@ -72,12 +105,45 @@ function getAllHeilas() {
   return knex('users')
     .select('users.*')
     .where({ heila: true })
-    .then(rows => {
-      if (_.isEmpty(rows)) {
+    .then(userRows => {
+      if (_.isEmpty(userRows)) {
         return [];
       }
-      return _heilaRowsToObjectList(rows);
+      console.log('userRows::::')
+      console.log(userRows)
+      const heilaIds = userRows.map(user => {
+        return user.uuid;
+      })
+      console.log(heilaIds)
+      return knex('heilas')
+        .select('heilas.*')
+        .whereIn('uuid', heilaIds)
+        .then(heilaRows => {
+          console.log(heilaRows);
+          if (_.isEmpty(heilaRows)) {
+            return [];
+          }
+          return _heilaRowsToObjectList(_mergeUserHeilaRows(userRows, heilaRows));
+        })
     })
+}
+
+function _mergeUserHeilaRows(userRows, heilaRows) {
+  // mergetään user-profiilit ja heila-profiilit
+  // lopputuloksena palautetaan lista, jossa
+  // sekä userin tiedot että heilan tiedot samassa
+  // objektissa
+  userRows.forEach(user => {
+    for (let i = 0; i < heilaRows.length; i += 1) {
+      if (user.uuid === heilaRows[i].uuid) {
+        user = Object.assign(user, heilaRows[i]);
+        break;
+      }
+    }
+  })
+  console.log('merged userRows:');
+  console.log(userRows);
+  return userRows;
 }
 
 function _heilaRowsToObjectList(userList) {
@@ -91,8 +157,8 @@ function _heilaRowsToObjectList(userList) {
         name: user.name,
         team_id: user.team_id,
         image_url: user.image_path ? prefixImageWithGCS(user.image_path) : null,
-        bio_text: "lorem ipsum bibibibibi",
-        bio_looking_for: "something nice"
+        bio_text: user.bio_text,
+        bio_looking_for: user.bio_looking_for
       }
     })
   console.log("heilaList")
@@ -169,7 +235,8 @@ function _queryHeilaDetails(heilaId) {
 function _makeHeilaDbRow(heila) {
   const dbRow = {
     'uuid': heila.uuid,
-    'image_path': heila.image_path
+    'bio_text': heila.bio_text || '',
+    'bio_looking_for': heila.bio_looking_for || '',
   };
 
   return dbRow;
@@ -177,9 +244,10 @@ function _makeHeilaDbRow(heila) {
 
 // jscs:disable requireCamelCaseOrUpperCaseIdentifiers
 function _heilaRowToObject(row) {
-
+  console.log("heilaRowToObject")
+  console.log(row)
   // jos kuvaa ei ole uploadattu, palautetaan tyhjä merkkijono
-  let url = '';
+  let url = null; 
   if (row.image_path) {
     url = `${GCS_CONFIG.baseUrl}/${GCS_CONFIG.bucketName}/${row.image_path}`;
   }
@@ -187,10 +255,11 @@ function _heilaRowToObject(row) {
   return {
     id: row.id,
     uuid: row.uuid,
-    image_path: row.image_path || '',
     // tässä asetetaan image_urli, jolla sen voi hakea verkosta ja näyttää
     // urlia ei oikeasti ole laitettu kantaan, siellä on vain image_path
-    image_url: url
+    image_url: url,
+    bio_text: row.bio_text,
+    bio_looking_for: row.bio_looking_for,
   };
 }
 
@@ -199,4 +268,5 @@ export {
   findByUuid,
   getHeilaDetails,
   getAllHeilas,
+  checkHeilaTableStatus,
 };
