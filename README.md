@@ -488,6 +488,7 @@ Images is an array of [feed objects](#feed-objects).
   "name": "Hessu Kypärä",
   "team": "TiTe",
   "numSimas": "1",
+  "image_url": "https://...." || null,
   "images": [
     {
       "id": "2",

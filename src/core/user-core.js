@@ -95,6 +95,7 @@ function findByUuid(uuid) {
  */
 function getUserDetails(opts) {
   const userDetailsQuery = _queryUserDetails(opts.userId);
+  const userImageQuery = _getUserImageUrl(opts.userId);
 
   const imagesQuery = feedCore.getFeed({
     client:        opts.client,
@@ -105,18 +106,37 @@ function getUserDetails(opts) {
   });
 
   return BPromise.all([
+    userImageQuery,
     userDetailsQuery,
     imagesQuery
-  ]).spread((userDetails, images) => {
+  ]).spread((userImagePath, userDetails, images) => {
     if (!userDetails) {
       return null;
     }
-
+    
     userDetails.images = images;
+    userDetails.image_url = null;
+    
+    if (userImagePath) {
+      userDetails.image_url = prefixImageWithGCS(userImagePath);
+    }
 
     return userDetails;
   });
 }
+
+function _getUserImageUrl(userId) {
+  return knex('users')
+    .select('users.*')
+    .where({ id: userId })
+    .then(users => {
+      //console.log('users')
+      //console.log(users)
+      const user = users[0]
+      //console.log(user)
+      return user.image_path;
+    })
+};
 
 function _queryUserDetails(userId) {
   const sqlString = `
