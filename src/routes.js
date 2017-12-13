@@ -20,7 +20,8 @@ function createRouter() {
   // palauttaa listan heiloja, joita voi frontissa näyttää heilanselauksessa
   router.get('/heila', heilaHttp.getHeilaList);
   // palauttaa yhden heilan tiedot (käytännössä ne samat tiedot, joita ylempi palauttaa listassa)
-  router.get('/heila/:uuid', heilaHttp.getHeilaByUuid);
+  // TODO
+  // router.get('/heila/:id', heilaHttp.getHeilaById);
   // päivittää oman heilaprofiilin tekstikenttätietoja
   router.put('/heila/:uuid', heilaHttp.putHeila);
 
