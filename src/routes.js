@@ -13,6 +13,7 @@ import * as radioHttp from './http/radio-http';
 import * as wappuMood from './http/wappu-mood-http';
 import * as imageHttp from './http/image-http';
 import * as heilaHttp from './http/heila-http';
+import * as heilaLogic from './http/heila-logic';
 
 function createRouter() {
   const router = express.Router();
@@ -23,6 +24,9 @@ function createRouter() {
   // router.get('/heila/:uuid', heilaHttp.getHeilaByUuid);
   // päivittää oman heilaprofiilin tekstikenttätietoja
   // router.put('/heila/:uuid', heilaHttp.putHeila);
+
+  router.get('/heila/matches', heilaLogic.getMatches);
+  router.get('/heila/matches/:id', heilaLogic.getChat);
 
   router.get('/events', eventHttp.getEvents);
   router.get('/events/:id', eventHttp.getEvent);
