@@ -8,10 +8,11 @@ import crypto from 'crypto';
 require('../init-env-variables');
 
 const localOptions = {
-  usernameField: 'username'
+  usernameField: 'email'
 };
-const localLogin = new LocalStrategy(localOptions, (username, password, done) => {
-  return knex('admin').where('username', username).first()
+const localLogin = new LocalStrategy(localOptions, (email, password, done) => {
+  email = crypto.createHash('md5').update(req.body.email).digest("hex");
+  return knex('admin').where('email', email).first()
   .then(row => {
     if (_.isEmpty(row)) {
       return done(null, false)
@@ -30,7 +31,7 @@ const jwtOptions = {
 };
 
 const jwtLogin = new Strategy(jwtOptions, (payload, done) => {
-  return knex('admin').select('username').where('id', payload.sub)
+  return knex('admin').select('email').where('id', payload.sub)
   .then(rows => {
     if (_.isEmpty(rows)) {
       return done(null, false)

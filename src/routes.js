@@ -66,6 +66,7 @@ function createRouter() {
   router.put('/admin/users/:uuid/ban', requireAuth, adminHttp.shadowBanUser);
   router.put('/admin/users/:uuid/unban', requireAuth, adminHttp.unBanUser);
   router.delete('/deletemoderator/:email', requireAdmin, loginHttp.deletemoderator);
+  router.get('/moderatorlist', requireAdmin, loginHttp.modlist);
 
   return router;
 }
