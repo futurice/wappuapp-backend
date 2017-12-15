@@ -338,6 +338,8 @@ Examples:
 * Load 20 more feed items: `GET /api/feed?beforeId=123&limit=20`
 
     Assuming the id of oldest/last feed item client currently has is `123`.
+    
+* Get the comments for a feed item with id 7: `GET /api/feed?parent_id=7`
 
 Responses:
 
