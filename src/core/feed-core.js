@@ -315,6 +315,10 @@ function _getWhereSql(opts) {
     params.push(opts.since);
   }
 
+  if (!opts.parent_id){
+    whereClauses.push(`parent_id IS NULL`);
+  }
+
   return whereClauses.length > 0
     ? knex.raw(` WHERE ${ whereClauses.join(' AND ')}`, params).toString()
     : '';
@@ -323,6 +327,7 @@ function _getWhereSql(opts) {
 function _getSortingSql(sort, parent_id) {
   const { HOT, TOP } = CONST.FEED_SORT_TYPES;
   if (parent_id){
+    // New comments show up at the bottom of the comments list
     return 'ORDER BY id ASC';
   } else if (sort === HOT) {
     return 'ORDER BY is_sticky DESC, hot_score DESC, id DESC';
