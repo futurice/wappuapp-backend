@@ -11,17 +11,27 @@ const localOptions = {
   usernameField: 'email'
 };
 const localLogin = new LocalStrategy(localOptions, (email, password, done) => {
-  email = crypto.createHash('md5').update(req.body.email).digest("hex");
-  return knex('admin').where('email', email).first()
+  email = crypto.createHash('md5').update(email).digest("hex");
+  return knex('admin').select('activated').where('email', email)
   .then(row => {
     if (_.isEmpty(row)) {
       return done(null, false)
     }
-    const pw = row.password
-    if (pw != crypto.createHash('md5').update(password).digest("hex")) {
-      return done(null, false);
+    const [activated] = row;
+    if (activated.activated != true) {
+      return done(null, false)
     }
-    return done(null, true)
+    return knex('admin').where('email', email).first()
+    .then(row => {
+      if (_.isEmpty(row)) {
+        return done(null, false)
+      }
+      const pw = row.password
+      if (pw != crypto.createHash('md5').update(password).digest("hex")) {
+        return done(null, false);
+      }
+      return done(null, true)
+    });
   });
 });
 
@@ -49,13 +59,13 @@ const jwtLogin = new Strategy(jwtOptions, (payload, done) => {
 });
 
 const adminLogin = new Strategy(jwtOptions, (payload, done) => {
-  return knex('admin').select('power').where('id', payload.sub)
+  return knex('admin').select('admin').where('id', payload.sub)
   .then(row => {
     if (_.isEmpty(row)) {
       return done(null, false)
     }
-    const [power] = row
-    if (power.power != 1) {
+    const [admin] = row
+    if (admin.admin != true) {
       return done(null, false)
     }
     const startTime = moment(payload.iat)

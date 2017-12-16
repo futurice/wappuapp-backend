@@ -22,7 +22,10 @@ const login = createJsonRoute(function(req, res) {
   const email = crypto.createHash('md5').update(req.body.email).digest("hex");
   return knex('admin').select('id').where('email', email).first()
     .then(id => {
-      return { token: tokenForUser(id.id) };
+      return knex('admin').select('admin').where('email', email).first()
+        .then(admin => {
+          return { admin: admin.admin, token: tokenForUser(id.id) };
+        })
     })
 });
 
@@ -109,10 +112,10 @@ const demote = createJsonRoute(function(req, res, next) {
 const modlist = createJsonRoute(function(req, res, next) {
   return knex('admin').select('id', 'email', 'activated', 'admin')
   .then(rows => {
-    if (_.isEmpty(row)) {
+    if (_.isEmpty(rows)) {
       return throwStatus(404, 'No moderator list');
     } else {
-      return throwStatus(200, rows);
+      return rows;
     }
   });
 });
