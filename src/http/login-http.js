@@ -14,6 +14,7 @@ function tokenForUser(id) {
 function sendTokenWithEmail(email, token) {
   //TODO
   //Send the token with email to user
+  //URL in the email will be of form http://addresstotheadminpanel.asd/changepassword?token=token
   console.log(token)
   return {token: token}
 };
@@ -30,11 +31,12 @@ const login = createJsonRoute(function(req, res) {
 });
 
 const addmoderator = createJsonRoute(function(req, res, next) {
-  const email = crypto.createHash('md5').update(req.body.email).digest("hex");
-  const password = crypto.createHash('md5').update(req.body.password).digest("hex");
-  if (!email || !password) {
-    return throwStatus(400, 'All fields must be provided');
+  if (!email) {
+    return throwStatus(400, 'Email must be provided');
   }
+  const email = crypto.createHash('md5').update(req.body.email).digest("hex");
+  var password = Math.random().toString(36).replace(/[^a-z]+/g, '').substr(0,30);
+  password = crypto.createHash('md5').update(password).digest("hex");
   return knex('admin').select('id').where('email', email).orWhere('email', email)
   .then(rows => {
     if (_.isEmpty(rows)) {
@@ -63,10 +65,8 @@ const deletemoderator = createJsonRoute(function(req, res, next) {
 
 const changepw = createJsonRoute(function(req, res, next) {
   const password = crypto.createHash('md5').update(req.body.password).digest("hex");
-  console.log(password)
-  return knex('admin').where('id', req.user).update({password: password}).returning('id')
+  return knex('admin').where('id', req.user).update({password: password, activated: true}).returning('id')
   .then(row => {
-    console.log(row)
     if (_.isEmpty(row)) {
       return throwStatus(404, 'There was an error');
     } else {
