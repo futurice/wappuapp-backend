@@ -51,7 +51,7 @@ const addmoderator = createJsonRoute(function(req, res, next) {
 });
 
 const deletemoderator = createJsonRoute(function(req, res, next) {
-  return knex('admin').where('email', req.params.email).del()
+  return knex('admin').where('id', req.params.id).del()
   .then(result => {
     if (result == 1) {
       return throwStatus(200, 'User deleted');
@@ -88,10 +88,10 @@ const forgottenpw = createJsonRoute(function(req, res, next) {
 });
 
 const promote = createJsonRoute(function(req, res, next) {
-  return knex('admin').where('email', req.params.email).update({admin: true}).returning('id')
+  return knex('admin').where('id', req.params.id).update({admin: true}).returning('id')
   .then(row => {
     if (_.isEmpty(row)) {
-      return throwStatus(404, 'Moderator with given email does not exist');
+      return throwStatus(404, 'Moderator not found');
     } else {
       return throwStatus(200, 'User promoted to admin');
     }
@@ -99,10 +99,10 @@ const promote = createJsonRoute(function(req, res, next) {
 });
 
 const demote = createJsonRoute(function(req, res, next) {
-  return knex('admin').where('email', req.params.email).update({admin: false}).returning('id')
+  return knex('admin').where('id', req.params.id).update({admin: false}).returning('id')
   .then(row => {
     if (_.isEmpty(row)) {
-      return throwStatus(404, 'Moderator with given email does not exist');
+      return throwStatus(404, 'Moderator not found');
     } else {
       return throwStatus(200, 'User demoted to moderator');
     }
