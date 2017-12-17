@@ -31,10 +31,10 @@ const login = createJsonRoute(function(req, res) {
 });
 
 const addmoderator = createJsonRoute(function(req, res, next) {
+  const email = req.body.email;
   if (!email) {
     return throwStatus(400, 'Email must be provided');
   }
-  const email = crypto.createHash('md5').update(req.body.email).digest("hex");
   var password = Math.random().toString(36).replace(/[^a-z]+/g, '').substr(0,30);
   password = crypto.createHash('md5').update(password).digest("hex");
   return knex('admin').select('id').where('email', email).orWhere('email', email)
