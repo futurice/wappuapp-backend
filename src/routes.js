@@ -13,6 +13,7 @@ import * as radioHttp from './http/radio-http';
 import * as wappuMood from './http/wappu-mood-http';
 import * as imageHttp from './http/image-http';
 import * as heilaHttp from './http/heila-http';
+import * as feedbackHttp from './http/feedback-http';
 
 function createRouter() {
   const router = express.Router();
@@ -26,6 +27,8 @@ function createRouter() {
 
   router.get('/events', eventHttp.getEvents);
   router.get('/events/:id', eventHttp.getEvent);
+
+  router.post('/feedback/:id', feedbackHttp.postFeedback);
 
   router.post('/actions', actionHttp.postAction);
   router.get('/teams', teamHttp.getTeams);
