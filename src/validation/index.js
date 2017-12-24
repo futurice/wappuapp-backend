@@ -92,6 +92,11 @@ const schemas = {
 
   teamsParams: {
     city: common.primaryKeyId,
+  },
+  reportParams: {
+    feedItemId: common.primaryKeyId.required(),
+    reportCreatorUuid: common.userUuid.required(),
+    reportDescriptiion: Joi.string().optional().example('This offends me')
   }
 };
 

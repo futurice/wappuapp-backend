@@ -6,9 +6,9 @@ exports.up = function(knex, Promise) {
       .references('id')
       .inTable('feed_items')
       .onDelete('CASCADE');
-    table.integer('report_creator_id').notNullable();
-    table.foreign('report_creator_id')
-      .references('id')
+    table.integer('report_creator_uuid').notNullable();
+    table.foreign('report_creator_uuid')
+      .references('uuid')
       .inTable('users')
       .onDelete('CASCADE');
     table.timestamp('created_at')
