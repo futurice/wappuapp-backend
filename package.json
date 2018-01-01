@@ -23,6 +23,7 @@
     "david": "^11.0.0",
     "express": "^4.16.2",
     "fb": "^2.0.0",
+    "firebase-functions": "^0.7.5",
     "geolib": "^2.0.24",
     "gm": "^1.23.0",
     "googleapis": "^23.0.0",
