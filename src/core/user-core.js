@@ -49,7 +49,6 @@ function runDbUpdate(user) {
       if (_.isEmpty(rows)) {
         throw new Error('User row update failed: ' + dbRow);
       }
-      return rows.length;
     });
 }
 
