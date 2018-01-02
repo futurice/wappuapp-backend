@@ -38,6 +38,12 @@ const schemas = {
     imageData: Joi.string().when('type', { is: 'IMAGE', then: Joi.required() }),
   },
 
+  match: {
+    uuid: common.userUuid.required(),
+    matchedUserId: common.primaryKeyId.required(),
+    opinion: Joi.string().regex(/^UP|DOWN$/).required()
+  },
+
   userImage: {
     uuid: common.userUuid.required(),
     imageData: Joi.string().required(),

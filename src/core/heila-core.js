@@ -5,7 +5,6 @@ import { GCS_CONFIG } from '../util/gcs';
 const BPromise = require('bluebird');
 const {knex} = require('../util/database').connect();
 
-
 function createOrUpdateHeila(heila) {
   console.log('createOrUpdateHeila')
   console.log(heila)
