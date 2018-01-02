@@ -26,8 +26,7 @@ function createRouter() {
   // päivittää oman heilaprofiilin tekstikenttätietoja
   router.put('/heila/:uuid', heilaHttp.putHeila);
 
-  router.get('/heila/matches', matchHttp.getMatches);
-  router.get('/heila/matches/:id', matchHttp.getChat);
+  router.get('/heila/matches/:uuid', matchHttp.getUsersMatchesList);
   router.post('/heila/matches', matchHttp.postMatch);
 
   router.get('/events', eventHttp.getEvents);

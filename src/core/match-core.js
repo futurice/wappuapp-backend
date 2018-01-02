@@ -136,6 +136,29 @@ function handleMatch(matchObject) {
     })
 }
 
+function getListOfMatches(uuid) {
+  return _uuidToUserId(uuid)
+    .then(userId => {
+      return knex('matches')
+        .select('matches.*')
+        .where('userId1', userId)
+        .orWhere('userId2', userId)
+        .then(rows => {
+          console.log(`${uuid} --> ${userId} --> :: `);
+          console.log(rows);
+          rows = rows.filter(row => {
+            return (row.opinion1 === 'UP' &&
+                   row.opinion2 === 'UP' &&
+                   row.firebaseChatId);
+          });
+          console.log(rows);
+          // TODO: mitä pitäisi palauttaa
+          return rows;
+        })
+    })
+};
+
 export {
-  createOrUpdateMatch
+  createOrUpdateMatch,
+  getListOfMatches,
 }

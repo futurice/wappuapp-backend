@@ -45,6 +45,10 @@ const schemas = {
     opinion: Joi.string().regex(/^UP|DOWN$/).required()
   },
 
+  matchesList: {
+    uuid: common.userUuid.required(),
+  },
+
   userImage: {
     uuid: common.userUuid.required(),
     imageData: Joi.string().required(),
