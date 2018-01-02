@@ -13,7 +13,7 @@ const getChat = createJsonRoute(function(req, res) {
 const postMatch = createJsonRoute(function(req, res) {
   const match = assert(req.body, 'match');
 
-  return matchesCore.updateMatch(match)
+  return matchesCore.createOrUpdateMatch(match)
     .then(rows => undefined)
 })
 

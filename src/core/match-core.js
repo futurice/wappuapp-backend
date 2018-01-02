@@ -12,7 +12,7 @@ function _uuidToUserId(uuid) {
     })
 }
 
-function updateMatch(match) {
+function createOrUpdateMatch(match) {
   console.log('updateMatch')
   console.log(match)
 
@@ -35,6 +35,11 @@ function updateMatch(match) {
             .then(result => {
               console.log('result');
               console.log(result);
+
+              if (match.opinion === 'UP') {
+                return checkIfMatchWasFound(newRow);
+              }
+
             });
         } else {
           // there was a row from this to that already
@@ -48,13 +53,14 @@ function updateMatch(match) {
               .where({ from: match.fromUserId,
                        to: match.matchedUserId })
               .update(newRow)
-              .then(updatedRows => undefined);
+              .then(updatedRows => {
+                if (match.opinion === 'UP') {
+                  return checkIfMatchWasFound(newRow);
+                }
+              })
           }
         }
       })
-    
-    // TODO: check if there's a two-way match --> open a chat
-
     })
 }
 
@@ -68,6 +74,28 @@ function _makeMatchDbRow(match) {
   return dbRow;
 }
 
+function checkIfMatchWasFound(matchDbRow) {
+  console.log('checkIfMatchWasFound')
+  console.log(matchDbRow)
+
+  return knex('matches')
+    .select('matches.*')
+    .where({ 'from': matchDbRow.to,
+             'to': matchDbRow.from })
+    .then(rows => {
+      if (rows.length === 1) {
+        
+        // match is 2-way
+        console.log('MATCH WAS FOUND!½!!!!!')
+        
+        // now what needs to be done:
+        // 1. create a new chat in Firebase
+        // 2. save the chat key in db
+        // 3. ...
+      }
+    })
+}
+
 export {
-  updateMatch
+  createOrUpdateMatch
 }
