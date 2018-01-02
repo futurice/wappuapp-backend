@@ -5,56 +5,28 @@ import { GCS_CONFIG } from '../util/gcs';
 const BPromise = require('bluebird');
 const {knex} = require('../util/database').connect();
 
-
-function checkHeilaTableStatus(user) {
-  return findByUuid(user.uuid)
-    .then(foundHeila => {
-      
-      // if heila table row doesn't exist -> create it
-      if (foundHeila === null && user.heila === true) {
-        console.log('heila not found + heila = true --> add table row');
-        return createHeila(user);
-      // if heila table row exists but it shouldn't -> delete it
-      } else if (foundHeila !== null && user.heila === false) {
-        console.log('heila found + heila = false --> drop table row');
-        return deleteHeila(user);
-      } else {
-        console.log(`heila: ${user.heila} + foundHeila: ${foundHeila} --> doing nothing`);
-        return 1;
-      }
-    })
-}
-
-function deleteHeila(heila) {
-  return knex('heilas')
-    .where({ uuid: heila.uuid })
-    .del()
-    .then(delCount => {
-      console.log('deleted this many heila rows:');
-      console.log(delCount);
-      if (delCount === 0) {
-        throw new Error(`Couldn't del heila uuid ${heila.uuid}`);
-      }
-    })
-}
-
 function createOrUpdateHeila(heila) {
   console.log('createOrUpdateHeila')
   console.log(heila)
-  return findByUuid(heila.uuid)
-  .then(foundHeila => {
-    if (foundHeila === null) {
-      return createHeila(heila);
-    } else {
-      return updateHeila(heila);
-    }
-  });
+  return _findUserIdByUuid(heila.uuid)
+    .then(userId => {
+      heila['userId'] = userId;
+      return findByUuid(heila.uuid)
+      .then(foundHeila => {
+        if (foundHeila === null) {
+          return createHeila(heila);
+        } else {
+          return updateHeila(heila);
+        }
+      });
+    })
 }
 
+// creates a row in the heilas table
 function createHeila(heila) {
   console.log('createHeila')
   const dbRow = _makeHeilaDbRow(heila);
-  return knex('heilas').returning('id').insert(dbRow)
+  return knex('heilas').returning('userId').insert(dbRow)
     .then(rows => {
       if (_.isEmpty(rows)) {
         throw new Error('Heila row creation failed: ' + dbRow);
@@ -77,6 +49,15 @@ function updateHeila(heila) {
 
       return rows.length;
     });
+}
+
+function _findUserIdByUuid(uuid) {
+  return knex('users')
+    .select('users.*')
+    .where({ uuid: uuid })
+    .then(rows => {
+      return rows[0].id;
+    })
 }
 
 function findByUuid(uuid) {
@@ -166,74 +147,9 @@ function _heilaRowsToObjectList(userList) {
   return heilaList;
 }
 
-/**
- * Get heila's details
- *
- * @param {object} opts
- * @param {number} opts.heilaId
- * @param {object} opts.client
- */
-function getHeilaDetails(opts) {
-  console.log('getHeilaDetails')
-  const heilaDetailsQuery = _queryHeilaDetails(opts.heilaId);
-
-  const imagesQuery = feedCore.getFeed({
-    client:        opts.client,
-    heilaId:        opts.heilaId,
-    type:          'IMAGE',
-    includeSticky: false,
-    limit:         50,
-  });
-
-  return BPromise.all([
-    heilaDetailsQuery,
-    imagesQuery
-  ]).spread((heilaDetails, images) => {
-    if (!heilaDetails) {
-      return null;
-    }
-
-    heilaDetails.images = images;
-
-    return heilaDetails;
-  });
-}
-
-function _queryHeilaDetails(heilaId) {
-  const sqlString = `
-  SELECT
-    heilas.name AS name,
-    teams.name AS team,
-    COALESCE(num_simas, 0) AS num_simas
-  FROM heilas
-  JOIN teams ON teams.id = heilas.team_id
-  LEFT JOIN (
-    SELECT
-      actions.heila_id AS heila_id,
-      COUNT(*) AS num_simas
-    FROM actions
-    JOIN action_types ON action_types.id = actions.action_type_id
-    WHERE action_types.code = 'SIMA'
-    GROUP BY heila_id
-  ) AS stats ON heilas.id = stats.heila_id
-  WHERE heilas.id = ?
-  `;
-
-  return knex.raw(sqlString, [heilaId])
-    .then(result => {
-      if (result.rows.length === 0) {
-        return null;
-      }
-
-      const rowObj = result.rows[0];
-      return {
-        name: rowObj['name'],
-      };
-    });
-}
-
 function _makeHeilaDbRow(heila) {
   const dbRow = {
+    'userId': heila.userId,
     'uuid': heila.uuid,
     'bio_text': heila.bio_text || '',
     'bio_looking_for': heila.bio_looking_for || '',
@@ -247,11 +163,11 @@ function _heilaRowToObject(row) {
   console.log("heilaRowToObject")
   console.log(row)
   // jos kuvaa ei ole uploadattu, palautetaan tyhjä merkkijono
-  let url = null; 
+  let url = null;
   if (row.image_path) {
     url = `${GCS_CONFIG.baseUrl}/${GCS_CONFIG.bucketName}/${row.image_path}`;
   }
- 
+
   return {
     id: row.id,
     uuid: row.uuid,
@@ -266,7 +182,5 @@ function _heilaRowToObject(row) {
 export {
   createOrUpdateHeila,
   findByUuid,
-  getHeilaDetails,
   getAllHeilas,
-  checkHeilaTableStatus,
 };
