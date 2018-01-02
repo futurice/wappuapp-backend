@@ -41,7 +41,7 @@ function createOrUpdateMatch(match) {
       matchObject.userId2 = match.fromUserId;
       matchObject.userId1 = match.matchedUserId;
     }
-    
+
     let currentUserString;
     if (matchObject.userId1 === match.fromUserId) {
       matchObject["opinion1"] = match.opinion;
@@ -50,7 +50,7 @@ function createOrUpdateMatch(match) {
       matchObject["opinion2"] = match.opinion;
       currentUserString = "2";
     }
-    
+
     // this retrieves a row where from and to are the same
     return knex('matches')
       .where({ 'userId1': matchObject.userId1,
@@ -74,9 +74,16 @@ function createOrUpdateMatch(match) {
                        'userId2': matchObject.userId2 })
               .update(matchObject)
               .then(updatedRows => {
-                //if (match.opinion === 'UP') {
-                  //return checkIfMatchWasFound(newRow);
-                //}
+                const otherUserString = currentUserString === '1' ? '2' : '1';
+                const otherUserOpinion = earlierRow['opinion' + otherUserString];
+                console.log('currentUserString: ' + currentUserString);
+                console.log('currentUserOpinion: ' + match.opinion);
+                console.log('oterUserString: ' + otherUserString);
+                console.log('oterUserOpinion: ' + otherUserOpinion);
+                if (match.opinion === 'UP' && otherUserOpinion === 'UP') {
+                  console.log('both users have UP');
+                  return handleMatch(matchObject);
+                }
               })
           }
         }
@@ -84,40 +91,20 @@ function createOrUpdateMatch(match) {
     })
 }
 
-function _makeMatchDbRow(match) {
-
-  const dbRow = {
-    'from': match.fromUserId,
-    'to': match.matchedUserId,
-    'opinion': match.opinion,
-  }
-  return dbRow;
-}
-
-function checkIfMatchWasFound(matchDbRow) {
-  console.log('checkIfMatchWasFound')
-  console.log(matchDbRow)
-
-  return knex('matches')
-    .select('matches.*')
-    .where({ 'from': matchDbRow.to,
-             'to': matchDbRow.from })
-    .then(rows => {
-      if (rows.length === 1) {
-        
-        // match is 2-way
-        console.log('MATCH WAS FOUND!½!!!!!')
-        
-        // now what needs to be done:
-        // 1. create a new chat in Firebase
-        // 2. save the chat key in db
-        return functionCore.createChatForTwoUsers(matchDbRow)
-          .then(chatFirebaseKey => {
-            console.log('chatFirebaseKey')
-            console.log(chatFirebaseKey)
-            //return saveFirebaseKey(chatFirebaseKey);
-          })
-      }
+function handleMatch(matchObject) {
+  // now what needs to be done:
+  // 1. create a new chat in Firebase
+  // 2. save the chat key in db
+  return functionCore.createChatForTwoUsers(matchObject)
+    .then(chatFirebaseKey => {
+      console.log('chatFirebaseKey')
+      console.log(chatFirebaseKey)
+      matchObject['firebaseChatId'] = chatFirebaseKey;
+      return knex('matches')
+        .returning('id')
+        .where({ 'userId1': matchObject.userId1,
+                 'userId2': matchObject.userId2 })
+        .update(matchObject)
     })
 }
 
