@@ -1,6 +1,6 @@
 import { createJsonRoute } from '../util/express';
 import {assert} from '../validation';
-import * as matchesCore from '../core/matches-core';
+import * as matchesCore from '../core/match-core';
 
 // this gives a list of matches between user and other users
 const getMatches = createJsonRoute(function(req, res) {

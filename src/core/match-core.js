@@ -4,7 +4,8 @@ const {knex} = require('../util/database').connect();
 
 function _uuidToUserId(uuid) {
   return knex('users')
-    .where({ uuid: match.uuid })
+    .select('users.*')
+    .where({ uuid: uuid })
     .then(rows => {
       const user = rows[0];
       return user.id;
@@ -16,7 +17,7 @@ function updateMatch(match) {
   console.log(match)
 
   // this retrieves the userId of the matching user
-  _uuidToUserId(match.uuid)
+  return _uuidToUserId(match.uuid)
   .then(userId => {
     match['fromUserId'] = userId;
 
