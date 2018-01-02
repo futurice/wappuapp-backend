@@ -13,6 +13,28 @@ function _uuidToUserId(uuid) {
     })
 }
 
+// matches are stored in a table named matches that looks like this:
+//
+// id | userId1 | userId2 | opinion1 | opinion2 |    firebaseChatId
+// ----+---------+---------+----------+----------+----------------------
+// 2 |       3 |      66 | UP       |          |
+// 3 |       2 |       3 | UP       | UP       | -L1qIL_JuJnSTuKJxgmO
+//
+// NOTE: userId1 is ALWAYS the smaller userId of the two userIds,
+// returned from simple < comparison
+//
+// NOTE: by default opinion1 and opinion2 and firebaseChatId are empty/null
+//
+// How createOrUpdateMatch works:
+//
+// 1. check if there's a row matching received matchobject (userid1, userid2 match)
+// 2. if no match, then insert a row
+// 3. if match, then update the row
+// 4. check if both opinions are UP
+// 5. if both UP, check if they already have a firebaseChatId
+// 6. if no firebaseCahtId, -> request a new chatId from firebase functions
+// 7. if new chat was created, save the chatId to the db
+
 function createOrUpdateMatch(match) {
   console.log('updateMatch')
   console.log(match)
@@ -82,7 +104,13 @@ function createOrUpdateMatch(match) {
                 console.log('oterUserOpinion: ' + otherUserOpinion);
                 if (match.opinion === 'UP' && otherUserOpinion === 'UP') {
                   console.log('both users have UP');
-                  return handleMatch(matchObject);
+                  // if the row ALREADY has firebaseChatId then the two users
+                  // already have a chat in Firebase -> no need to create a new one
+                  // this could happen if one first UPs, then the other UPs, then
+                  // either DOWNs and UPs again
+                  if (!earlierRow['firebaseChatId']) {
+                    return handleMatch(matchObject);
+                  }
                 }
               })
           }
@@ -106,10 +134,6 @@ function handleMatch(matchObject) {
                  'userId2': matchObject.userId2 })
         .update(matchObject)
     })
-}
-
-function faveFirebaseKey(chatFirebaseKey) {
- //
 }
 
 export {
