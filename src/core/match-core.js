@@ -1,6 +1,7 @@
 const BPromise = require('bluebird');
 const {knex} = require('../util/database').connect();
 
+import * as functionCore from './function-core';
 
 function _uuidToUserId(uuid) {
   return knex('users')
@@ -19,44 +20,63 @@ function createOrUpdateMatch(match) {
   // this retrieves the userId of the matching user
   return _uuidToUserId(match.uuid)
   .then(userId => {
-    match['fromUserId'] = userId;
 
+    userId = parseInt(userId);
+    match['fromUserId'] = userId;
+    match.matchedUserId = parseInt(match.matchedUserId);
+
+    if (userId === match.matchedUserId) {
+      throw new Error('Cannot match your own userId!');
+    }
+
+    const matchObject = {
+      'userId1': '',
+      'userId2': ''
+    };
+
+    if (match.fromUserId < match.matchedUserId) {
+      matchObject.userId1 = match.fromUserId;
+      matchObject.userId2 = match.matchedUserId;
+    } else {
+      matchObject.userId2 = match.fromUserId;
+      matchObject.userId1 = match.matchedUserId;
+    }
+    
+    let currentUserString;
+    if (matchObject.userId1 === match.fromUserId) {
+      matchObject["opinion1"] = match.opinion;
+      currentUserString = "1";
+    } else {
+      matchObject["opinion2"] = match.opinion;
+      currentUserString = "2";
+    }
+    
     // this retrieves a row where from and to are the same
     return knex('matches')
-      .where('from', match.fromUserId)
-      .where('to', match.matchedUserId)
+      .where({ 'userId1': matchObject.userId1,
+               'userId2': matchObject.userId2 })
       .then(rows => {
-        const newRow = _makeMatchDbRow(match);
-        // no match from this userId to that userId
-        // --> add a row from this to that with opinion
         if (rows.length === 0) {
           return knex('matches')
-            .insert(newRow)
+            .insert(matchObject)
             .then(result => {
-              console.log('result');
-              console.log(result);
-
-              if (match.opinion === 'UP') {
-                return checkIfMatchWasFound(newRow);
-              }
-
+              console.log('matchRow added');
             });
         } else {
-          // there was a row from this to that already
-          const earlierMatchObject = rows[0];
-          console.log(earlierMatchObject);
-
-          // if the opinion has changed, lets change it
-          if (earlierMatchObject.opinion !== match.opinion) {
+          const earlierRow = rows[0];
+          // check if the row in DB already has this user's new opinion
+          if (earlierRow['opinion' + currentUserString] !== match.opinion) {
+            console.log('opinion changed or missing --> update with this matchObject:');
+            console.log(matchObject);
             return knex('matches')
               .returning('id')
-              .where({ from: match.fromUserId,
-                       to: match.matchedUserId })
-              .update(newRow)
+              .where({ 'userId1': matchObject.userId1,
+                       'userId2': matchObject.userId2 })
+              .update(matchObject)
               .then(updatedRows => {
-                if (match.opinion === 'UP') {
-                  return checkIfMatchWasFound(newRow);
-                }
+                //if (match.opinion === 'UP') {
+                  //return checkIfMatchWasFound(newRow);
+                //}
               })
           }
         }
@@ -91,9 +111,18 @@ function checkIfMatchWasFound(matchDbRow) {
         // now what needs to be done:
         // 1. create a new chat in Firebase
         // 2. save the chat key in db
-        // 3. ...
+        return functionCore.createChatForTwoUsers(matchDbRow)
+          .then(chatFirebaseKey => {
+            console.log('chatFirebaseKey')
+            console.log(chatFirebaseKey)
+            //return saveFirebaseKey(chatFirebaseKey);
+          })
       }
     })
+}
+
+function faveFirebaseKey(chatFirebaseKey) {
+ //
 }
 
 export {
