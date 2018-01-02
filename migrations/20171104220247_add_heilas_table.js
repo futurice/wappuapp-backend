@@ -1,7 +1,13 @@
 
 exports.up = function(knex, Promise) {
     return knex.schema.createTable('heilas', function(table) {
-      table.bigIncrements('id').primary().index();
+      table.integer('userId').notNullable().unique().primary().index();
+      table.foreign('userId')
+        .references('id')
+        .inTable('users')
+        .onDelete('RESTRICT')
+        .onUpdate('CASCADE')
+
       table.string('uuid').notNullable().unique().index();
       table.foreign('uuid')
         .references('uuid')
