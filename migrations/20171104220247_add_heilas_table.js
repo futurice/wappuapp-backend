@@ -1,7 +1,13 @@
 
 exports.up = function(knex, Promise) {
     return knex.schema.createTable('heilas', function(table) {
-      table.bigIncrements('id').primary().index();
+      table.integer('userId').notNullable().unique().primary().index();
+      table.foreign('userId')
+        .references('id')
+        .inTable('users')
+        .onDelete('RESTRICT')
+        .onUpdate('CASCADE')
+
       table.string('uuid').notNullable().unique().index();
       table.foreign('uuid')
         .references('uuid')
@@ -9,7 +15,8 @@ exports.up = function(knex, Promise) {
         .onDelete('RESTRICT')
         .onUpdate('CASCADE');
 
-      table.string('image_path');
+      table.string('bio_text', 250);
+      table.string('bio_looking_for', 250);
       table.timestamp('created_at').index().notNullable().defaultTo(knex.fn.now());
       table.timestamp('updated_at').index().notNullable().defaultTo(knex.fn.now());
     });
