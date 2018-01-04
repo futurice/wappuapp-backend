@@ -11,8 +11,7 @@ const localOptions = {
   usernameField: 'email'
 };
 const localLogin = new LocalStrategy(localOptions, (email, password, done) => {
-  email = crypto.createHash('md5').update(email).digest("hex");
-  return knex('admin').select('activated').where('email', email)
+  return knex('role').select('activated').where('email', email)
   .then(row => {
     if (_.isEmpty(row)) {
       return done(null, false)
@@ -21,7 +20,7 @@ const localLogin = new LocalStrategy(localOptions, (email, password, done) => {
     if (activated.activated != true) {
       return done(null, false)
     }
-    return knex('admin').where('email', email).first()
+    return knex('role').where('email', email).first()
     .then(row => {
       if (_.isEmpty(row)) {
         return done(null, false)
@@ -41,7 +40,7 @@ const jwtOptions = {
 };
 
 const jwtLogin = new Strategy(jwtOptions, (payload, done) => {
-  return knex('admin').select('email').where('id', payload.sub)
+  return knex('role').select('email').where('id', payload.sub)
   .then(rows => {
     if (_.isEmpty(rows)) {
       return done(null, false)
@@ -59,7 +58,7 @@ const jwtLogin = new Strategy(jwtOptions, (payload, done) => {
 });
 
 const adminLogin = new Strategy(jwtOptions, (payload, done) => {
-  return knex('admin').select('admin').where('id', payload.sub)
+  return knex('role').select('admin').where('id', payload.sub)
   .then(row => {
     if (_.isEmpty(row)) {
       return done(null, false)

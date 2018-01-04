@@ -21,9 +21,9 @@ function sendTokenWithEmail(email, token) {
 
 const login = createJsonRoute(function(req, res) {
   const email = crypto.createHash('md5').update(req.body.email).digest("hex");
-  return knex('admin').select('id').where('email', email).first()
+  return knex('role').select('id').where('email', email).first()
     .then(id => {
-      return knex('admin').select('admin').where('email', email).first()
+      return knex('role').select('admin').where('email', email).first()
         .then(admin => {
           return { admin: admin.admin, token: tokenForUser(id.id) };
         })
@@ -37,10 +37,10 @@ const addmoderator = createJsonRoute(function(req, res, next) {
   }
   var password = Math.random().toString(36).replace(/[^a-z]+/g, '').substr(0,30);
   password = crypto.createHash('md5').update(password).digest("hex");
-  return knex('admin').select('id').where('email', email).orWhere('email', email)
+  return knex('role').select('id').where('email', email).orWhere('email', email)
   .then(rows => {
     if (_.isEmpty(rows)) {
-      return knex('admin').insert({ email: email, password: password }).returning('id')
+      return knex('role').insert({ email: email, password: password }).returning('id')
       .then(result => {
         const [id] = result;
         const token = tokenForUser(id);
@@ -53,7 +53,7 @@ const addmoderator = createJsonRoute(function(req, res, next) {
 });
 
 const deletemoderator = createJsonRoute(function(req, res, next) {
-  return knex('admin').where('id', req.params.id).del()
+  return knex('role').where('id', req.params.id).del()
   .then(result => {
     if (result == 1) {
       return throwStatus(200, 'User deleted');
@@ -65,7 +65,7 @@ const deletemoderator = createJsonRoute(function(req, res, next) {
 
 const changepw = createJsonRoute(function(req, res, next) {
   const password = crypto.createHash('md5').update(req.body.password).digest("hex");
-  return knex('admin').where('id', req.user).update({password: password, activated: true}).returning('id')
+  return knex('role').where('id', req.user).update({password: password, activated: true}).returning('id')
   .then(row => {
     if (_.isEmpty(row)) {
       return throwStatus(404, 'There was an error');
@@ -76,7 +76,7 @@ const changepw = createJsonRoute(function(req, res, next) {
 });
 
 const forgottenpw = createJsonRoute(function(req, res, next) {
-  return knex('admin').select('id').where('email', req.params.email)
+  return knex('role').select('id').where('email', req.params.email)
   .then(result => {
     const [id] = result;
     if (id == undefined) {
@@ -88,7 +88,7 @@ const forgottenpw = createJsonRoute(function(req, res, next) {
 });
 
 const promote = createJsonRoute(function(req, res, next) {
-  return knex('admin').where('id', req.params.id).update({admin: true}).returning('id')
+  return knex('role').where('id', req.params.id).update({admin: true}).returning('id')
   .then(row => {
     if (_.isEmpty(row)) {
       return throwStatus(404, 'Moderator not found');
@@ -99,7 +99,7 @@ const promote = createJsonRoute(function(req, res, next) {
 });
 
 const demote = createJsonRoute(function(req, res, next) {
-  return knex('admin').where('id', req.params.id).update({admin: false}).returning('id')
+  return knex('role').where('id', req.params.id).update({admin: false}).returning('id')
   .then(row => {
     if (_.isEmpty(row)) {
       return throwStatus(404, 'Moderator not found');
@@ -110,7 +110,7 @@ const demote = createJsonRoute(function(req, res, next) {
 });
 
 const modlist = createJsonRoute(function(req, res, next) {
-  return knex('admin').select('id', 'email', 'activated', 'admin')
+  return knex('role').select('id', 'email', 'activated', 'admin')
   .then(rows => {
     if (_.isEmpty(rows)) {
       return throwStatus(404, 'No moderator list');
