@@ -20,7 +20,7 @@ function sendTokenWithEmail(email, token) {
 };
 
 const login = createJsonRoute(function(req, res) {
-  const email = crypto.createHash('md5').update(req.body.email).digest("hex");
+  const email = req.body.email;
   return knex('role').select('id').where('email', email).first()
     .then(id => {
       return knex('role').select('admin').where('email', email).first()
