@@ -1,8 +1,9 @@
-  import _ from 'lodash';
+import _ from 'lodash';
 import {createJsonRoute, throwStatus} from '../util/express';
 
 import jwt from 'jwt-simple';
 import crypto from 'crypto';
+import sendgrid from 'sendgrid';
 const {knex} = require('../util/database').connect();
 require('../init-env-variables');
 
@@ -12,11 +13,41 @@ function tokenForUser(id) {
 };
 
 function sendTokenWithEmail(email, token) {
-  //TODO
-  //Send the token with email to user
-  //URL in the email will be of form http://addresstotheadminpanel.asd/changepassword?token=token
-  console.log(token)
-  return {token: token}
+  sendgrid(process.env.SENDGRID_API_KEY);
+  const request = sendgrid.emptyRequest({
+    method: 'POST',
+    path: 'v3/mail/send',
+    body: {
+      personalization: [
+        {
+          to: [
+            {
+              email: email,
+            },
+          ],
+          subject: "Activation mail for your WhappuApp adminpanel account",
+        },
+      ],
+      from: {
+        email: 'admin@whappuapp',
+      },
+      content: [
+        {
+          type: 'text/plain',
+          value: 'http://addresstotheadminpanel.asd/changepassword?token='+token,
+        },
+      ],
+    },
+  });
+  sendgrid.api(request)
+    .then(response => {
+      return true;
+    })
+    .catch(error => {
+      console.log("Error sending mail")
+      console.log(error.response.statusCode)
+      return false;
+    });
 };
 
 const login = createJsonRoute(function(req, res) {
