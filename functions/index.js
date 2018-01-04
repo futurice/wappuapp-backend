@@ -6,27 +6,6 @@ admin.initializeApp(functions.config().firebase);
 
 // // Create and Deploy Your First Cloud Functions
 // // https://firebase.google.com/docs/functions/write-firebase-functions
-//
-// exports.helloWorld = functions.https.onRequest((request, response) => {
-//  response.send("Hello from Firebase!");
-// });
-//
-//
-//
-// THIS IS OFFICIAL GCF EXAMPLE:::::
-//
-//
-// Take the text parameter passed to this HTTP endpoint and insert it into the
-// Realtime Database under the path /messages/:pushId/original
-exports.addMessage = functions.https.onRequest((req, res) => {
-  // Grab the text parameter.
-  const original = req.query.text;
-  // Push the new message into the Realtime Database using the Firebase Admin SDK.
-  admin.database().ref('/messages').push({original: original}).then(snapshot => {
-    // Redirect with 303 SEE OTHER to the URL of the pushed object in the Firebase console.
-    res.redirect(303, snapshot.ref);
-  });
-});
 
 // THIS FUNCTION ADDS PUSHTOKEN FOR USERID
 exports.addPushTokenForUserId = functions.https.onRequest((req, res) => {
@@ -49,9 +28,7 @@ exports.addNewChatBetweenUsers = functions.https.onRequest((req, res) => {
     console.log(snapshot)
     res.send(snapshot.ref);
   });
-
 });
-
 
 // OFFICIAL EXAMPLE FOR TRIGGERING GCF ON WRITE
 //
@@ -68,61 +45,64 @@ exports.addNewChatBetweenUsers = functions.https.onRequest((req, res) => {
       //// Setting an "uppercase" sibling in the Realtime Database returns a Promise.
       //return event.data.ref.parent.child('uppercase').set(uppercase);
     //});
-
+//
+// THIS TRIGGERS ON WRITE @ /chats/whatever
+// --> check if receiver has enabled notifications
+// --> send a push notif
 exports.sendPushMessage = functions.database.ref('/chats/{chatId}/')
-    .onWrite(event => {
-      // Grab the current value of what was written to the Realtime Database.
-      const chatData = event.data.val();
-      console.log('\ŋ\ŋthere was a new write to ' + event.params.chatId);
-      console.log(chatData)
-      const users = chatData.users;
-      const lastMessageId = Object.keys(chatData.messages).slice(-1)[0];
-      const userIdForSender = chatData.messages[lastMessageId].userId;
-      const userIdForReceiver = users.filter(id => id !== userIdForSender)[0];
-      console.log(users)
-      console.log(userIdForSender)
-      console.log(userIdForReceiver)
-      return admin.database().ref('/pushTokens').once('value').then(snapshot => {
-        
-        const userIdObject = snapshot.val();
-        console.log('looking for pushToken for userId ' + userIdForReceiver);
-        console.log('all pushToken userIds are: ' + Object.keys(userIdObject));
+  .onWrite(event => {
+    // Grab the current value of what was written to the Realtime Database.
+    const chatData = event.data.val();
+    console.log('\ŋ\ŋthere was a new write to ' + event.params.chatId);
+    console.log(chatData)
+    const users = chatData.users;
+    const lastMessageId = Object.keys(chatData.messages).slice(-1)[0];
+    const userIdForSender = chatData.messages[lastMessageId].userId;
+    const userIdForReceiver = users.filter(id => id !== userIdForSender)[0];
+    console.log(users)
+    console.log(userIdForSender)
+    console.log(userIdForReceiver)
+    return admin.database().ref('/pushTokens').once('value').then(snapshot => {
 
-        if (userIdForReceiver in userIdObject) {
-          const pushToken = userIdObject[userIdForReceiver];
-          console.log('FOUND');
-          console.log(pushToken);
-  
+      const userIdObject = snapshot.val();
+      console.log('looking for pushToken for userId ' + userIdForReceiver);
+      console.log('all pushToken userIds are: ' + Object.keys(userIdObject));
 
-          // See the "Defining the message payload" section below for details
-          // on how to define a message payload.
-          var payload = {
-            data: {
-              score: "850",
-              time: "2:45"
-            }
-          };
+      if (userIdForReceiver in userIdObject) {
+        const pushToken = userIdObject[userIdForReceiver];
+        console.log('FOUND');
+        console.log(pushToken);
 
-          // Send a message to the device corresponding to the provided
-          // registration token.
-          admin.messaging().sendToDevice(pushToken, payload)
-            .then(function(response) {
-              // See the MessagingDevicesResponse reference documentation for
-              // the contents of response.
-              console.log("Successfully sent message:", response);
-            })
-            .catch(function(error) {
-              console.log("Error sending message:", error);
-            });
-        
-        } else {
-          console.log('NOT FOUND');
-        }
+        // See the "Defining the message payload" section below for details
+        // on how to define a message payload.
+        // NOTE: the notification dictionary HAS TO BE HERE
+        // read this: https://firebase.google.com/docs/cloud-messaging/concept-options#notifications
+        var payload = {
+          notification: {
+            title: 'WappuNotif!',
+            body: 'jep :-)'
+          },
+          data: {
+            kv1: 'any data here',
+            kv2: 'any data here, too'
+          }
+        };
 
-      })
-      // You must return a Promise when performing asynchronous tasks inside a Functions such as
-      // writing to the Firebase Realtime Database.
-      // Setting an "uppercase" sibling in the Realtime Database returns a Promise.
-      //return event.data.ref.parent.child('uppercase').set(uppercase);
-    });
+        // Send a message to the device corresponding to the provided
+        // registration token.
+        admin.messaging().sendToDevice(pushToken, payload)
+          .then(function(response) {
+            // See the MessagingDevicesResponse reference documentation for
+            // the contents of response.
+            console.log("Successfully sent message:", response);
+          })
+          .catch(function(error) {
+            console.log("Error sending message:", error);
+          });
+
+      } else {
+        console.log('NOT FOUND');
+      }
+    })
+  });
 
