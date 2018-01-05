@@ -66,6 +66,8 @@ function createRouter() {
   router.get('/protectedadmin', requireAdmin, (req, res, next) => {
     res.send("Admin Success");
   });
+  router.put('/admin/users/:uuid/ban', requireAuth, adminHttp.shadowBanUser);
+  router.put('/admin/users/:uuid/unban', requireAuth, adminHttp.unBanUser);
 
   return router;
 }
