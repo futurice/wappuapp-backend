@@ -51,7 +51,10 @@ function sendTokenWithEmail(email, token) {
 };
 
 const login = createJsonRoute(function(req, res) {
-  const email = req.body.email;
+  var email = req.body.email;
+  const cipher = crypto.createCipher('aes192', process.env.CRYPTO_PASSWORD);
+  email = cipher.update(email, 'utf8', 'hex');
+  email += cipher.final('hex');
   return knex('role').select('id').where('email', email).first()
     .then(id => {
       return knex('role').select('admin').where('email', email).first()
@@ -62,10 +65,13 @@ const login = createJsonRoute(function(req, res) {
 });
 
 const addmoderator = createJsonRoute(function(req, res, next) {
-  const email = req.body.email;
+  var email = req.body.email;
   if (!email) {
     return throwStatus(400, 'Email must be provided');
   }
+  const cipher = crypto.createCipher('aes192', process.env.CRYPTO_PASSWORD);
+  email = cipher.update(email, 'utf8', 'hex');
+  email += cipher.final('hex');
   var password = Math.random().toString(36).replace(/[^a-z]+/g, '').substr(0,30);
   password = crypto.createHash('md5').update(password).digest("hex");
   return knex('role').select('id').where('email', email).orWhere('email', email)
@@ -107,14 +113,17 @@ const changepw = createJsonRoute(function(req, res, next) {
 });
 
 const forgottenpw = createJsonRoute(function(req, res, next) {
-  return knex('role').select('id').where('email', req.params.email)
+  const cipher = crypto.createCipher('aes192', process.env.CRYPTO_PASSWORD);
+  var email = cipher.update(req.params.email, 'utf8', 'hex');
+  email += cipher.final('hex');
+  return knex('role').select('id').where('email', email)
   .then(result => {
     const [id] = result;
     if (id == undefined) {
       return throwStatus(404, 'User with given email does not exist');
     }
     const token = tokenForUser(id.id);
-    sendTokenWithEmail(req.params.email, token);
+    return sendTokenWithEmail(req.params.email, token);
   })
 });
 
@@ -146,6 +155,12 @@ const modlist = createJsonRoute(function(req, res, next) {
     if (_.isEmpty(rows)) {
       return throwStatus(404, 'No moderator list');
     } else {
+      const decipher = crypto.createDecipher('aes192', process.env.CRYPTO_PASSWORD)
+      for (var i = 0; i < rows.length; i++) {
+        var email = decipher.update(rows[i].email, 'hex', 'utf8');
+        email += decipher.final('utf8')
+        rows[i].email = email
+      }
       return rows;
     }
   });

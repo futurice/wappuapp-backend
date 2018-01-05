@@ -11,6 +11,9 @@ const localOptions = {
   usernameField: 'email'
 };
 const localLogin = new LocalStrategy(localOptions, (email, password, done) => {
+  const cipher = crypto.createCipher('aes192', process.env.CRYPTO_PASSWORD);
+  email = cipher.update(email, 'utf8', 'hex');
+  email += cipher.final('hex');
   return knex('role').select('activated').where('email', email)
   .then(row => {
     if (_.isEmpty(row)) {
