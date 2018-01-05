@@ -8,19 +8,32 @@ import crypto from 'crypto';
 require('../init-env-variables');
 
 const localOptions = {
-  usernameField: 'username'
+  usernameField: 'email'
 };
-const localLogin = new LocalStrategy(localOptions, (username, password, done) => {
-  return knex('admin').where('username', username).first()
+const localLogin = new LocalStrategy(localOptions, (email, password, done) => {
+  const cipher = crypto.createCipher('aes192', process.env.CRYPTO_PASSWORD);
+  email = cipher.update(email, 'utf8', 'hex');
+  email += cipher.final('hex');
+  return knex('role').select('activated').where('email', email)
   .then(row => {
     if (_.isEmpty(row)) {
       return done(null, false)
     }
-    const pw = row.password
-    if (pw != crypto.createHash('md5').update(password).digest("hex")) {
-      return done(null, false);
+    const [activated] = row;
+    if (activated.activated != true) {
+      return done(null, false)
     }
-    return done(null, true)
+    return knex('role').where('email', email).first()
+    .then(row => {
+      if (_.isEmpty(row)) {
+        return done(null, false)
+      }
+      const pw = row.password
+      if (pw != crypto.createHash('md5').update(password).digest("hex")) {
+        return done(null, false);
+      }
+      return done(null, true)
+    });
   });
 });
 
@@ -30,7 +43,7 @@ const jwtOptions = {
 };
 
 const jwtLogin = new Strategy(jwtOptions, (payload, done) => {
-  return knex('admin').select('username').where('id', payload.sub)
+  return knex('role').select('email').where('id', payload.sub)
   .then(rows => {
     if (_.isEmpty(rows)) {
       return done(null, false)
@@ -48,13 +61,13 @@ const jwtLogin = new Strategy(jwtOptions, (payload, done) => {
 });
 
 const adminLogin = new Strategy(jwtOptions, (payload, done) => {
-  return knex('admin').select('power').where('id', payload.sub)
+  return knex('role').select('admin').where('id', payload.sub)
   .then(row => {
     if (_.isEmpty(row)) {
       return done(null, false)
     }
-    const [power] = row
-    if (power.power != 1) {
+    const [admin] = row
+    if (admin.admin != true) {
       return done(null, false)
     }
     const startTime = moment(payload.iat)
