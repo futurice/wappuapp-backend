@@ -2,7 +2,7 @@ const {knex} = require('../util/database').connect();
 const logger = require('../util/logger')(__filename);
 
 function deleteFeedItem(id) {
-  return knex('feed_items').delete().where({
+  return knex('feed_items').update({is_banned: true}).where({
     'id': id,
   })
   .then(deletedCount => {
