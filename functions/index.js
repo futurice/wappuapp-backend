@@ -58,6 +58,8 @@ exports.addNewChatBetweenUsers = functions.https.onRequest((req, res) => {
       //// Setting an "uppercase" sibling in the Realtime Database returns a Promise.
       //return event.data.ref.parent.child('uppercase').set(uppercase);
     //});
+
+
 //
 // THIS TRIGGERS ON WRITE @ /chats/whatever
 // --> check if receiver has enabled notifications
@@ -77,12 +79,19 @@ exports.sendPushMessage = functions.database.ref('/chats/{chatId}/')
     console.log(userIdForReceiver)
     return admin.database().ref('/pushTokens').once('value').then(snapshot => {
 
+      // /pushTokens is an object of this form:
+      // {
+      //   userIdX: { token: pushTokenString },
+      //   userIdY: { token: pushTokenString },
+      //   ...
+      // }
+
       const userIdObject = snapshot.val();
       console.log('looking for pushToken for userId ' + userIdForReceiver);
       console.log('all pushToken userIds are: ' + Object.keys(userIdObject));
 
       if (userIdForReceiver in userIdObject) {
-        const pushToken = userIdObject[userIdForReceiver];
+        const pushToken = userIdObject[userIdForReceiver]['token'];
         console.log('FOUND');
         console.log(pushToken);
 
