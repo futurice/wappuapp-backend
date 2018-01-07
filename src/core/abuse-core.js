@@ -11,7 +11,7 @@ function _sanitizeText(text) {
 function reportFeedItem(reportObj) {
   const dbRow = {
     'feed_item_id': reportObj.feedItemId,
-    'report_creator_uuid': reportObj.reportCreatorUuid,
+    'report_creator_id': reportObj.reportCreatorId,
     'report_description': _sanitizeText(reportObj.reportDescription)
   }
   return knex('feed_item_reports').insert(dbRow).returning('id')
@@ -37,20 +37,24 @@ function resolveReport(reportParams) {
   return knex.transaction(function(trx) {
     return trx('feed_item_reports').update('is_resolved', true)
       .where('id', reportParams.reportId)
-      .then(report => {
-        if (_.isEmpty(report)) {
+      .returning(['id', 'feed_item_id'])
+      .then(reports => {
+        if (_.isEmpty(reports)) {
           throw new Error('Feed item report resolving failed: ' + reportParams);
         }
-        return trx('feed_items').update('is_banned', true).where('id', report.feed_item_id)
-          .then(feedItem => {
-            if (_.isEmpty(feedItem)) {
-              throw new Error('Feed item not found: ' + feedItem.feed_item_id);
+        const [report] = reports;
+        return trx('feed_items').update('is_banned', true)
+          .where('id', report.feed_item_id)
+          .returning('id')
+          .then(feedItems=> {
+            if (_.isEmpty(feedItems)) {
+              throw new Error('Feed item not found: ' + report.feed_item_id);
             }
-            return trx.commit();
+            const [feedItem] = feedItems;
+            return feedItem;
           });
       })
       .catch(err => {
-        trx.rollback();
         throw err;
       });
     });

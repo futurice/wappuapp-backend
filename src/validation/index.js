@@ -97,8 +97,8 @@ const schemas = {
   },
   reportParams: {
     feedItemId: common.primaryKeyId.required(),
-    reportCreatorUuid: common.userUuid.required(),
-    reportDescriptiion: Joi.string().optional().example('This offends me')
+    reportCreatorId: common.primaryKeyId.required(),
+    reportDescription: Joi.string().optional().example('This offends me')
   },
   reportResolveParams: {
     reportId: common.primaryKeyId.required(),

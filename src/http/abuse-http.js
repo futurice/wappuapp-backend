@@ -4,10 +4,11 @@ import {assert} from '../validation';
 
 
 const reportFeedItem = createJsonRoute(function(req, res) {
+  console.log(req.body);
   const reportParams = assert({
-    feedItemId: req.query.feedItemId,
-    reportCreatorUuid: req.query.reportCreatorUuid,
-    reportDescription: req.query.reportDescription
+    feedItemId: req.body.feedItemId,
+    reportCreatorId: req.body.reportCreatorId,
+    reportDescription: req.body.reportDescription
   }, 'reportParams');
 
   return abuseCore.reportFeedItem(reportParams)
@@ -23,7 +24,7 @@ const reportFeedItem = createJsonRoute(function(req, res) {
 const resolveReport = createJsonRoute(function(req, res) {
   const resolveReportParams = assert({
     reportId: req.params.id,
-    banned: req.query.banned
+    banned: req.body.banned
   }, 'reportResolveParams');
 
   return abuseCore.resolveReport(resolveReportParams)
