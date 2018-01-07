@@ -33,6 +33,30 @@ function reportFeedItem(reportObj) {
     });
 }
 
+function resolveReport(reportParams) {
+  return knex.transaction(function(trx) {
+    return trx('feed_item_reports').update('is_resolved', true)
+      .where('id', reportParams.reportId)
+      .then(report => {
+        if (_.isEmpty(report)) {
+          throw new Error('Feed item report resolving failed: ' + reportParams);
+        }
+        return trx('feed_items').update('is_banned', true).where('id', report.feed_item_id)
+          .then(feedItem => {
+            if (_.isEmpty(feedItem)) {
+              throw new Error('Feed item not found: ' + feedItem.feed_item_id);
+            }
+            return trx.commit();
+          });
+      })
+      .catch(err => {
+        trx.rollback();
+        throw err;
+      });
+    });
+}
+
 export {
-  reportFeedItem
+  reportFeedItem,
+  resolveReport
 };

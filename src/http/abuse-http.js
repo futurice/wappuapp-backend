@@ -20,6 +20,23 @@ const reportFeedItem = createJsonRoute(function(req, res) {
     });
 });
 
+const resolveReport = createJsonRoute(function(req, res) {
+  const resolveReportParams = assert({
+    reportId: req.params.id,
+    banned: req.query.banned
+  }, 'reportResolveParams');
+
+  return abuseCore.resolveReport(resolveReportParams)
+    .then(resolvedCount => {
+      if (resolvedCount === 0){
+        return throwStatus(404, 'Not found')
+      } else {
+        return undefined;
+      }
+    });
+});
+
 export {
-  reportFeedItem
+  reportFeedItem,
+  resolveReport
 };

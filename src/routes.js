@@ -17,6 +17,7 @@ import * as wappuMood from './http/wappu-mood-http';
 import * as imageHttp from './http/image-http';
 import * as loginHttp from './http/login-http';
 import * as adminHttp from './http/admin-http';
+import * as abuseHttp from './http/abuse-http';
 
 
 const requireAuth = passport.authenticate('jwt', {session: false});
@@ -66,8 +67,12 @@ function createRouter() {
   router.get('/protectedadmin', requireAdmin, (req, res, next) => {
     res.send("Admin Success");
   });
+
   router.put('/admin/users/:uuid/ban', requireAuth, adminHttp.shadowBanUser);
   router.put('/admin/users/:uuid/unban', requireAuth, adminHttp.unBanUser);
+
+  router.post('/reports', abuseHttp.reportFeedItem);
+  router.put('/admin/reports/:id', requireAuth, abuseHttp.resolveReport);
 
   return router;
 }

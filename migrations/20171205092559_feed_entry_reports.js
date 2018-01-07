@@ -15,7 +15,7 @@ exports.up = function(knex, Promise) {
       .notNullable()
       .defaultTo(knex.fn.now());
     table.text('report_description');
-    table.boolean('resolved')
+    table.boolean('is_resolved')
       .notNullable()
       .defaultTo('false');
   })

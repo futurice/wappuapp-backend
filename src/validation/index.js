@@ -97,6 +97,10 @@ const schemas = {
     feedItemId: common.primaryKeyId.required(),
     reportCreatorUuid: common.userUuid.required(),
     reportDescriptiion: Joi.string().optional().example('This offends me')
+  },
+  reportResolveParams: {
+    reportId: common.primaryKeyId.required(),
+    banned: Joi.boolean()
   }
 };
 
