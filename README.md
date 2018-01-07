@@ -190,6 +190,28 @@ Responses:
 * Body is [heila bio object](#heila-bio-object).
 
 
+
+
+
+### `POST /api/heila/match`
+
+> This POSTs a match telling that "this user made an UP for that user"
+
+Responses:
+* `200 OK`
+
+### `GET /api/heila/matches/:uuid`
+
+> List of matches
+
+Responses:
+* `200 OK` List of [match objects](#match-object).
+
+
+
+
+
+
 ### `GET /api/events`
 
 > List events
@@ -432,6 +454,28 @@ Responses:
 * `200 OK` Body is one of [radio objects](#radio-object).
 
 ## Response objects
+
+
+### Match object
+
+When you're POSTin your opinion about another user:
+
+```js
+{
+  "uuid": "this is your own uuid",
+  "matchedUserId": "this is the USERID of the user you're UPing/DOWNing",
+  "opinion": "UP|DOWN"
+}
+```
+
+When you're GETting your own list of matches:
+
+```js
+{
+  NOT DECIDED YET BUT IS ALREADY RETURNING:
+  "firebaseChatId": "key that points to /chats/*** in firebase"
+}
+```
 
 ### Heila object
 
