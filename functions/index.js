@@ -20,14 +20,27 @@ exports.addPushTokenForUserId = functions.https.onRequest((req, res) => {
 });
 
 exports.addNewChatBetweenUsers = functions.https.onRequest((req, res) => {
+  console.log(req.query)
   const userId1 = req.query.userId1;
   const userId2 = req.query.userId2;
-
-  admin.database().ref('/chats/').push({ messages: [], users: [userId1, userId2] }).then(snapshot => {
-    console.log('chat record was added for users ' + userId1 + ' and ' + userId2);
-    console.log(snapshot)
-    res.send(snapshot.ref);
-  });
+  
+  return admin.database().ref('/chats/')
+         .push({
+           messages: [],
+           users: [userId1, userId2]
+         })
+    .then(snapshot => {
+      console.log('chat record was added for users ' + userId1 + ' and ' + userId2);
+      const chatKey = snapshot.ref.toString().split('/').slice(-1)[0];
+      console.log(`chatKey: ${chatKey}`);
+      res.send(chatKey);
+      return admin.database().ref(`/chats/${chatKey}/messages`)
+             .push({
+               msg: 'Tervetuloa whappuäpin chättiin!',
+               userId: '-1',
+               ts: (new Date()).getTime().toString()
+             })
+    });
 });
 
 // OFFICIAL EXAMPLE FOR TRIGGERING GCF ON WRITE
