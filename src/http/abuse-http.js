@@ -4,10 +4,9 @@ import {assert} from '../validation';
 
 
 const reportFeedItem = createJsonRoute(function(req, res) {
-  console.log(req.body);
   const reportParams = assert({
     feedItemId: req.body.feedItemId,
-    reportCreatorId: req.body.reportCreatorId,
+    reportCreatorUuid: req.body.reportCreatorUuid,
     reportDescription: req.body.reportDescription
   }, 'reportParams');
 
@@ -26,7 +25,6 @@ const resolveReport = createJsonRoute(function(req, res) {
     reportId: req.params.id,
     banned: req.body.banned
   }, 'reportResolveParams');
-
   return abuseCore.resolveReport(resolveReportParams)
     .then(resolvedCount => {
       if (resolvedCount === 0){
