@@ -3,7 +3,7 @@ import {assert} from '../validation';
 import * as matchesCore from '../core/match-core';
 
 // this gives a list of matches between user and other users
-const getUsersMatchesList = createJsonRoute(function(req, res) {
+const getMatches = createJsonRoute(function(req, res) {
   console.log(req.params)
   const user = assert(req.params, 'matchesList');
   return matchesCore.getListOfMatches(user.uuid)
@@ -12,9 +12,6 @@ const getUsersMatchesList = createJsonRoute(function(req, res) {
       console.log(matchesList);
       return matchesList;
     });
-});
-
-const getChat = createJsonRoute(function(req, res) {
 });
 
 // this is used when a user presses the thumbs UP/DOWN
@@ -26,7 +23,6 @@ const postMatch = createJsonRoute(function(req, res) {
 })
 
 export {
-  getUsersMatchesList,
-  getChat,
+  getMatches,
   postMatch
 }
