@@ -61,11 +61,11 @@ function createRouter() {
   router.post('/changepassword', requireAuth, loginHttp.changepw);
   router.post('/addmoderator', requireAdmin, loginHttp.addmoderator);
   router.get('/forgottenpassword/:email', loginHttp.forgottenpw);
-  router.put('/promote/:email', requireAdmin, loginHttp.promote);
-  router.put('/demote/:email', requireAdmin, loginHttp.demote);
+  router.put('/promote/:id', requireAdmin, loginHttp.promote);
+  router.put('/demote/:id', requireAdmin, loginHttp.demote);
   router.put('/admin/users/:uuid/ban', requireAuth, adminHttp.shadowBanUser);
   router.put('/admin/users/:uuid/unban', requireAuth, adminHttp.unBanUser);
-  router.delete('/deletemoderator/:email', requireAdmin, loginHttp.deletemoderator);
+  router.delete('/deletemoderator/:id', requireAdmin, loginHttp.deletemoderator);
   router.get('/moderatorlist', requireAdmin, loginHttp.modlist);
 
   return router;

@@ -95,7 +95,7 @@ const deletemoderator = createJsonRoute(function(req, res, next) {
     if (result == 1) {
       return throwStatus(200, 'User deleted');
     } else {
-      return throwStatus(404, 'Email not found');
+      return throwStatus(404, 'Moderator not found');
     }
   });
 });
