@@ -2,6 +2,8 @@ import _ from 'lodash';
 import * as feedCore from './feed-core.js';
 import { prefixImageWithGCS } from './image-core.js'
 import { GCS_CONFIG } from '../util/gcs';
+import { addPushNotificationTokenForUserId } from './function-core.js';
+
 const BPromise = require('bluebird');
 const {knex} = require('../util/database').connect();
 
@@ -31,7 +33,12 @@ function createHeila(heila) {
       if (_.isEmpty(rows)) {
         throw new Error('Heila row creation failed: ' + dbRow);
       }
-
+      if (heila.pushToken) {
+        // this adds the pushToken to Firebase database
+        // so that the "send push message to user" function
+        // triggered by new chat msg write can use the pushToken immediately
+        addPushNotificationTokenForUserId(heila.userId, heila.pushToken);
+      }
       return rows.length;
     });
 }
@@ -40,11 +47,18 @@ function updateHeila(heila) {
   console.log('updateHeila')
   const dbRow = _makeHeilaDbRow(heila);
   console.log(dbRow)
-  return knex('heilas').returning('id').update(dbRow)
+  return knex('heilas').returning('userId').update(dbRow)
     .where('uuid', heila.uuid)
     .then(rows => {
       if (_.isEmpty(rows)) {
         throw new Error('Heila row update failed: ' + dbRow);
+      }
+
+      if (heila.pushToken) {
+        // this adds the pushToken to Firebase database
+        // so that the "send push message to user" function
+        // triggered by new chat msg write can use the pushToken immediately
+        addPushNotificationTokenForUserId(heila.userId, heila.pushToken);
       }
 
       return rows.length;
@@ -151,8 +165,9 @@ function _makeHeilaDbRow(heila) {
   const dbRow = {
     'userId': heila.userId,
     'uuid': heila.uuid,
-    'bio_text': heila.bio_text || '',
-    'bio_looking_for': heila.bio_looking_for || '',
+    'bio_text': heila.bio_text,
+    'bio_looking_for': heila.bio_looking_for,
+    'pushToken': heila.pushToken,
   };
 
   return dbRow;
