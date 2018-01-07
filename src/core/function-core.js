@@ -11,10 +11,8 @@ function createChatForTwoUsers(matchRow) {
     headers: {'Content-Type': 'application/json'}
   })
   .then(res => res.json())
-  .then(fullChatUrl => {
-    console.log(fullChatUrl)
-    const chatId = fullChatUrl.split("/").slice(-1)[0];
-    return chatId;
+  .then(chatKey => {
+    return chatKey;
   })
 }
 
