@@ -12,8 +12,8 @@ function createChatForTwoUsers(matchRow) {
     headers: {'Content-Type': 'application/json'}
   })
   .then(res => res.json())
-  .then(chatKey => {
-    return chatKey;
+  .then(data => {
+    return data.chatKey;
   })
 };
 

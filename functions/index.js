@@ -33,7 +33,7 @@ exports.addNewChatBetweenUsers = functions.https.onRequest((req, res) => {
       console.log('chat record was added for users ' + userId1 + ' and ' + userId2);
       const chatKey = snapshot.ref.toString().split('/').slice(-1)[0];
       console.log(`chatKey: ${chatKey}`);
-      res.send(chatKey);
+      res.send({ 'chatKey': chatKey });
       return admin.database().ref(`/chats/${chatKey}/messages`)
              .push({
                msg: 'Tervetuloa whappuäpin chättiin!',
