@@ -13,6 +13,7 @@ const getFeed = createJsonRoute(function(req, res) {
     type: req.query.type,
     since: req.query.since,
     offset: req.query.offset,
+    parent_id: req.query.parent_id,
   }, 'feedParams');
 
   const coreParams = _.merge(feedParams, {

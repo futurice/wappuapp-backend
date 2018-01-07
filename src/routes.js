@@ -41,7 +41,7 @@ function createRouter() {
 
   router.get('/feed', feedHttp.getFeed);
   router.delete('/feed/:id', feedHttp.deleteFeedItem);
-  router.delete('/admin/feed/:id', requireAuth, adminHttp.deleteFeedItem);
+  router.put('/admin/feed/:id', requireAuth, adminHttp.deleteFeedItem);
   router.get('/image/:id', imageHttp.getImage);
 
   router.get('/announcements', announcementHttp.getAnnouncements);
@@ -59,17 +59,15 @@ function createRouter() {
   router.get('/mood', wappuMood.getMood);
 
   router.post('/login', requireLogin, loginHttp.login);
-  router.post('/register', loginHttp.register);
-  //Protected endpoint example
-  router.get('/protected', requireAuth, (req, res, next) => {
-    res.send("Success");
-  });
-  router.get('/protectedadmin', requireAdmin, (req, res, next) => {
-    res.send("Admin Success");
-  });
-
+  router.post('/changepassword', requireAuth, loginHttp.changepw);
+  router.post('/addmoderator', requireAdmin, loginHttp.addmoderator);
+  router.get('/forgottenpassword/:email', loginHttp.forgottenpw);
+  router.put('/promote/:id', requireAdmin, loginHttp.promote);
+  router.put('/demote/:id', requireAdmin, loginHttp.demote);
   router.put('/admin/users/:uuid/ban', requireAuth, adminHttp.shadowBanUser);
   router.put('/admin/users/:uuid/unban', requireAuth, adminHttp.unBanUser);
+  router.delete('/deletemoderator/:id', requireAdmin, loginHttp.deletemoderator);
+  router.get('/moderatorlist', requireAdmin, loginHttp.modlist);
 
   router.post('/reports', abuseHttp.reportFeedItem);
   router.put('/admin/reports/:id', requireAuth, abuseHttp.resolveReport);
