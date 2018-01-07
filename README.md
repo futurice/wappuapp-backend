@@ -193,7 +193,7 @@ Responses:
 
 
 
-### `POST /api/heila/match`
+### `POST /api/heila/matches`
 
 > This POSTs a match telling that "this user made an UP for that user"
 
