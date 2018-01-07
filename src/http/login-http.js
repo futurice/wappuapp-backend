@@ -3,7 +3,6 @@ import {createJsonRoute, throwStatus} from '../util/express';
 
 import jwt from 'jwt-simple';
 import crypto from 'crypto';
-import sendgrid from 'sendgrid';
 const {knex} = require('../util/database').connect();
 require('../init-env-variables');
 
@@ -13,7 +12,7 @@ function tokenForUser(id) {
 };
 
 function sendTokenWithEmail(email, token) {
-  sendgrid(process.env.SENDGRID_API_KEY);
+  var sendgrid = require('sendgrid')(process.env.SENDGRID_API_KEY);
   const request = sendgrid.emptyRequest({
     method: 'POST',
     path: 'v3/mail/send',
@@ -34,12 +33,12 @@ function sendTokenWithEmail(email, token) {
       content: [
         {
           type: 'text/plain',
-          value: 'http://addresstotheadminpanel.asd/changepassword?token='+token,
+          value: 'http://addresstotheadminpanel.asd/changepassword?token=' + token,
         },
       ],
     },
   });
-  sendgrid.api(request)
+  sendgrid.API(request)
     .then(response => {
       return true;
     })
