@@ -5,6 +5,7 @@ import CONST from '../constants';
 const logger = require('../util/logger')(__filename);
 import * as score from './score-core';
 import moment from 'moment-timezone';
+import BPromise from 'bluebird';
 
 const FEED_ITEM_TYPES = new Set(['IMAGE', 'TEXT', 'CHECK_IN']);
 
@@ -127,8 +128,13 @@ function getFeed(opts) {
       return [];
     }
 
-    return _.map(rows, row => _actionToFeedObject(row, opts.client));
-  });
+    return rows;
+  })
+  .then(rows => {
+    return BPromise.all(
+      _.map(rows, row => _actionToFeedObject(row, opts.client))
+    )
+  })
 }
 
 function _sanitizeText(text) {
@@ -231,45 +237,49 @@ function _actionToFeedObject(row, client) {
   if (!client) {
     throw new Error('Client information not passed as a parameter');
   }
+  return knex.raw(`SELECT COUNT(id) FROM feed_items WHERE parent_id=?;`, row['id'])
+    .then(function(knexRawResult) {
+        const number_of_comments = parseInt(knexRawResult.rows[0].count, 10);
+        var feedObj = {
+          id: row['id'],
+          type: row['action_type_code'],
+          votes: row['votes'],
+          userVote: row['user_vote'],
+          hotScore: row['hot_score'],
+          author: {
+            id: row['user_id'],
+            name: row['user_name'],
+            team: row['team_name'],
+            type: _resolveAuthorType(row, client)
+          },
+          createdAt: row['created_at'],
+          parent_id: row['parent_id'],
+          numberOfComments: number_of_comments
+        };
 
-  var feedObj = {
-    id: row['id'],
-    type: row['action_type_code'],
-    votes: row['votes'],
-    userVote: row['user_vote'],
-    hotScore: row['hot_score'],
-    author: {
-      id: row['user_id'],
-      name: row['user_name'],
-      team: row['team_name'],
-      type: _resolveAuthorType(row, client)
-    },
-    createdAt: row['created_at'],
-    parent_id: row['parent_id']
-  };
+        if (row.location) {
+          feedObj.location = {
+            latitude: row.location.y,
+            longitude: row.location.x
+          };
+        }
 
-  if (row.location) {
-    feedObj.location = {
-      latitude: row.location.y,
-      longitude: row.location.x
-    };
-  }
+        if (feedObj.type === 'IMAGE') {
+          const imagePath = row['image_path'];
 
-  if (feedObj.type === 'IMAGE') {
-    const imagePath = row['image_path'];
+          if (process.env.DISABLE_IMGIX === 'true' || _.endsWith(imagePath, 'gif')) {
+            feedObj.url = GCS_CONFIG.baseUrl + '/' + GCS_CONFIG.bucketName + '/' + imagePath;
+          } else {
+            feedObj.url =
+              'https://' + GCS_CONFIG.bucketName + '.imgix.net/' + imagePath +
+              process.env.IMGIX_QUERY;
+          }
+        } else if (feedObj.type === 'TEXT') {
+          feedObj.text = row.text;
+        }
 
-    if (process.env.DISABLE_IMGIX === 'true' || _.endsWith(imagePath, 'gif')) {
-      feedObj.url = GCS_CONFIG.baseUrl + '/' + GCS_CONFIG.bucketName + '/' + imagePath;
-    } else {
-      feedObj.url =
-        'https://' + GCS_CONFIG.bucketName + '.imgix.net/' + imagePath +
-        process.env.IMGIX_QUERY;
-    }
-  } else if (feedObj.type === 'TEXT') {
-    feedObj.text = row.text;
-  }
-
-  return feedObj;
+        return feedObj
+    });
 }
 
 function _getWhereSql(opts) {
