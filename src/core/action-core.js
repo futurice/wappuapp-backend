@@ -87,20 +87,6 @@ function getActionType(code) {
     });
 }
 
-function getCheckIns(event)
-{
-  return knex('actions')
-  .select('*')
-  .where({action_type_id:9, event_id: event})
-  .then(rows =>
-    {
-      if (_.isEmpty(rows))
-      {
-        return null;
-      }
-      return rows.length;
-    });
-}
 
 function _actionTypeRowToObject(row) {
   return {
