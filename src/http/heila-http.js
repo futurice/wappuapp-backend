@@ -12,50 +12,31 @@ const putHeila = createJsonRoute(function(req, res) {
     .then(rowsInserted => undefined);
 });
 
-// TODO: ei futaa
 const getHeilaList = createJsonRoute(function(req, res) {
-  console.log('getHeilaList')
-  return heilaCore.getAllHeilas()
-    .then(heilaList => {
-      return heilaList;
-    })
-});
+  const userId = req.query.userId;
 
-const getHeilaByUuid = createJsonRoute(function(req, res) {
-  return heilaCore.findByUuid(req.params.uuid)
-  .then(heila => {
-    if (heila === null) {
-      const err = new Error('Heila not found: ' + req.params.uuid);
-      err.status = 404;
-      throw err;
-    }
-
-    return heila;
-  });
-});
-
-// TODO: onko tarve
-const getUserById = createJsonRoute(function(req, res) {
-  const userParams = assert(req.query, 'userQueryParams');
-
-  const coreParams = Object.assign(userParams, {
-    client: req.client,
-  });
-
-  return userCore.getUserDetails(coreParams)
-    .then(user => {
-      if (user === null) {
-        const err = new Error('User not found: ' + req.query.userId);
+  // if there's a query param for userId, then return only that
+  if (userId) {
+    console.log('get single heila details by userId' + userId);
+    return heilaCore.getHeilaByUserId(userId)
+    .then(heila => {
+      if (heila === null) {
+        const err = new Error('Heila not found: ' + userId);
         err.status = 404;
         throw err;
       }
-
-      return user;
+      return heila;
     });
+  } else {
+    // otherwise return all heila profiles wuhuu
+    return heilaCore.getAllHeilas()
+      .then(heilaList => {
+        return heilaList;
+      })
+  }
 });
 
 export {
   putHeila,
-  getHeilaList,
-  getHeilaByUuid,
+  getHeilaList
 };
