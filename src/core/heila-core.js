@@ -123,6 +123,35 @@ function getAllHeilas() {
     })
 }
 
+function getHeilaByUserId(userId) {
+  console.log('getHeilaByUserId'); 
+  return knex('users')
+    .select('users.*')
+    .where({ id: userId })
+    .then(userRows => {
+      if (_.isEmpty(userRows)) {
+        return [];
+      }
+      console.log('userRows::::')
+      console.log(userRows)
+      const heilaIds = userRows.map(user => {
+        return user.uuid;
+      })
+      console.log(heilaIds)
+      return knex('heilas')
+        .select('heilas.*')
+        .whereIn('uuid', heilaIds)
+        .then(heilaRows => {
+          console.log(heilaRows);
+          if (_.isEmpty(heilaRows)) {
+            return [];
+          }
+          return _heilaRowsToObjectList(_mergeUserHeilaRows(userRows, heilaRows))[0];
+        })
+    })
+
+}
+
 function _mergeUserHeilaRows(userRows, heilaRows) {
   // mergetään user-profiilit ja heila-profiilit
   // lopputuloksena palautetaan lista, jossa
@@ -198,4 +227,5 @@ export {
   createOrUpdateHeila,
   findByUuid,
   getAllHeilas,
+  getHeilaByUserId,
 };

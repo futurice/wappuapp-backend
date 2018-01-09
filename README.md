@@ -177,7 +177,7 @@ UPDATE users SET is_banned = true WHERE uuid='D47DA01C-51BB-4F96-90B6-D64B77225E
 
 Query parameters:
 
-* Nothing implemented yet. The query returns full list of all heilas.
+* `userId` Integer. If specified, returns only that single heila profile.
 
 Responses:
 

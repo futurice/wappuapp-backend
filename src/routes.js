@@ -19,10 +19,9 @@ function createRouter() {
   const router = express.Router();
 
   // palauttaa listan heiloja, joita voi frontissa näyttää heilanselauksessa
+  // jos antaa query parametrin ?userId=jotakin, niin palauttaa vain tuota
+  // userId:tä vastaavan heilan
   router.get('/heila', heilaHttp.getHeilaList);
-  // palauttaa yhden heilan tiedot (käytännössä ne samat tiedot, joita ylempi palauttaa listassa)
-  // TODO
-  // router.get('/heila/:id', heilaHttp.getHeilaById);
   // päivittää oman heilaprofiilin tekstikenttätietoja
   router.put('/heila/:uuid', heilaHttp.putHeila);
 
