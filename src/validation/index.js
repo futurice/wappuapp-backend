@@ -30,18 +30,29 @@ const schemas = {
     uuid: common.userUuid.required(),
     name: Joi.string().min(1, 'utf8').max(50, 'utf8').required(),
     team: common.team.required(),
-    imageData: Joi.string().when('type', { is: 'IMAGE', then: Joi.required() }),
     heila: Joi.boolean().optional()
   },
 
   heila: {
     uuid: common.userUuid.required(),
-    imageData: Joi.string().when('type', { is: 'IMAGE', then: Joi.required() }),
+    bio_text: Joi.string().min(0, 'utf8').max(250, 'utf8').required(),
+    bio_looking_for: Joi.string().min(0, 'utf8').max(250, 'utf8').required(),
+    pushToken: Joi.string().min(0, 'utf8').max(250, 'utf8').optional(),
+  },
+
+  match: {
+    uuid: common.userUuid.required(),
+    matchedUserId: common.primaryKeyId.required(),
+    opinion: Joi.string().regex(/^UP|DOWN$/).required()
+  },
+
+  matchesList: {
+    uuid: common.userUuid.required(),
   },
 
   userImage: {
     uuid: common.userUuid.required(),
-    imageData: Joi.string().when('type', { is: 'IMAGE', then: Joi.required() }),
+    imageData: Joi.string().required(),
   },
 
   userQueryParams: {

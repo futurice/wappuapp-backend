@@ -14,7 +14,11 @@ function createOrUpdateUser(user) {
     if (foundUser === null) {
       return createUser(user);
     } else {
-      return updateUser(user);
+      if (user.imageData) {
+        return updateUserImage(user);
+      } else {
+        return updateUser(user);
+      }
     }
   });
 }
@@ -45,30 +49,25 @@ function runDbUpdate(user) {
       if (_.isEmpty(rows)) {
         throw new Error('User row update failed: ' + dbRow);
       }
-      return rows.length;
     });
 }
 
 function updateUser(user) {
   console.log('updateUser')
-  // console.log(user)
+  return runDbUpdate(user);
+}
 
-  if (user.imageData) {
-    console.log('imageData found!')
+function updateUserImage(user) {
+  console.log('updateUserImage')
     // putUserImage asettaa kuvan kantaan itsenäisesti
-    putUserImage(user.imageData, user.uuid)
-    .then(uploadedImageName => {
-      // alkup. user-objektissa ei image_pathia mukana
-      // asetetaan image_path
-      user["image_path"] = uploadedImageName;
-      delete user["imageData"];
-      runDbUpdate(user);
-    })
-  } else {
-    console.log('no imageData found')
+  return putUserImage(user.imageData, user.uuid)
+  .then(uploadedImageName => {
+    // alkup. user-objektissa ei image_pathia mukana
+    // asetetaan image_path
+    user['image_path'] = uploadedImageName;
+    delete user['imageData'];
     runDbUpdate(user);
-  }
-
+  })
 }
 
 function findByUuid(uuid) {
@@ -95,6 +94,7 @@ function findByUuid(uuid) {
  */
 function getUserDetails(opts) {
   const userDetailsQuery = _queryUserDetails(opts.userId);
+  const userImageQuery = _getUserImageUrl(opts.userId);
 
   const imagesQuery = feedCore.getFeed({
     client:        opts.client,
@@ -105,18 +105,37 @@ function getUserDetails(opts) {
   });
 
   return BPromise.all([
+    userImageQuery,
     userDetailsQuery,
     imagesQuery
-  ]).spread((userDetails, images) => {
+  ]).spread((userImagePath, userDetails, images) => {
     if (!userDetails) {
       return null;
     }
-
+    
     userDetails.images = images;
+    userDetails.image_url = null;
+    
+    if (userImagePath) {
+      userDetails.image_url = prefixImageWithGCS(userImagePath);
+    }
 
     return userDetails;
   });
 }
+
+function _getUserImageUrl(userId) {
+  return knex('users')
+    .select('users.*')
+    .where({ id: userId })
+    .then(users => {
+      //console.log('users')
+      //console.log(users)
+      const user = users[0]
+      //console.log(user)
+      return user.image_path;
+    })
+};
 
 function _queryUserDetails(userId) {
   const sqlString = `
@@ -179,7 +198,7 @@ function _userRowToObject(row) {
   if (row.image_path !== "") {
     obj["image_url"] = prefixImageWithGCS(row.image_path);
   } else {
-    obj["image_url"] = "";
+    obj["image_url"] = null; 
   }
 
   return obj;
