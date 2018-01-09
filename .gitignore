@@ -2,7 +2,7 @@
 
 .tmp
 .DS_Store
-.env
+.env*
 .env-test
 .vscode
 *.sublime-*
@@ -37,7 +37,12 @@ build/Release
 # Dependency directory
 # https://www.npmjs.org/doc/misc/npm-faq.html#should-i-check-my-node_modules-folder-into-git
 node_modules
+<<<<<<< HEAD
 whappu-9f17f78c8dc4.json
 functions/node_modules/**
 firebase.json
 .firebaserc
+=======
+
+yarn.lock
+>>>>>>> checkins

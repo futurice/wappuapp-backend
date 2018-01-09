@@ -2,8 +2,13 @@
   "name": "wappuapp-backend",
   "version": "1.0.0",
   "engines": {
+<<<<<<< HEAD
     "node": "^9",
     "npm": "^5.6.x"
+=======
+    "node": "6.x.x",
+    "npm": "2.x.x"
+>>>>>>> checkins
   },
   "license": "MIT",
   "author": "Futurice Tammerforce <tammerforce@futurice.com> (http://tammerforce.com/)",
