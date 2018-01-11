@@ -39,10 +39,11 @@ const localLogin = new LocalStrategy(localOptions, (email, password, done) => {
 
 const jwtOptions = {
   jwtFromRequest: ExtractJwt.fromHeader('authorization'),
-  secretOrKey: process.env.JWT_SECRET
+  secretOrKey: process.env.JWT_SECRET,
+  passReqToCallback: true
 };
 
-const jwtLogin = new Strategy(jwtOptions, (payload, done, req) => {
+const jwtLogin = new Strategy(jwtOptions, (req, payload, done) => {
   const uuid = req.headers['x-user-uuid'];
   return knex('users').select('id').where('uuid', uuid)
     .then(rows => {
@@ -73,7 +74,7 @@ const jwtLogin = new Strategy(jwtOptions, (payload, done, req) => {
     })
 });
 
-const adminLogin = new Strategy(jwtOptions, (payload, done, request) => {
+const adminLogin = new Strategy(jwtOptions, (req, payload, done) =>  {
   return knex('role').select('admin').where('id', payload.sub)
   .then(row => {
     if (_.isEmpty(row)) {
