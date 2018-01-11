@@ -54,13 +54,26 @@ const login = createJsonRoute(function(req, res) {
   const cipher = crypto.createCipher('aes192', process.env.CRYPTO_PASSWORD);
   email = cipher.update(email, 'utf8', 'hex');
   email += cipher.final('hex');
+  const uuid = req.headers['x-user-uuid'];
   return knex('role').select('id').where('email', email).first()
     .then(id => {
-      return knex('role').select('admin').where('email', email).first()
-        .then(admin => {
-          return { admin: admin.admin, token: tokenForUser(id.id) };
+      return knex('users').select('id').where('uuid', uuid)
+        .then(rows => {
+          if (!_.isEmpty(rows)) {
+            console.log(id.id)
+            return knex('users').update({role: id.id}).where('uuid', uuid).returning('id')
+              .then(row => {
+                if (_.isEmpty(row)) {
+                  return throwStatus(500, 'User linking failed')
+                }})
+                return {admin: true};
+          } else {
+            return knex('role').select('admin').where('email', email).first()
+              .then(admin => {
+                return { admin: admin.admin, token: tokenForUser(id.id) };
+          })}
         })
-    })
+      })
 });
 
 const addmoderator = createJsonRoute(function(req, res, next) {
