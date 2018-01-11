@@ -60,7 +60,6 @@ const login = createJsonRoute(function(req, res) {
       return knex('users').select('id').where('uuid', uuid)
         .then(rows => {
           if (!_.isEmpty(rows)) {
-            console.log(id.id)
             return knex('users').update({role: id.id}).where('uuid', uuid).returning('id')
               .then(row => {
                 if (_.isEmpty(row)) {
