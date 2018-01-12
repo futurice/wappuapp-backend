@@ -50,7 +50,16 @@ const demote = createJsonRoute(function(req, res, next) {
 });
 
 const modlist = createJsonRoute(function(req, res, next) {
-  return loginCore.modList();
+  return loginCore.modList()
+    .then(rows => {
+      for (var i = 0; i < rows.length; i++) {
+        const decipher = crypto.createDecipher('aes192', process.env.CRYPTO_PASSWORD)
+        var email = decipher.update(rows[i].email, 'hex', 'utf8');
+        email += decipher.final('utf8')
+        rows[i].email = email
+      }
+      return rows;
+    })
 });
 
 export {
