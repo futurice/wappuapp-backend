@@ -31,13 +31,13 @@ const deletemoderator = createJsonRoute(function(req, res, next) {
 
 const changepw = createJsonRoute(function(req, res, next) {
   const oldpassword = crypto.createHash('md5').update(req.body.oldpassword).digest("hex");
-  const password = crypto.createHash('md5').update(req.body.password).digest("hex");
-  return loginCore.changePassword(password, oldpassword, req.user)
+  const newpassword = crypto.createHash('md5').update(req.body.newpassword).digest("hex");
+  return loginCore.changePassword(newpassword, oldpassword, req.user)
 });
 
 const activateaccount = createJsonRoute(function(req, res, next) {
   const password = crypto.createHash('md5').update(req.body.password).digest("hex");
-  return loginCore.changePassword(password, req.user)
+  return loginCore.activateaccount(password, req.user)
 });
 
 const forgottenpw = createJsonRoute(function(req, res, next) {

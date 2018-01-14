@@ -32,7 +32,7 @@ function sendTokenWithEmail(email, token) {
       content: [
         {
           type: 'text/plain',
-          value: 'http://addresstotheadminpanel.asd/changepassword?token=' + token,
+          value: 'http://addresstotheadminpanel.asd/activateaccount?token=' + token,
         },
       ],
     },
@@ -100,7 +100,8 @@ export function deletemoderator(id) {
 export function changePassword(password, oldpassword, user) {
   return knex('role').select('password').where('id', user)
     .then(pw => {
-      if (pw != oldpassword) {
+      const [pass] = pw;
+      if (pass.password != oldpassword) {
         return throwStatus(401, 'Old password is not correct');
       } else {
         return knex('role').where('id', user).update({password: password}).returning('id')
