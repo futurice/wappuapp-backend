@@ -97,13 +97,31 @@ export function deletemoderator(id) {
   });
 }
 
-export function changePassword(password, user) {
+export function changePassword(password, oldpassword, user) {
+  return knex('role').select('password').where('id', user)
+    .then(pw => {
+      if (pw != oldpassword) {
+        return throwStatus(401, 'Old password is not correct');
+      } else {
+        return knex('role').where('id', user).update({password: password}).returning('id')
+        .then(row => {
+          if (_.isEmpty(row)) {
+            return throwStatus(404, 'There was an error');
+          } else {
+            return throwStatus(200, 'Password changed');
+          }
+        });
+      }
+    }
+)};
+
+export function activateaccount(password, user) {
   return knex('role').where('id', user).update({password: password, activated: true}).returning('id')
   .then(row => {
     if (_.isEmpty(row)) {
       return throwStatus(404, 'There was an error');
     } else {
-      return throwStatus(200, 'Password changed');
+      return throwStatus(200, 'Password changed and account activated');
     }
   });
 }
