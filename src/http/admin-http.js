@@ -21,7 +21,7 @@ const deleteFeedItem = createJsonRoute(function(req, res) {
 });
 
 const shadowBanUser = createJsonRoute(function(req, res) {
-  const id = assert(req.params.uuid, 'common.userUuid');
+  const id = assert(req.params.id, 'common.primaryKeyId');
 
   return adminCore.shadowBanUser(id)
   .then(updatedCount => {
@@ -34,7 +34,7 @@ const shadowBanUser = createJsonRoute(function(req, res) {
 });
 
 const unBanUser = createJsonRoute(function(req, res) {
-  const id = assert(req.params.uuid, 'common.userUuid');
+  const id = assert(req.params.id, 'common.primaryKeyId');
 
   return adminCore.unBanUser(id)
   .then(updatedCount => {

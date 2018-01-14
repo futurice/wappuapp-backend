@@ -64,8 +64,8 @@ function createRouter() {
   router.get('/forgottenpassword/:email', loginHttp.forgottenpw);
   router.put('/promote/:id', requireAdmin, loginHttp.promote);
   router.put('/demote/:id', requireAdmin, loginHttp.demote);
-  router.put('/admin/users/:uuid/ban', requireAuth, adminHttp.shadowBanUser);
-  router.put('/admin/users/:uuid/unban', requireAuth, adminHttp.unBanUser);
+  router.put('/admin/users/:id/ban', requireAuth, adminHttp.shadowBanUser);
+  router.put('/admin/users/:id/unban', requireAuth, adminHttp.unBanUser);
   router.delete('/deletemoderator/:id', requireAdmin, loginHttp.deletemoderator);
   router.get('/moderatorlist', requireAdmin, loginHttp.modlist);
 

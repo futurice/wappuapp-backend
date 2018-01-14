@@ -16,10 +16,10 @@ function deleteFeedItem(id) {
 }
 
 function shadowBanUser(id) {
-  return knex('users').where('uuid', id).update({is_banned: true})
+  return knex('users').where('id', id).update({is_banned: true})
   .then(updatedCount => {
     if (updatedCount > 1) {
-      logger.error('Banned user with UUID ', id);
+      logger.error('Banned user with ID ', id);
       throw new Error('Unexpected amount of bans happened: ', updatedCount);
     }
     return updatedCount;
@@ -27,10 +27,10 @@ function shadowBanUser(id) {
 }
 
 function unBanUser(id) {
-  return knex('users').where('uuid', id).update({is_banned: false})
+  return knex('users').where('id', id).update({is_banned: false})
   .then(updatedCount => {
     if (updatedCount > 1) {
-      logger.error('Unbanned user with UUID ', id);
+      logger.error('Unbanned user with ID ', id);
       throw new Error('Unexpected amount of unbans happened: ', updatedCount);
     }
     return updatedCount;
@@ -42,4 +42,3 @@ export {
   shadowBanUser,
   unBanUser
 };
-
