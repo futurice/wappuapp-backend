@@ -8,5 +8,4 @@ let getActionTypes = createJsonRoute(function(req, res) {
 
 export {
   getActionTypes,
-  getCheckIns
 };

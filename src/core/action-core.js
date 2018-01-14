@@ -101,6 +101,5 @@ function _actionTypeRowToObject(row) {
 export {
   createAction,
   getActionType,
-  markAsAggregated,
-  getCheckIns
+  markAsAggregated
 };
