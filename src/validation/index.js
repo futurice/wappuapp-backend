@@ -39,6 +39,13 @@ const schemas = {
     bio_looking_for: Joi.string().min(0, 'utf8').max(250, 'utf8').required(),
     pushToken: Joi.string().min(0, 'utf8').max(250, 'utf8').optional(),
   },
+  
+  feedback: {
+    uuid: common.userUuid.required(),
+    id: common.primaryKeyId.required(),
+    grade: Joi.number().integer().min(0).max(5).optional(),
+    text: Joi.string().min(0, 'utf8').max(5000, 'utf8').optional(),
+  },
 
   match: {
     uuid: common.userUuid.required(),
