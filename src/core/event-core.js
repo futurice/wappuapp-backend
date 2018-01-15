@@ -11,7 +11,6 @@ import { getFeed } from "./feed-core";
  * @param {number} opts.client.id
  */
 function getEventById(opts = {}) {
-  console.log(opts)
   return getEvents(opts)
     .then(events => {
       if (_.isEmpty(events)) {
