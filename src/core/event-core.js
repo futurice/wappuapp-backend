@@ -128,7 +128,7 @@ function _rowToEvent(row) {
     city:           row['city'],
     fbEventId:      row['fb_event_id'],
     attendingCount: row['attending_count'],
-    checkingCount:  row['checking_count'],
+    checkingCount:  row['checkinCount'],
     radius:         row['radius'],
     location: {
       latitude:  _.get(row, 'location.y', null),
