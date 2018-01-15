@@ -13,27 +13,24 @@ import * as radioHttp from './http/radio-http';
 import * as wappuMood from './http/wappu-mood-http';
 import * as imageHttp from './http/image-http';
 import * as heilaHttp from './http/heila-http';
+import * as matchHttp from './http/match-http';
 import * as feedbackHttp from './http/feedback-http';
-import * as heilaLogic from './http/heila-logic';
 
 function createRouter() {
   const router = express.Router();
 
   // palauttaa listan heiloja, joita voi frontissa näyttää heilanselauksessa
+  // jos antaa query parametrin ?userId=jotakin, niin palauttaa vain tuota
+  // userId:tä vastaavan heilan
   router.get('/heila', heilaHttp.getHeilaList);
-  // palauttaa yhden heilan tiedot (käytännössä ne samat tiedot, joita ylempi palauttaa listassa)
-  // router.get('/heila/:uuid', heilaHttp.getHeilaByUuid);
   // päivittää oman heilaprofiilin tekstikenttätietoja
-  // router.put('/heila/:uuid', heilaHttp.putHeila);
-
-  router.get('/heila/matches', heilaLogic.getMatches);
-  router.get('/heila/matches/:id', heilaLogic.getChat);
+  router.put('/heila/:uuid', heilaHttp.putHeila);
+  
+  router.get('/heila/matches/:uuid', matchHttp.getMatches);
+  router.post('/heila/matches', matchHttp.postMatch);
 
   router.get('/events', eventHttp.getEvents);
   router.get('/events/:id', eventHttp.getEvent);
-
-  router.get('/checkins/:id', actionHttp.getCheckIns);
-router.post('/feedback/:id', feedbackHttp.postFeedback);
 
   router.post('/actions', actionHttp.postAction);
   router.get('/teams', teamHttp.getTeams);
@@ -57,6 +54,9 @@ router.post('/feedback/:id', feedbackHttp.postFeedback);
   router.get('/cities', citiesHttp.getCities)
 
   router.put('/vote', voteHttp.putVote);
+
+  router.post('/feedback/:id', feedbackHttp.postFeedback);
+  router.get('/feedback/:id', feedbackHttp.postFeedback);
 
   router.get('/radio', radioHttp.getStations);
   router.get('/radio/:id', radioHttp.getStation);
