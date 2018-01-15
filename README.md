@@ -524,6 +524,7 @@ When you're GETting your own list of matches:
   "city": 3,
   "fbEventId": null,
   "attendingCount": 0,
+  "checkingCount": 0,
   "radius": 400,
   "images": []
 }
