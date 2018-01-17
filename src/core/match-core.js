@@ -158,7 +158,28 @@ function getListOfMatches(uuid) {
     })
 };
 
+function closeMatch(close) {
+  
+  return _uuidToUserId(close.uuid)
+    .then(closerUserId => {
+      return knex('matches')
+        .select('matches.*')
+        .where({
+          'userId1': (closerUserId < close.matchedUserId) ? closerUserId : close.matchedUserId,
+          'userId2': (closerUserId < close.matchedUserId) ? close.matchedUserId : closerUserId,
+          'firebaseChatId': close.firebaseChatId
+        })
+        .then(rows => {
+          if (rows.length === 1) {
+            functionCore.closeChat(close.firebaseChatId);            
+          }
+        })
+
+    })
+};
+
 export {
   createOrUpdateMatch,
   getListOfMatches,
+  closeMatch,
 }
