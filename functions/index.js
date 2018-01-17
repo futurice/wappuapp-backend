@@ -143,6 +143,8 @@ exports.sendPushMessage = functions.database.ref('/chats/{chatId}/')
     })
   });
 
+// this writes "closed": true to chats/chatId and so closes the chat
+// for writing. reading will still be allowed.
 exports.closeChatId = functions.https.onRequest((req, res) => {
   
   if (req.get('FUNCTION_SECRET_KEY') !== functions.config().functions.secret) {
