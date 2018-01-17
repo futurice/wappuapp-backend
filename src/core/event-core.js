@@ -33,6 +33,7 @@ function getEventById(opts = {}) {
 
         return event;
       });
+
     });
 }
 
@@ -59,7 +60,21 @@ function getEvents(opts) {
     ])
     .whereRaw(where.sql, where.params)
     .orderBy('start_time', 'asc')
-    .then(rows => _.map(rows, _rowToEvent));
+    .then(rows => _.map(rows, _rowToEvent))
+    .then(events => {
+
+      // get all actions and filter checkins in order to add them
+      // into the event details
+      return knex('actions')
+        .select('*')
+        .where({ action_type_id: 9 })
+        .then(checkIns => {
+          events.forEach(event => {
+            event['checkinCount'] = checkIns.filter(c => c.event_id == event.event_id).length;
+          })
+          return events;
+        })
+    })
 };
 
 function setAttendingCount(facebookEventId, attendingCount) {
@@ -113,6 +128,7 @@ function _rowToEvent(row) {
     city:           row['city'],
     fbEventId:      row['fb_event_id'],
     attendingCount: row['attending_count'],
+    checkingCount:  row['checkinCount'],
     radius:         row['radius'],
     location: {
       latitude:  _.get(row, 'location.y', null),

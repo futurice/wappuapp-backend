@@ -2,10 +2,13 @@
 
 .tmp
 .DS_Store
-.env
+.env*
 .env-test
 .vscode
 *.sublime-*
+
+keyfile.json
+
 
 # Logs
 logs
