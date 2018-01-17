@@ -1,3 +1,4 @@
+const process = require('process');
 const fetch = require('node-fetch');
 
 const URL_CREATE_CHAT = "https://us-central1-whappu-183808.cloudfunctions.net/addNewChatBetweenUsers";
@@ -9,7 +10,10 @@ function createChatForTwoUsers(matchRow) {
   console.log(current_url);
   return fetch(current_url, {
     method: 'GET',
-    headers: {'Content-Type': 'application/json'}
+    headers: {
+      'Content-Type': 'application/json',
+      'FUNCTION_SECRET_KEY': process.env.FUNCTION_SECRET_KEY
+    }
   })
   .then(res => res.json())
   .then(data => {
@@ -23,7 +27,10 @@ function addPushNotificationTokenForUserId(userId, pushToken) {
   console.log(current_url);
   return fetch(current_url, {
     method: 'GET',
-    headers: {'Content-Type': 'application/json'}
+    headers: {
+      'Content-Type': 'application/json',
+      'FUNCTION_SECRET_KEY': process.env.FUNCTION_SECRET_KEY
+    }
   })
   .catch(err => {
     console.log(err);
