@@ -5,7 +5,7 @@ import {assert} from '../validation';
 
 const addEvent = createJsonRoute(function(req, res) {
   const event = {
-    code: req.body.code,
+    code: 'asd2',
     name: req.body.name,
     location_name: req.body.location_name,
     description: req.body.description,
@@ -25,7 +25,39 @@ const addEvent = createJsonRoute(function(req, res) {
     } else {
       return;
     }
+  })
+  .catch(err => {
+    return err;
   });
+});
+
+const updateEvent = createJsonRoute(function(req, res) {
+  const event = {
+    id: req.body.id,
+    code: req.body.code,
+    name: req.body.name,
+    location_name: req.body.location_name,
+    description: req.body.description,
+    organizer: req.body.organizer,
+    contact_details: req.body.contact_details,
+    teemu: req.body.teemu,
+    city_id: req.body.city_id,
+    start_time: req.body.start_time,
+    end_time: req.body.end_time,
+    cover_image: req.body.cover_image,
+    fb_event_id: req.body.fb_event_id
+  };
+  return eventCore.updateEvent(event)
+  .then(result => {
+      return;
+    })
+  .catch(err => {
+    return err;
+  });
+});
+
+const deleteEvent = createJsonRoute(function(req, res) {
+    return eventCore.deleteEvent(req.params.id)
 });
 
 const getEvent = createJsonRoute(function(req, res) {
@@ -77,5 +109,7 @@ export {
   getEvent,
   getEvents,
   isValidCheckIn,
-  addEvent
+  addEvent,
+  deleteEvent,
+  updateEvent
 };
