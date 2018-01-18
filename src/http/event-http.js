@@ -3,6 +3,31 @@ import * as eventCore from '../core/event-core';
 import {createJsonRoute, throwStatus} from '../util/express';
 import {assert} from '../validation';
 
+const addEvent = createJsonRoute(function(req, res) {
+  const event = {
+    code: req.body.code,
+    name: req.body.name,
+    location_name: req.body.location_name,
+    description: req.body.description,
+    organizer: req.body.organizer,
+    contact_details: req.body.contact_details,
+    teemu: req.body.teemu,
+    city_id: req.body.city_id,
+    start_time: req.body.start_time,
+    end_time: req.body.end_time,
+    cover_image: req.body.cover_image,
+    fb_event_id: req.body.fb_event_id
+  };
+  return eventCore.addEvent(event)
+  .then(result => {
+    if (result.rowCount !== 1) {
+      throwStatus(422, 'Event creation failed');
+    } else {
+      return;
+    }
+  });
+});
+
 const getEvent = createJsonRoute(function(req, res) {
   return eventCore.getEventById({
     eventId: req.params.id,
@@ -52,4 +77,5 @@ export {
   getEvent,
   getEvents,
   isValidCheckIn,
+  addEvent
 };

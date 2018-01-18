@@ -36,6 +36,10 @@ function getEventById(opts = {}) {
     });
 }
 
+function addEvent(event) {
+  return knex('events').insert(event);
+}
+
 function getEvents(opts) {
   const where = _getWhereClause(opts);
 
@@ -184,5 +188,6 @@ export {
   getEventById,
   getEvents,
   setAttendingCount,
-  isValidCheckIn
+  isValidCheckIn,
+  addEvent
 };
