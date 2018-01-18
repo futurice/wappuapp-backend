@@ -69,6 +69,8 @@ function createRouter() {
   router.delete('/deletemoderator/:id', requireAdmin, loginHttp.deletemoderator);
   router.get('/moderatorlist', requireAdmin, loginHttp.modlist);
   router.post('/addevent', requireAuth, eventHttp.addEvent);
+  router.delete('/deleteevent/:id', requireAuth, eventHttp.deleteEvent);
+  router.post('/updateevent', requireAuth, eventHttp.updateEvent)
 
   router.post('/reports', abuseHttp.reportFeedItem);
   router.put('/admin/reports/:id', requireAuth, abuseHttp.resolveReport);

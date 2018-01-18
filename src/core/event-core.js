@@ -40,6 +40,20 @@ function addEvent(event) {
   return knex('events').insert(event);
 }
 
+function updateEvent(event) {
+  return knex('events').where('id', event.id).update(event)
+    .then(result => {
+      return result;
+    })
+}
+
+function deleteEvent(id) {
+  return knex('events').where('id', id).del()
+  .then(result => {
+    return result;
+  })
+}
+
 function getEvents(opts) {
   const where = _getWhereClause(opts);
 
@@ -189,5 +203,7 @@ export {
   getEvents,
   setAttendingCount,
   isValidCheckIn,
-  addEvent
+  addEvent,
+  deleteEvent,
+  updateEvent
 };
