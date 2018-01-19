@@ -31,10 +31,20 @@ const addEvent = createJsonRoute(function(req, res) {
   });
 });
 
+const getUpdateEvent = createJsonRoute(function(req, res) {
+  return eventCore.getUpdateEvent(req.params.id)
+    .then(result => {
+      return result;
+    })
+    .catch(err => {
+      return err;
+    })
+});
+
 const updateEvent = createJsonRoute(function(req, res) {
   const event = {
-    id: req.body.id,
-    code: req.body.code,
+    id: req.params.id,
+    code: 'asd3',
     name: req.body.name,
     location_name: req.body.location_name,
     description: req.body.description,
@@ -74,6 +84,13 @@ const getEvent = createJsonRoute(function(req, res) {
   });
 });
 
+const getAllEvents = createJsonRoute(function(req, res) {
+  return eventCore.getAllEvents(req.params.city_id)
+    .then(events => {
+      return events;
+    })
+});
+
 const getEvents = createJsonRoute(function(req, res) {
   const eventParams = assert({
     id: req.params.id,
@@ -111,5 +128,7 @@ export {
   isValidCheckIn,
   addEvent,
   deleteEvent,
-  updateEvent
+  updateEvent,
+  getAllEvents,
+  getUpdateEvent
 };
