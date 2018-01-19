@@ -60,6 +60,7 @@ function createRouter() {
 
   router.post('/login', requireLogin, loginHttp.login);
   router.post('/changepassword', requireAuth, loginHttp.changepw);
+  router.post('/activateaccount', requireAuth, loginHttp.activateaccount);
   router.post('/addmoderator', requireAdmin, loginHttp.addmoderator);
   router.get('/forgottenpassword/:email', loginHttp.forgottenpw);
   router.put('/promote/:id', requireAdmin, loginHttp.promote);
