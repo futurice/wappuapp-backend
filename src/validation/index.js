@@ -18,6 +18,7 @@ const schemas = {
     imageText: Joi.string().max(50, 'utf8').optional(),
     imageTextPosition: Joi.number().min(0).max(1).optional(),
     text: Joi.string().when('type', { is: 'TEXT', then: Joi.required() }),
+    parent_id: Joi.number().integer().optional(),
     eventId: common.primaryKeyId.when('type', { is: 'CHECK_IN_EVENT', then: Joi.required()}),
     city: common.primaryKeyId,
     location: Joi.object({
@@ -42,6 +43,7 @@ const schemas = {
     limit: Joi.number().integer().min(1).max(100).optional(),
     since: Joi.date().iso(),
     offset: Joi.number().integer().min(0),
+    parent_id: Joi.number().integer().optional(),
     type: Joi.string()
       .valid(['TEXT', 'IMAGE'])
       .optional(),
@@ -93,6 +95,15 @@ const schemas = {
   teamsParams: {
     city: common.primaryKeyId,
   },
+  reportParams: {
+    feedItemId: common.primaryKeyId.required(),
+    reportCreatorUuid: common.userUuid.required(),
+    reportDescription: Joi.string().optional().example('This offends me')
+  },
+  reportResolveParams: {
+    reportId: common.primaryKeyId.required(),
+    banned: Joi.boolean()
+  }
 };
 
 const conversions = {};
