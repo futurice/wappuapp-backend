@@ -5,7 +5,7 @@ import {assert} from '../validation';
 
 const addEvent = createJsonRoute(function(req, res) {
   const event = {
-    code: 'asd2',
+    code: req.body.code,
     name: req.body.name,
     location_name: req.body.location_name,
     description: req.body.description,
@@ -16,7 +16,8 @@ const addEvent = createJsonRoute(function(req, res) {
     start_time: req.body.start_time,
     end_time: req.body.end_time,
     cover_image: req.body.cover_image,
-    fb_event_id: req.body.fb_event_id
+    fb_event_id: req.body.fb_event_id,
+    show: req.body.show
   };
   return eventCore.addEvent(event)
   .then(result => {
@@ -44,7 +45,7 @@ const getUpdateEvent = createJsonRoute(function(req, res) {
 const updateEvent = createJsonRoute(function(req, res) {
   const event = {
     id: req.params.id,
-    code: 'asd3',
+    code: req.body.code,
     name: req.body.name,
     location_name: req.body.location_name,
     description: req.body.description,
@@ -55,8 +56,10 @@ const updateEvent = createJsonRoute(function(req, res) {
     start_time: req.body.start_time,
     end_time: req.body.end_time,
     cover_image: req.body.cover_image,
-    fb_event_id: req.body.fb_event_id
+    fb_event_id: req.body.fb_event_id,
+    show: req.body.show
   };
+  console.log(event)
   return eventCore.updateEvent(event)
   .then(result => {
       return;
@@ -67,7 +70,8 @@ const updateEvent = createJsonRoute(function(req, res) {
 });
 
 const deleteEvent = createJsonRoute(function(req, res) {
-    return eventCore.deleteEvent(req.params.id)
+  console.log(req.params.id)
+  return eventCore.deleteEvent(req.params.id)
 });
 
 const getEvent = createJsonRoute(function(req, res) {
