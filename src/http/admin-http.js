@@ -3,6 +3,7 @@ import {assert} from '../validation';
 import * as adminCore from '../core/admin-core';
 import _ from 'lodash';
 import * as throttleCore from '../core/throttle-core';
+import * as actionCore from '../core/action-core';
 
 const deleteFeedItem = createJsonRoute(function(req, res) {
   const id = assert(req.params.id, 'common.primaryKeyId');
@@ -48,7 +49,7 @@ const unBanUser = createJsonRoute(function(req, res) {
   });
 });
 
-const sendSystemMessage = createJsonRoute(function (req, res){
+let sendSystemMessage = createJsonRoute(function (req, res){
   const action = assert(_.merge(req.body, {
     city: req.query.cityId,
   }), 'action');
@@ -61,22 +62,27 @@ const sendSystemMessage = createJsonRoute(function (req, res){
     throwStatus(403);
   }
 
-  //let handleAction;
-
-  action.ip = req.ip;
-
-  //handleAction = actionCore.getActionType(action.type)
-
-  if (!action.type === 'text') {
-      throwStatus(400, 'Action type must be text');
+  
+  return throttleCore.canDoAction(action.user, action.type)
+  .then(canDoAction => {
+    if (!canDoAction && action.type !== 'TEXT' ){
+      throwStatus(429, `Too many actions of type ${ action.type }`);
     } else {
-      return Promise.resolve();
-    }
-  return adminCore.sendSystemMessage(_.merge(action, {client: req.client}))
-  .then(() => throttleCore.executeAction(action.user, action.type))
-  .then(() => undefined);
+      let handleAction;
 
-  //return adminCore.sendSystemMessage(action)
+      if (action.type !== 'TEXT') {
+        throwStatus(400, 'Action type must be text');
+      } else {
+        action.ip = req.ip;
+        handleAction = actionCore.getActionType(action.type)
+        adminCore.sendSystemMessage(_.merge(action, {client: req.client}));
+      }
+      return handleAction
+        .then(() => throttleCore.executeAction(action.user, action.type))
+        .then(() => undefined);
+
+    }
+  });
 });
 
 export {

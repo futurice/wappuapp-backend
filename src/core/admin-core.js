@@ -69,23 +69,19 @@ function sendSystemMessage(action) {
         if (_.isEmpty(rows)) {
           throw new Error('Action row creation failed: ' + actionRow);
         }
-
         action.id = rows[0].id;
         action.client.team = rows[0].team_id;
-
+        action.city = 3;
+        action.client.team = 15;
+        action.user = null;
+        action.isSticky = true;
         if (action.type === 'TEXT') {
-          logger.info('Announcing system message');
-          //return createFeedItem(action, trx);
-          return createFeedItem({
-            type: 'TEXT',
-            //text: `${action.text}`,
-            text: action.text,
-            user: null,
-            isSticky: true
-          });
-        }
+          logger.info(`Announcing system message ${action.text}`);
+          return createFeedItem(action,trx);
 
+        } else {
         return Promise.resolve();
+        }
     });
   });
 }
