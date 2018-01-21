@@ -29,7 +29,7 @@ function createRouter() {
 
   router.get('/events', eventHttp.getEvents);
   router.get('/events/:id', eventHttp.getEvent);
-
+  router.get('/allevents/:city_id', requireAuth, eventHttp.getAllEvents);
   router.post('/actions', actionHttp.postAction);
   router.get('/teams', teamHttp.getTeams);
 
@@ -69,6 +69,10 @@ function createRouter() {
   router.put('/admin/users/:id/unban', requireAuth, adminHttp.unBanUser);
   router.delete('/deletemoderator/:id', requireAdmin, loginHttp.deletemoderator);
   router.get('/moderatorlist', requireAdmin, loginHttp.modlist);
+  router.post('/addevent', requireAuth, eventHttp.addEvent);
+  router.delete('/deleteevent/:id', requireAuth, eventHttp.deleteEvent);
+  router.post('/updateevent/:id', requireAuth, eventHttp.updateEvent);
+  router.get('/updateevent/:id', requireAuth, eventHttp.getUpdateEvent);
 
   router.post('/reports', abuseHttp.reportFeedItem);
   router.put('/admin/reports/:id', requireAuth, abuseHttp.resolveReport);
