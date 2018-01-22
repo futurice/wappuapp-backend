@@ -360,7 +360,7 @@ function _getTeamNameSql(cityId) {
 }
 
 function _getNumberOfComments(id, parent_id){
-  // skip the database search if the feedItem does not have a parent_id
+  // skip the database search if the feedItem has a parent_id
   if (parent_id){
     return BPromise.resolve(0);
   }
