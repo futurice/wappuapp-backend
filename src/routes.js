@@ -14,6 +14,7 @@ import * as wappuMood from './http/wappu-mood-http';
 import * as imageHttp from './http/image-http';
 import * as heilaHttp from './http/heila-http';
 import * as matchHttp from './http/match-http';
+import * as feedbackHttp from './http/feedback-http';
 
 function createRouter() {
   const router = express.Router();
@@ -54,6 +55,8 @@ function createRouter() {
   router.get('/cities', citiesHttp.getCities)
 
   router.put('/vote', voteHttp.putVote);
+
+  router.post('/feedback/:id', feedbackHttp.postFeedback);
 
   router.get('/radio', radioHttp.getStations);
   router.get('/radio/:id', radioHttp.getStation);

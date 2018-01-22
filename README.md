@@ -169,8 +169,6 @@ UPDATE users SET is_banned = true WHERE uuid='D47DA01C-51BB-4F96-90B6-D64B77225E
 
 
 
-
-
 ### `GET /api/heila`
 
 > List heila profiles
@@ -245,6 +243,15 @@ Responses:
 
 * `200 OK` Body is one of [event object](#event-object) with an array of images that are [image feed objects](#feed-objects).
 * `404 Not Found` Event not found
+
+
+### `POST /api/feedback/:id`
+
+Responses:
+
+* `200 OK`
+
+Body is a [feedback object](#feedback-object).
 
 
 ### `GET /api/teams`
@@ -548,6 +555,17 @@ When you're GETting your own list of matches:
   "checkingCount": 0,
   "radius": 400,
   "images": []
+}
+```
+
+### Feedback object
+
+```js
+{
+  "id": 1234,
+  "text": "blaa blaa bububu pöx", // optional, max 5000 char
+  "grade": [0-5], // optional,
+  "uuid": "kdjfdakdf" // uuid of the giver
 }
 ```
 
