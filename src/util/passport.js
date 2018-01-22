@@ -65,7 +65,7 @@ const jwtLogin = new Strategy(jwtOptions, (req, payload, done) => {
         });
       } else {
         const [row] = rows
-        if (row.role != null) {
+        if (row.role !== null) {
           return done(null, true)
         } else {
           return done(null, false)
