@@ -46,6 +46,12 @@ const schemas = {
     opinion: Joi.string().regex(/^UP|DOWN$/).required()
   },
 
+  matchBan: {
+    uuid: common.userUuid.required(),
+    matchedUserId: common.primaryKeyId.required(),
+    firebaseChatId: Joi.string().required()
+  },
+
   matchesList: {
     uuid: common.userUuid.required(),
   },

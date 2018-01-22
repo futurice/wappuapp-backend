@@ -147,9 +147,9 @@ function getListOfMatches(uuid) {
           console.log(`${uuid} --> ${userId} --> :: `);
           console.log(rows);
           rows = rows.filter(row => {
-            return (row.opinion1 === 'UP' &&
+            return row.opinion1 === 'UP' &&
                    row.opinion2 === 'UP' &&
-                   row.firebaseChatId);
+                   row.firebaseChatId;
           });
           console.log(rows);
           // TODO: mitä pitäisi palauttaa
@@ -158,7 +158,30 @@ function getListOfMatches(uuid) {
     })
 };
 
+
+function closeMatch(close) {
+
+  return _uuidToUserId(close.uuid)
+    .then(closerUserId => {
+      // """security check"""
+      return knex('matches')
+        .select('matches.*')
+        .where({
+          'userId1': closerUserId < close.matchedUserId ? closerUserId : close.matchedUserId,
+          'userId2': closerUserId < close.matchedUserId ? close.matchedUserId : closerUserId,
+          'firebaseChatId': close.firebaseChatId
+        })
+        .then(rows => {
+          if (rows.length === 1) {
+            // this will close the chat via Firebase function
+            functionCore.closeChat(close.firebaseChatId);
+          }
+        })
+    })
+};
+
 export {
   createOrUpdateMatch,
   getListOfMatches,
+  closeMatch,
 }

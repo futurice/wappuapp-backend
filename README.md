@@ -197,6 +197,8 @@ Responses:
 
 > This POSTs a match telling that "this user made an UP for that user"
 
+* Body is [match object](#match-object).
+
 Responses:
 * `200 OK`
 
@@ -208,6 +210,15 @@ Responses:
 * `200 OK` List of [match objects](#match-object).
 
 
+### `POST /api/heila/matches/close`
+
+> This POSTs a note that this particular chat should be CLOSED.
+This will disable writing to that Firebase chat.
+
+* Body is [match object close](#match-object-close).
+
+Responses:
+* `200 OK`
 
 
 
@@ -474,6 +485,16 @@ When you're GETting your own list of matches:
 {
   NOT DECIDED YET BUT IS ALREADY RETURNING:
   "firebaseChatId": "key that points to /chats/*** in firebase"
+}
+```
+
+### Match object close
+
+```js
+{
+  "uuid": "this is your own uuid",
+  "matchedUserId": "this is the USERID of the user you're closing the chat with",
+  "firebaseChatId": "this is the firebaseChatId your chat is located at"
 }
 ```
 

@@ -143,3 +143,25 @@ exports.sendPushMessage = functions.database.ref('/chats/{chatId}/')
     })
   });
 
+// this writes "closed": true to chats/chatId and so closes the chat
+// for writing. reading will still be allowed.
+exports.closeChatId = functions.https.onRequest((req, res) => {
+  
+  if (req.get('FUNCTION_SECRET_KEY') !== functions.config().functions.secret) {
+    console.log('not authenticated, FUNCTION_SECRET_KEY header is barps');
+    res.sendStatus(403);
+    return;
+  }
+
+  console.log(req.query)
+  const chatId = req.query.chatId;
+  
+  return admin.database().ref(`/chats/${chatId}`)
+    .update({
+      "closed": true
+    })
+    .then(r => {
+      res.sendStatus(200); 
+    })
+});
+

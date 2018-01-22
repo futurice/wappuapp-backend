@@ -22,7 +22,16 @@ const postMatch = createJsonRoute(function(req, res) {
     .then(rows => undefined)
 })
 
+// this is used when a user closes a chat between another user
+const postMatchClose = createJsonRoute(function(req, res) {
+  const close = assert(req.body, 'matchClose');
+
+  return matchesCore.closeMatch(close)
+    .then(rows => undefined)
+})
+
 export {
   getMatches,
-  postMatch
+  postMatch,
+  postMatchClose
 }
