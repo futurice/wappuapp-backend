@@ -1,4 +1,3 @@
-import _ from 'lodash';
 import {createJsonRoute, throwStatus} from '../util/express';
 import {assert} from '../validation';
 import * as adminCore from '../core/admin-core';
@@ -21,6 +20,34 @@ const deleteFeedItem = createJsonRoute(function(req, res) {
   });
 });
 
+const shadowBanUser = createJsonRoute(function(req, res) {
+  const id = assert(req.params.id, 'common.primaryKeyId');
+
+  return adminCore.shadowBanUser(id)
+  .then(updatedCount => {
+    if (updatedCount === 0) {
+      return throwStatus(404, 'User not found');
+    } else {
+      return undefined;
+    }
+  });
+});
+
+const unBanUser = createJsonRoute(function(req, res) {
+  const id = assert(req.params.id, 'common.primaryKeyId');
+
+  return adminCore.unBanUser(id)
+  .then(updatedCount => {
+    if (updatedCount === 0) {
+      return throwStatus(404, 'User not found');
+    } else {
+      return undefined;
+    }
+  });
+});
+
 export {
-  deleteFeedItem
+  deleteFeedItem,
+  shadowBanUser,
+  unBanUser
 }

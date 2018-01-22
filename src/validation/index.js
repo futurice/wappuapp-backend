@@ -95,6 +95,15 @@ const schemas = {
   teamsParams: {
     city: common.primaryKeyId,
   },
+  reportParams: {
+    feedItemId: common.primaryKeyId.required(),
+    reportCreatorUuid: common.userUuid.required(),
+    reportDescription: Joi.string().optional().example('This offends me')
+  },
+  reportResolveParams: {
+    reportId: common.primaryKeyId.required(),
+    banned: Joi.boolean()
+  }
 };
 
 const conversions = {};

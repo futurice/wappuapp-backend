@@ -40,6 +40,7 @@
     "pg": "^4.5.1",
     "redis": "^2.7.1",
     "request": "^2.69.0",
+    "sendgrid": "5.2.3",
     "server-destroy": "^1.0.1",
     "streamifier": "^0.1.1",
     "uuid": "^3.0.1",
