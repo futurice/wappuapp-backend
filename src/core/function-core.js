@@ -1,7 +1,7 @@
 const process = require('process');
 const fetch = require('node-fetch');
 
-const BASE_URL = "https://us-central1-whappu-183808.cloudfunctions.net";
+const BASE_URL = process.env.FUNCTION_BASE_URL;
 
 function createChatForTwoUsers(matchRow) {
   console.log('createChatForTwoUsers');
