@@ -5,7 +5,6 @@ let getActionTypes = createJsonRoute(function(req, res) {
   return actionTypeCore.getActionTypes();
 });
 
-
 export {
   getActionTypes,
 };

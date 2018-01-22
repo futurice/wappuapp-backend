@@ -7,8 +7,16 @@ admin.initializeApp(functions.config().firebase);
 // // Create and Deploy Your First Cloud Functions
 // // https://firebase.google.com/docs/functions/write-firebase-functions
 
+
 // THIS FUNCTION ADDS PUSHTOKEN FOR USERID
 exports.addPushTokenForUserId = functions.https.onRequest((req, res) => {
+
+  if (req.get('FUNCTION_SECRET_KEY') !== functions.config().functions.secret) {
+    console.log('not authenticated, FUNCTION_SECRET_KEY header is barps');
+    res.sendStatus(403);
+    return;
+  }
+
   const userId = req.query.userId;
   const pushToken = req.query.pushToken;
 
@@ -20,6 +28,13 @@ exports.addPushTokenForUserId = functions.https.onRequest((req, res) => {
 });
 
 exports.addNewChatBetweenUsers = functions.https.onRequest((req, res) => {
+  
+  if (req.get('FUNCTION_SECRET_KEY') !== functions.config().functions.secret) {
+    console.log('not authenticated, FUNCTION_SECRET_KEY header is barps');
+    res.sendStatus(403);
+    return;
+  }
+
   console.log(req.query)
   const userId1 = req.query.userId1;
   const userId2 = req.query.userId2;
@@ -127,4 +142,26 @@ exports.sendPushMessage = functions.database.ref('/chats/{chatId}/')
       }
     })
   });
+
+// this writes "closed": true to chats/chatId and so closes the chat
+// for writing. reading will still be allowed.
+exports.closeChatId = functions.https.onRequest((req, res) => {
+  
+  if (req.get('FUNCTION_SECRET_KEY') !== functions.config().functions.secret) {
+    console.log('not authenticated, FUNCTION_SECRET_KEY header is barps');
+    res.sendStatus(403);
+    return;
+  }
+
+  console.log(req.query)
+  const chatId = req.query.chatId;
+  
+  return admin.database().ref(`/chats/${chatId}`)
+    .update({
+      "closed": true
+    })
+    .then(r => {
+      res.sendStatus(200); 
+    })
+});
 

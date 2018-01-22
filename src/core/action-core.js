@@ -87,7 +87,6 @@ function getActionType(code) {
     });
 }
 
-
 function _actionTypeRowToObject(row) {
   return {
     id: row.id,
