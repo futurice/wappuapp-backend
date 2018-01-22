@@ -1,6 +1,6 @@
 import * as userCore from '../core/user-core';
 import * as heilaCore from '../core/heila-core';
-import {createJsonRoute} from '../util/express';
+import {throwStatus, createJsonRoute} from '../util/express';
 import {assert} from '../validation';
 
 const putHeila = createJsonRoute(function(req, res) {
@@ -9,7 +9,11 @@ const putHeila = createJsonRoute(function(req, res) {
   console.log(heila);
 
   return heilaCore.createOrUpdateHeila(heila)
-    .then(rowsInserted => undefined);
+    .then(rowsInserted => {
+      if (rowsInserted === -1) {
+        throwStatus(500, 'Something went wrong.');
+      }
+    });
 });
 
 const getHeilaList = createJsonRoute(function(req, res) {
@@ -36,7 +40,15 @@ const getHeilaList = createJsonRoute(function(req, res) {
   }
 });
 
+const getHeilaTypes = createJsonRoute(function(req, res) {
+  // if there's a query param for userId, then return only that
+  return heilaCore.getHeilaTypes()
+    .then(list => {
+      return list;
+    });
+});
 export {
   putHeila,
-  getHeilaList
+  getHeilaList,
+  getHeilaTypes
 };

@@ -62,6 +62,11 @@ function updateHeila(heila) {
       }
 
       return rows.length;
+    })
+    .catch(err => {
+      console.log('something went wrong when updating heila profile');
+      console.log(err);
+      return -1;
     });
 }
 
@@ -182,7 +187,7 @@ function _heilaRowsToObjectList(userList) {
         team_id: user.team_id,
         image_url: user.image_path ? prefixImageWithGCS(user.image_path) : null,
         bio_text: user.bio_text,
-        bio_looking_for: user.bio_looking_for
+        bio_looking_for_type_id: user.bio_looking_for_type_id
       }
     })
   console.log("heilaList")
@@ -195,10 +200,9 @@ function _makeHeilaDbRow(heila) {
     'userId': heila.userId,
     'uuid': heila.uuid,
     'bio_text': heila.bio_text,
-    'bio_looking_for': heila.bio_looking_for,
+    'bio_looking_for_type_id': heila.bio_looking_for_type_id,
     'pushToken': heila.pushToken,
   };
-
   return dbRow;
 }
 
@@ -219,13 +223,22 @@ function _heilaRowToObject(row) {
     // urlia ei oikeasti ole laitettu kantaan, siellä on vain image_path
     image_url: url,
     bio_text: row.bio_text,
-    bio_looking_for: row.bio_looking_for,
+    bio_looking_for_type_id: row.bio_looking_for_type_id
   };
 }
+
+function getHeilaTypes() {
+  return knex('heila_types')
+    .select('heila_types.*')
+    .then(rows => {
+      return rows;
+    });
+};
 
 export {
   createOrUpdateHeila,
   findByUuid,
   getAllHeilas,
   getHeilaByUserId,
+  getHeilaTypes,
 };
