@@ -51,7 +51,7 @@ exports.addNewChatBetweenUsers = functions.https.onRequest((req, res) => {
       res.send({ 'chatKey': chatKey });
       return admin.database().ref(`/chats/${chatKey}/messages`)
              .push({
-               msg: 'Tervetuloa whappuäpin chättiin!',
+               msg: 'Tervetuloa Whappuäpin chättiin! Huomaathan, että tämä keskustelu ei ole vahvasti salattu. Chättiä on fiksuinta käyttää yhteystietojen vaihtamiseen ja siirtyä sen jälkeen keskustelemaan WhatsAppissa, Telegrammissa, Messengerissä jne. tai kasvokkain :-)',
                userId: '-1',
                ts: (new Date()).getTime().toString()
              })
