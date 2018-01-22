@@ -181,7 +181,7 @@ Responses:
 
 * `200 OK` List of [heila object](#heila-object).
 
-### `GET /api/heila/types`
+### `GET /api/heila-types`
 
 > List all possible heila bio_looking_for types
 

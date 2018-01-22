@@ -18,6 +18,7 @@ const putHeila = createJsonRoute(function(req, res) {
 
 const getHeilaList = createJsonRoute(function(req, res) {
   const userId = req.query.userId;
+  const uuid = req.params.uuid;
 
   // if there's a query param for userId, then return only that
   if (userId) {
@@ -33,7 +34,7 @@ const getHeilaList = createJsonRoute(function(req, res) {
     });
   } else {
     // otherwise return all heila profiles wuhuu
-    return heilaCore.getAllHeilas()
+    return heilaCore.getAllHeilas(uuid)
       .then(heilaList => {
         return heilaList;
       })
