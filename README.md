@@ -212,6 +212,7 @@ Responses:
 
 > This POSTs a note that this particular chat should be CLOSED.
 This will disable writing to that Firebase chat.
+The chat will still be open for reading by the other user.
 
 * Body is [match object close](#match-object-close).
 
