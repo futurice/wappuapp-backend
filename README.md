@@ -169,7 +169,7 @@ UPDATE users SET is_banned = true WHERE uuid='D47DA01C-51BB-4F96-90B6-D64B77225E
 
 
 
-### `GET /api/heila`
+### `GET /api/heila/:uuid`
 
 > List heila profiles
 
