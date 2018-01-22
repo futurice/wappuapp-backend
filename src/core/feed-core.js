@@ -238,6 +238,7 @@ function _actionToFeedObject(row, client) {
     throw new Error('Client information not passed as a parameter');
   }
 
+// _getNumberOfComments calculates the number of comments for a feedItem
   return _getNumberOfComments(row['id'], row['parent_id'])
   .then(numberOfComments => {
     var feedObj = {
@@ -306,6 +307,9 @@ function _getWhereSql(opts) {
   }
 
   if (opts.parent_id){
+    whereClauses.push('feed_items.id > ?');
+    params.push(opts.parent_id);
+
     whereClauses.push('feed_items.parent_id = ?');
     params.push(opts.parent_id);
   }
@@ -356,13 +360,13 @@ function _getTeamNameSql(cityId) {
 }
 
 function _getNumberOfComments(id, parent_id){
+  // skip the database search if the feedItem does not have a parent_id
   if (parent_id){
     return BPromise.resolve(0);
   }
 
   return knex.raw(`SELECT COUNT(id) FROM feed_items WHERE parent_id=? AND id > ?;`, [id, id])
   .then(function(knexRawResult) {
-    //console.log(JSON.stringify(knexRawResult, null, 2));
     const number_of_comments = parseInt(knexRawResult.rows[0].count, 10);
     return number_of_comments;
   });
