@@ -237,49 +237,49 @@ function _actionToFeedObject(row, client) {
   if (!client) {
     throw new Error('Client information not passed as a parameter');
   }
-  return knex.raw(`SELECT COUNT(id) FROM feed_items WHERE parent_id=?;`, row['id'])
-    .then(function(knexRawResult) {
-        const number_of_comments = parseInt(knexRawResult.rows[0].count, 10);
-        var feedObj = {
-          id: row['id'],
-          type: row['action_type_code'],
-          votes: row['votes'],
-          userVote: row['user_vote'],
-          hotScore: row['hot_score'],
-          author: {
-            id: row['user_id'],
-            name: row['user_name'],
-            team: row['team_name'],
-            type: _resolveAuthorType(row, client)
-          },
-          createdAt: row['created_at'],
-          parent_id: row['parent_id'],
-          numberOfComments: number_of_comments
-        };
 
-        if (row.location) {
-          feedObj.location = {
-            latitude: row.location.y,
-            longitude: row.location.x
-          };
-        }
+  return _getNumberOfComments(row['id'], row['parent_id'])
+  .then(numberOfComments => {
+    var feedObj = {
+      id: row['id'],
+      type: row['action_type_code'],
+      votes: row['votes'],
+      userVote: row['user_vote'],
+      hotScore: row['hot_score'],
+      author: {
+        id: row['user_id'],
+        name: row['user_name'],
+        team: row['team_name'],
+        type: _resolveAuthorType(row, client)
+      },
+      createdAt: row['created_at'],
+      parent_id: row['parent_id'],
+      numberOfComments: numberOfComments,
+    };
 
-        if (feedObj.type === 'IMAGE') {
-          const imagePath = row['image_path'];
+    if (row.location) {
+      feedObj.location = {
+        latitude: row.location.y,
+        longitude: row.location.x
+      };
+    }
 
-          if (process.env.DISABLE_IMGIX === 'true' || _.endsWith(imagePath, 'gif')) {
-            feedObj.url = GCS_CONFIG.baseUrl + '/' + GCS_CONFIG.bucketName + '/' + imagePath;
-          } else {
-            feedObj.url =
-              'https://' + GCS_CONFIG.bucketName + '.imgix.net/' + imagePath +
-              process.env.IMGIX_QUERY;
-          }
-        } else if (feedObj.type === 'TEXT') {
-          feedObj.text = row.text;
-        }
+    if (feedObj.type === 'IMAGE') {
+      const imagePath = row['image_path'];
 
-        return feedObj
-    });
+      if (process.env.DISABLE_IMGIX === 'true' || _.endsWith(imagePath, 'gif')) {
+        feedObj.url = GCS_CONFIG.baseUrl + '/' + GCS_CONFIG.bucketName + '/' + imagePath;
+      } else {
+        feedObj.url =
+          'https://' + GCS_CONFIG.bucketName + '.imgix.net/' + imagePath +
+          process.env.IMGIX_QUERY;
+      }
+    } else if (feedObj.type === 'TEXT') {
+      feedObj.text = row.text;
+    }
+
+    return feedObj;
+  });
 }
 
 function _getWhereSql(opts) {
@@ -353,6 +353,19 @@ function _getTeamNameSql(cityId) {
   return !cityId
     ? `teams.name`
     : knex.raw(`CASE WHEN teams.city_id=? THEN teams.name ELSE cities.name END`, [cityId]).toString();
+}
+
+function _getNumberOfComments(id, parent_id){
+  if (parent_id){
+    return BPromise.resolve(0);
+  }
+
+  return knex.raw(`SELECT COUNT(id) FROM feed_items WHERE parent_id=? AND id > ?;`, [id, id])
+  .then(function(knexRawResult) {
+    //console.log(JSON.stringify(knexRawResult, null, 2));
+    const number_of_comments = parseInt(knexRawResult.rows[0].count, 10);
+    return number_of_comments;
+  });
 }
 
 function _resolveAuthorType(row, client) {
