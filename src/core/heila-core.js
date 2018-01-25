@@ -226,7 +226,8 @@ function _heilaRowsToObjectList(userList) {
         team_id: user.team_id,
         image_url: user.image_path ? prefixImageWithGCS(user.image_path) : null,
         bio_text: user.bio_text,
-        bio_looking_for_type_id: user.bio_looking_for_type_id
+        bio_looking_for_type_id: user.bio_looking_for_type_id,
+        class_year: user.class_year,
       }
     })
   console.log("heilaList")
@@ -241,6 +242,7 @@ function _makeHeilaDbRow(heila) {
     'bio_text': heila.bio_text,
     'bio_looking_for_type_id': heila.bio_looking_for_type_id,
     'pushToken': heila.pushToken,
+    'class_year': heila.class_year,
   };
   return dbRow;
 }
@@ -262,7 +264,8 @@ function _heilaRowToObject(row) {
     // urlia ei oikeasti ole laitettu kantaan, siellä on vain image_path
     image_url: url,
     bio_text: row.bio_text,
-    bio_looking_for_type_id: row.bio_looking_for_type_id
+    bio_looking_for_type_id: row.bio_looking_for_type_id,
+    class_year: row.class_year,
   };
 }
 
