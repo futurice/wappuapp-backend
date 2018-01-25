@@ -127,8 +127,9 @@ function getAllHeilas(uuid) {
               return [];
             }
             const unfilteredHeilalist = _heilaRowsToObjectList(_mergeUserHeilaRows(userRows, heilaRows));
-
-            const myType = unfilteredHeilalist.filter(h => h.id === userId)[0].bio_looking_for_type_id;
+            console.log('unfilteredHeilaList:')
+            console.log(unfilteredHeilalist)
+            const myType = unfilteredHeilalist.filter(h => h.id == userId)[0].bio_looking_for_type_id || -1;
             console.log('my_type');
             console.log(myType);
             console.log('unfilteredList:');
