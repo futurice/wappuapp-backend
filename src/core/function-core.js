@@ -36,6 +36,22 @@ function addPushNotificationTokenForUserId(userId, pushToken) {
   })
 };
 
+function removeUserId(userId) {
+  console.log('removeUserIdFromChats ' + userId);
+  const current_url = `${BASE_URL}/removeUserId?userId=${userId}`;
+  console.log(current_url);
+  return fetch(current_url, {
+    method: 'GET',
+    headers: {
+      'Content-Type': 'application/json',
+      'FUNCTION_SECRET_KEY': process.env.FUNCTION_SECRET_KEY
+    }
+  })
+  .catch(err => {
+    console.log(err);
+  })
+};
+
 function closeChatId(chatId) {
   console.log('closeChatId');
   const current_url = `${BASE_URL}/closeChatId?chatId=${chatId}`;
@@ -54,5 +70,6 @@ function closeChatId(chatId) {
 
 export {
   createChatForTwoUsers,
-  addPushNotificationTokenForUserId
+  addPushNotificationTokenForUserId,
+  removeUserId,
 }

@@ -145,19 +145,17 @@ function getListOfMatches(uuid) {
         .orWhere('userId2', userId)
         .then(rows => {
           console.log(`${uuid} --> ${userId} --> :: `);
-          console.log(rows);
+          // console.log(rows);
           rows = rows.filter(row => {
             return row.opinion1 === 'UP' &&
                    row.opinion2 === 'UP' &&
                    row.firebaseChatId;
           });
-          console.log(rows);
-          // TODO: mitä pitäisi palauttaa
+          // console.log(rows);
           return rows;
         })
     })
 };
-
 
 function closeMatch(close) {
 

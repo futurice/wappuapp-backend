@@ -195,8 +195,10 @@ Responses:
 
 * Body is [heila bio object](#heila-bio-object).
 
+### `DELETE /api/heila/:uuid`
 
-
+> Deletes the heila profile AND switches the user profile's heila to false.
+  The user will also stop receiving any push notifications from the service.
 
 
 ### `POST /api/heila/matches`
