@@ -22,7 +22,8 @@ function createRouter() {
   // palauttaa listan heiloja, joita voi frontissa näyttää heilanselauksessa
   // jos antaa query parametrin ?userId=jotakin, niin palauttaa vain tuota
   // userId:tä vastaavan heilan
-  router.get('/heila', heilaHttp.getHeilaList);
+  router.get('/heila/:uuid', heilaHttp.getHeilaList);
+  router.get('/heila-types', heilaHttp.getHeilaTypes);
   // päivittää oman heilaprofiilin tekstikenttätietoja
   router.put('/heila/:uuid', heilaHttp.putHeila);
 

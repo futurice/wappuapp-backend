@@ -62,6 +62,11 @@ function updateHeila(heila) {
       }
 
       return rows.length;
+    })
+    .catch(err => {
+      console.log('something went wrong when updating heila profile');
+      console.log(err);
+      return -1;
     });
 }
 
@@ -90,41 +95,80 @@ function findByUuid(uuid) {
     });
 }
 
-function getAllHeilas() {
-  console.log('getAllHeilas');
+function getAllHeilas(uuid) {
+  console.log('getAllHeilas for uuid ' + uuid);
 
   // palauttaa listan, jossa tällaisia objekteja:
   // { id: string, name: string, image_url: string,
-  //   team_id: int, bio_text: string, bio_looking_for: string }
+  //   team_id: int, bio_text: string, bio_looking_for_type_id: int }
 
-  return knex('users')
-    .select('users.*')
-    .where({ heila: true })
-    .then(userRows => {
-      if (_.isEmpty(userRows)) {
-        return [];
-      }
-      console.log('userRows::::')
-      console.log(userRows)
-      const heilaIds = userRows.map(user => {
-        return user.uuid;
-      })
-      console.log(heilaIds)
-      return knex('heilas')
-        .select('heilas.*')
-        .whereIn('uuid', heilaIds)
-        .then(heilaRows => {
-          console.log(heilaRows);
-          if (_.isEmpty(heilaRows)) {
-            return [];
-          }
-          return _heilaRowsToObjectList(_mergeUserHeilaRows(userRows, heilaRows));
+  return _findUserIdByUuid(uuid)
+  .then(userId => {
+
+    return knex('users')
+      .select('users.*')
+      .where({ heila: true })
+      .then(userRows => {
+        if (_.isEmpty(userRows)) {
+          return [];
+        }
+        console.log('userRows::::')
+        console.log(userRows)
+        const heilaIds = userRows.map(user => {
+          return user.uuid;
         })
-    })
+        console.log(heilaIds)
+        return knex('heilas')
+          .select('heilas.*')
+          .whereIn('uuid', heilaIds)
+          .then(heilaRows => {
+            console.log(heilaRows);
+            if (_.isEmpty(heilaRows)) {
+              return [];
+            }
+            const unfilteredHeilalist = _heilaRowsToObjectList(_mergeUserHeilaRows(userRows, heilaRows));
+            console.log('unfilteredHeilaList:')
+            console.log(unfilteredHeilalist)
+            const myType = unfilteredHeilalist.filter(h => h.id == userId)[0].bio_looking_for_type_id || -1;
+            console.log('my_type');
+            console.log(myType);
+            console.log('unfilteredList:');
+            console.log(unfilteredHeilalist);
+
+            return knex('matches')
+              .select('matches.*')
+              .where({ 'userId1': userId })
+              .orWhere({ 'userId2': userId })
+              .then(previousMatches => {
+                console.log('all previous matches:');
+                console.log(previousMatches);
+                const filterOutIds = previousMatches.map(match => match.userId1 === userId ? match.userId2 : match.userId1);
+                console.log('filterOudIds');
+                console.log(filterOutIds);
+
+                const filtered = unfilteredHeilalist.filter(elem => {
+                  return filterOutIds.indexOf(parseInt(elem.id)) === -1;
+                });
+
+                const sameTypes = [];
+                const otherTypes = [];
+
+                filtered.forEach(heila => {
+                  if (heila.bio_looking_for_type_id === myType) {
+                    sameTypes.push(heila);
+                  } else {
+                    otherTypes.push(heila);
+                  }
+                });
+                return sameTypes.concat(otherTypes);
+              })
+          })
+      })
+  })
 }
 
 function getHeilaByUserId(userId) {
-  console.log('getHeilaByUserId'); 
+  console.log('getHeilaByUserId');
   return knex('users')
     .select('users.*')
     .where({ id: userId })
@@ -182,7 +226,7 @@ function _heilaRowsToObjectList(userList) {
         team_id: user.team_id,
         image_url: user.image_path ? prefixImageWithGCS(user.image_path) : null,
         bio_text: user.bio_text,
-        bio_looking_for: user.bio_looking_for
+        bio_looking_for_type_id: user.bio_looking_for_type_id
       }
     })
   console.log("heilaList")
@@ -195,10 +239,9 @@ function _makeHeilaDbRow(heila) {
     'userId': heila.userId,
     'uuid': heila.uuid,
     'bio_text': heila.bio_text,
-    'bio_looking_for': heila.bio_looking_for,
+    'bio_looking_for_type_id': heila.bio_looking_for_type_id,
     'pushToken': heila.pushToken,
   };
-
   return dbRow;
 }
 
@@ -219,13 +262,22 @@ function _heilaRowToObject(row) {
     // urlia ei oikeasti ole laitettu kantaan, siellä on vain image_path
     image_url: url,
     bio_text: row.bio_text,
-    bio_looking_for: row.bio_looking_for,
+    bio_looking_for_type_id: row.bio_looking_for_type_id
   };
 }
+
+function getHeilaTypes() {
+  return knex('heila_types')
+    .select('heila_types.*')
+    .then(rows => {
+      return rows;
+    });
+};
 
 export {
   createOrUpdateHeila,
   findByUuid,
   getAllHeilas,
   getHeilaByUserId,
+  getHeilaTypes,
 };
