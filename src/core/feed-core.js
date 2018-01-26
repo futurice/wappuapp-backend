@@ -364,8 +364,7 @@ function _getNumberOfComments(id, parent_id){
   if (parent_id){
     return BPromise.resolve(0);
   }
-
-  return knex.raw(`SELECT COUNT(id) FROM feed_items WHERE parent_id=? AND id > ?;`, [id, id])
+  return knex.raw(`SELECT COUNT(id) FROM feed_items WHERE parent_id=? AND id > ? AND is_banned = false;`, [id, id])
   .then(function(knexRawResult) {
     const number_of_comments = parseInt(knexRawResult.rows[0].count, 10);
     return number_of_comments;
