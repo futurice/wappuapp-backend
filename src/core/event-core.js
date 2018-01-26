@@ -42,42 +42,21 @@ function addEvent(event) {
 
 function updateEvent(event) {
   return knex('events').where('id', event.id).update(event)
-    .then(result => {
-      return result;
-    })
 }
 
 function getUpdateEvent(id) {
   return knex('events').select('*').where('id', id)
-    .then(result => {
-      return result;
-    })
 }
 
 function getAllEvents(city_id) {
   if (city_id === '0') {
     return knex('events').select('*')
-      .then(result => {
-        return result;
-      })
-      .catch(err => {
-        return err;
-      })
   }
   return knex('events').select('*').where('city_id', city_id)
-    .then(result => {
-      return result;
-    })
-    .catch(err => {
-      return err;
-    })
 }
 
 function deleteEvent(id) {
   return knex('events').where('id', id).del()
-  .then(result => {
-    return result;
-  })
 }
 
 function getEvents(opts) {
