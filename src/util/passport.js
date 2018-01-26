@@ -45,7 +45,7 @@ const jwtOptions = {
 
 const jwtLogin = new Strategy(jwtOptions, (req, payload, done) => {
   const uuid = req.headers['x-user-uuid'];
-  return knex('users').select('id').where('uuid', uuid)
+  return knex('users').where('uuid', uuid)
     .then(rows => {
       if (_.isEmpty(rows)) {
         return knex('role').select('email').where('id', payload.sub)
