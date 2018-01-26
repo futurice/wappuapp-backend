@@ -1,5 +1,6 @@
 import _ from 'lodash';
 import {throwStatus} from '../util/express';
+import crypto from 'crypto';
 
 import jwt from 'jwt-simple';
 const {knex} = require('../util/database').connect();
@@ -63,9 +64,12 @@ export function login(email, uuid) {
                 return {admin: true};
 		})
           } else {
-            return knex('role').select('admin').where('email', email).first()
+            return knex('role').where('email', email).first()
               .then(admin => {
-                return { admin: admin.admin, token: tokenForUser(id.id) };
+                const decipher = crypto.createDecipher('aes192', process.env.CRYPTO_PASSWORD);
+                var email_ = decipher.update(admin.email, 'hex', 'utf8');
+                email_ += decipher.final('utf8');
+                return { admin: admin.admin, email: email_, activated: admin.activated, token: tokenForUser(id.id) };
           })}
         })
       })
