@@ -59,8 +59,9 @@ export function login(email, uuid) {
               .then(row => {
                 if (_.isEmpty(row)) {
                   return throwStatus(500, 'User linking failed')
-                }})
+                }
                 return {admin: true};
+		})
           } else {
             return knex('role').select('admin').where('email', email).first()
               .then(admin => {
