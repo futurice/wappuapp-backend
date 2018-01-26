@@ -1,7 +1,7 @@
 import express from 'express';
 import passport from 'passport';
 
-import passportService from './util/passport'; //eslint-disable-line
+import passportService, {uuidCheck} from './util/passport'; //eslint-disable-line
 import * as eventHttp from './http/event-http';
 import * as actionHttp from './http/action-http';
 import * as teamHttp from './http/team-http';
@@ -19,14 +19,13 @@ import * as loginHttp from './http/login-http';
 import * as adminHttp from './http/admin-http';
 import * as abuseHttp from './http/abuse-http';
 
-
 const requireAuth = passport.authenticate('jwt', {session: false});
 const requireLogin = passport.authenticate('local', {session: false});
 const requireAdmin = passport.authenticate('admin', {session: false});
 
 function createRouter() {
   const router = express.Router();
-
+  requireAuth.unless = require('express-unless')
   router.get('/events', eventHttp.getEvents);
   router.get('/events/:id', eventHttp.getEvent);
   router.get('/allevents/:city_id', requireAuth, eventHttp.getAllEvents);
@@ -41,7 +40,7 @@ function createRouter() {
 
   router.get('/feed', feedHttp.getFeed);
   router.delete('/feed/:id', feedHttp.deleteFeedItem);
-  router.put('/admin/feed/:id', requireAuth, adminHttp.deleteFeedItem);
+  router.put('/admin/feed/:id', requireAuth.unless(uuidCheck), adminHttp.deleteFeedItem);
   router.get('/image/:id', imageHttp.getImage);
 
   router.get('/announcements', announcementHttp.getAnnouncements);
@@ -65,8 +64,8 @@ function createRouter() {
   router.get('/forgottenpassword/:email', loginHttp.forgottenpw);
   router.put('/promote/:id', requireAdmin, loginHttp.promote);
   router.put('/demote/:id', requireAdmin, loginHttp.demote);
-  router.put('/admin/users/:id/ban', requireAuth, adminHttp.shadowBanUser);
-  router.put('/admin/users/:id/unban', requireAuth, adminHttp.unBanUser);
+  router.put('/admin/users/:id/ban', requireAuth.unless(uuidCheck), adminHttp.shadowBanUser);
+  router.put('/admin/users/:id/unban', requireAuth.unless(uuidCheck), adminHttp.unBanUser);
   router.delete('/deletemoderator/:id', requireAdmin, loginHttp.deletemoderator);
   router.get('/moderatorlist', requireAdmin, loginHttp.modlist);
   router.post('/addevent', requireAuth, eventHttp.addEvent);
