@@ -46,7 +46,8 @@ const jwtOptions = {
 
 export const uuidCheck = function(req) {
   const token = req.headers['authorization'];
-  if (token === 'null') {
+  console.log(token)
+  if (!token) {
     req.headers['authorization'] = jwt.encode({ sub: 0, iat: 0 }, process.env.JWT_SECRET)
     return false;
   }
