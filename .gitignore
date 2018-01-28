@@ -41,3 +41,4 @@ whappu-9f17f78c8dc4.json
 functions/node_modules/**
 firebase.json
 .firebaserc
+package-lock.json

@@ -4,7 +4,7 @@
 
 Dependencies:
 
-* Node 4.x or 5.x + npm 2.x
+* Node 4.x or 5.x + npm 2.x - Use NVM to manage different Node versions
 
  *Use NPM 2*.x, the current Babel configuration has issues with NPM 3.x and doesn't work ~~properly~~ at all with it
 
@@ -22,6 +22,14 @@ Dependencies:
   ```
 
 * Heroku toolbelt
+
+* Docker
+
+  Using Docker to run wappuapp-backend with wappuapp-adminpanel requires
+  - Docker 17.0.6 =>
+  - Docker Compose 1.11.2 =>
+
+  Clone this repo into the wappuapp-adminpanel folder and look for instructions there
 
 ## Get started
 
@@ -52,6 +60,8 @@ Environments:
 
 * `qa` https://wappuapp-backend-qa.herokuapp.com
 * `prod` https://wappuapp-backend.herokuapp.com
+
+Instructions for running wappuapp-backend with wappuapp-adminpanel are in the adminpanel's README.
 
 ## Techstack
 
@@ -411,6 +421,8 @@ Examples:
 * Load 20 more feed items: `GET /api/feed?beforeId=123&limit=20`
 
     Assuming the id of oldest/last feed item client currently has is `123`.
+    
+* Get the comments for a feed item with id 7: `GET /api/feed?parent_id=7`
 
 Responses:
 
@@ -434,7 +446,6 @@ Responses:
 > Delete item from feed
 
 `:id` Is the id of an item in the feed.
-
 
 ### `GET /api/mood`
 
@@ -481,6 +492,44 @@ Responses:
 Responses:
 
 * `200 OK` Body is one of [radio objects](#radio-object).
+
+## Adminpanel endpoints
+
+### `DELETE /api/admin/feed/:id`
+
+> Delete item from feed as a moderator
+
+Query paramters:
+
+* `:id` Is the id of an item in the feed.
+
+Responses:
+
+* `200 OK` with empty body
+
+### `PUT /api/admin/users/:uuid/ban`
+
+> Shadowban user as a moderator
+
+Query paramters:
+
+* `:uuid` Is the uuid of an user
+
+Responses:
+
+* `200 OK` with empty body
+
+### `PUT /api/admin/users/:uuid/unban`
+
+> Unban user as a moderator
+
+Query paramters:
+
+* `:uuid` Is the uuid of an user
+
+Responses:
+
+* `200 OK` with empty body
 
 ## Response objects
 

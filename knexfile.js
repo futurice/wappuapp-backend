@@ -51,7 +51,6 @@ function censorPgConnectionString(str) {
   if (str.match(regex) !== null) {
     return str.replace(regex, '$1://$2:HIDDEN_PASSWORD@$4');
   }
-
   return 'CENSORED CONNECTION STRING';
 }
 
