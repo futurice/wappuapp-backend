@@ -3,6 +3,18 @@ import * as heilaCore from '../core/heila-core';
 import {throwStatus, createJsonRoute} from '../util/express';
 import {assert} from '../validation';
 
+const deleteHeila = createJsonRoute(function(req, res) {
+  const uuid = req.params.uuid; 
+  console.log('deleteHeila ' + uuid);
+  return heilaCore.deleteHeila(uuid)
+    .then(rowsInserted => undefined)
+    .catch(err => {
+      console.log('error happened while deleteHeila was called');
+      console.log(err);
+      throwStatus(500, 'Something went wrong.');
+    })
+});
+
 const putHeila = createJsonRoute(function(req, res) {
   console.log('putHeila');
   const heila = assert(req.body, 'heila');
@@ -51,5 +63,6 @@ const getHeilaTypes = createJsonRoute(function(req, res) {
 export {
   putHeila,
   getHeilaList,
-  getHeilaTypes
+  getHeilaTypes,
+  deleteHeila,
 };

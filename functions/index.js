@@ -27,6 +27,42 @@ exports.addPushTokenForUserId = functions.https.onRequest((req, res) => {
 
 });
 
+
+// this function takes an userId as an argument and removes that user's 
+// pushToken from the database. after this the user will not receive any
+// push notifications from the service anymore.
+exports.removeUserId = functions.https.onRequest((req, res) => {
+
+  if (req.get('FUNCTION_SECRET_KEY') !== functions.config().functions.secret) {
+    console.log('not authenticated, FUNCTION_SECRET_KEY header is barps');
+    res.sendStatus(403);
+    return;
+  }
+
+  const userId = req.query.userId;
+
+  return admin.database().ref('/pushTokens/' + userId).set({ token: null }).then(snapshot => {
+    console.log('pushToken removed from userId ' + userId);
+    // return admin.database().ref('/chats/').once('value').then(snapshot => {
+    //   const allChats = snapshot.val();
+    //   const chatsToClose = [];
+    //   Object.keys(allChats).forEach(key => {
+    //     if (allChats[key].users[0] == userId || allChats[key].users[1] == userId) {
+    //       chatsToClose.push(key); 
+    //     }
+    //   });
+    //   // these are the keys for chats of this userId
+    //   // TODO: it should be decided what to do with them
+    //   // leave open, close them?
+    //   // should the other user be notified somehow?
+    //   console.log('chatsToClose:');
+    //   console.log(chatsToClose);
+    // });
+    res.sendStatus(200);
+  });
+
+});
+
 exports.addNewChatBetweenUsers = functions.https.onRequest((req, res) => {
   
   if (req.get('FUNCTION_SECRET_KEY') !== functions.config().functions.secret) {

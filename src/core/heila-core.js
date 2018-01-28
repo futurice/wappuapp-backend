@@ -2,8 +2,7 @@ import _ from 'lodash';
 import * as feedCore from './feed-core.js';
 import { prefixImageWithGCS } from './image-core.js'
 import { GCS_CONFIG } from '../util/gcs';
-import { addPushNotificationTokenForUserId } from './function-core.js';
-
+import * as functionCore from './function-core.js';
 const BPromise = require('bluebird');
 const {knex} = require('../util/database').connect();
 
@@ -37,7 +36,7 @@ function createHeila(heila) {
         // this adds the pushToken to Firebase database
         // so that the "send push message to user" function
         // triggered by new chat msg write can use the pushToken immediately
-        addPushNotificationTokenForUserId(heila.userId, heila.pushToken);
+        functionCore.addPushNotificationTokenForUserId(heila.userId, heila.pushToken);
       }
       return rows.length;
     });
@@ -58,7 +57,7 @@ function updateHeila(heila) {
         // this adds the pushToken to Firebase database
         // so that the "send push message to user" function
         // triggered by new chat msg write can use the pushToken immediately
-        addPushNotificationTokenForUserId(heila.userId, heila.pushToken);
+        functionCore.addPushNotificationTokenForUserId(heila.userId, heila.pushToken);
       }
 
       return rows.length;
@@ -274,10 +273,34 @@ function getHeilaTypes() {
     });
 };
 
+function deleteHeila(uuid) {
+  // first drops the row from heilas table
+  // then toggles the true/false of users table 
+  // for this uuid
+  // this IS a side-effect if you think about it
+  // from the users table's perspective, yes.
+  return knex('heilas')
+    .where({ 'uuid': uuid })
+    .del()
+    .then(res => {
+      // TODO: could this Promise Hell be somehow improved?!
+      return knex('users')
+        .where({ 'uuid': uuid })
+        .update({ 'heila': false })
+        .then(rows => {
+          return _findUserIdByUuid(uuid)
+            .then(userId => {
+              return functionCore.removeUserId(userId);
+            })
+        });
+    });
+};
+
 export {
   createOrUpdateHeila,
   findByUuid,
   getAllHeilas,
   getHeilaByUserId,
   getHeilaTypes,
+  deleteHeila
 };
