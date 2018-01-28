@@ -74,10 +74,7 @@
   "scripts": {
     "postinstall": "bash ./tools/run-migrations-and-seeds.sh",
     "debug": "nodemon --inspect --watch ./src -e js --exec \"babel-node --presets es2015 src/index.js\"",
-    "start": "nodemon --watch ./src -e js --exec \"babel-node --presets es2015 src/index.js\""
-  },
-  "scripts": {
-    "postinstall": "bash ./tools/run-migrations-and-seeds.sh",
+    "start": "nodemon --watch ./src -e js --exec \"babel-node --presets es2015 src/index.js\"",
     "precommit": "lint-staged",
     "test": "source .env-test && mocha --compilers js:babel-core/register",
     "ci": "bash ./tools/ci.sh",
