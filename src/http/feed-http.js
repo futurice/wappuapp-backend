@@ -2,6 +2,7 @@ import _ from 'lodash';
 import * as feedCore from '../core/feed-core';
 import {createJsonRoute, throwStatus} from '../util/express';
 import {assert} from '../validation';
+import { create } from 'domain';
 
 
 const getFeed = createJsonRoute(function(req, res) {
@@ -13,7 +14,7 @@ const getFeed = createJsonRoute(function(req, res) {
     type: req.query.type,
     since: req.query.since,
     offset: req.query.offset,
-    parent_id: req.query.parent_id,
+    parent_id: req.query.parent_id
   }, 'feedParams');
 
   const coreParams = _.merge(feedParams, {
@@ -39,7 +40,14 @@ const deleteFeedItem = createJsonRoute(function(req, res) {
   });
 });
 
+const refreshCommentNumber = createJsonRoute(function(req, res){
+  const id = req.params.id;
+  const client = req.client;
+  return feedCore.refreshCommentNumber(id, client);
+});
+
 export {
   getFeed,
-  deleteFeedItem
+  deleteFeedItem,
+  refreshCommentNumber
 };

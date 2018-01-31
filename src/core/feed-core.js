@@ -239,7 +239,7 @@ function _actionToFeedObject(row, client) {
   }
 
 // _getNumberOfComments calculates the number of comments for a feedItem
-  return _getNumberOfComments(row['id'], row['parent_id'])
+  return _getNumberOfComments(row['id'], row['parent_id'], client)
   .then(numberOfComments => {
     var feedObj = {
       id: row['id'],
@@ -359,12 +359,20 @@ function _getTeamNameSql(cityId) {
     : knex.raw(`CASE WHEN teams.city_id=? THEN teams.name ELSE cities.name END`, [cityId]).toString();
 }
 
-function _getNumberOfComments(id, parent_id){
+function _getNumberOfComments(id, parent_id, client){
   // skip the database search if the feedItem has a parent_id
   if (parent_id){
     return BPromise.resolve(0);
   }
-  return knex.raw(`SELECT COUNT(id) FROM feed_items WHERE parent_id=? AND id > ? AND is_banned = false;`, [id, id])
+
+  let SQLrequest;
+  if (client.isBanned == true){
+    SQLrequest = `SELECT COUNT(id) FROM feed_items WHERE parent_id=? AND id > ?;`
+  }
+  else {
+    SQLrequest = `SELECT COUNT(id) FROM feed_items WHERE parent_id=? AND id > ? AND is_banned = false;`
+  }
+  return knex.raw(SQLrequest, [id, id])
   .then(function(knexRawResult) {
     const number_of_comments = parseInt(knexRawResult.rows[0].count, 10);
     return number_of_comments;
@@ -383,8 +391,14 @@ function _resolveAuthorType(row, client) {
   return CONST.AUTHOR_TYPES.OTHER_USER;
 }
 
+function refreshCommentNumber(id, client){
+  const number = _getNumberOfComments(id, null, client)
+  return number;
+}
+
 export {
   getFeed,
   createFeedItem,
   deleteFeedItem,
+  refreshCommentNumber
 };
