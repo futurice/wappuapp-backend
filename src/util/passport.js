@@ -5,6 +5,7 @@ import {Strategy, ExtractJwt} from 'passport-jwt';
 import LocalStrategy from 'passport-local';
 const {knex} = require('../util/database').connect();
 import crypto from 'crypto';
+import jwt from 'jwt-simple';
 require('../init-env-variables');
 
 const localOptions = {
@@ -15,11 +16,11 @@ const localLogin = new LocalStrategy(localOptions, (email, password, done) => {
   email = cipher.update(email, 'utf8', 'hex');
   email += cipher.final('hex');
   return knex('role').select('activated').where('email', email)
-  .then(row => {
-    if (_.isEmpty(row)) {
+  .then(rows => {
+    if (_.isEmpty(rows)) {
       return done(null, false)
     }
-    const [activated] = row;
+    const [activated] = rows;
     if (activated.activated != true) {
       return done(null, false)
     }
@@ -39,28 +40,52 @@ const localLogin = new LocalStrategy(localOptions, (email, password, done) => {
 
 const jwtOptions = {
   jwtFromRequest: ExtractJwt.fromHeader('authorization'),
-  secretOrKey: process.env.JWT_SECRET
+  secretOrKey: process.env.JWT_SECRET,
+  passReqToCallback: true
 };
 
-const jwtLogin = new Strategy(jwtOptions, (payload, done) => {
-  return knex('role').select('email').where('id', payload.sub)
-  .then(rows => {
-    if (_.isEmpty(rows)) {
-      return done(null, false)
-    }
-    const startTime = moment(payload.iat)
-    const nowTime = moment(new Date().getTime())
-    const timeSpent = nowTime.diff(startTime, 'hours')
-    if (timeSpent > 24) {
-      return done(null, false)
-    } else {
-      const id = payload.sub;
-      return done(null, id)
-    }
-  });
-});
+export const uuidCheck = function(req) {
+  const token = req.headers['authorization'];
+  console.log(token)
+  if (!token) {
+    req.headers['authorization'] = jwt.encode({ sub: 0, iat: 0 }, process.env.JWT_SECRET)
+    return false;
+  }
+  return false;
+}
 
-const adminLogin = new Strategy(jwtOptions, (payload, done) => {
+const jwtLogin = new Strategy(jwtOptions, (req, payload, done) => {
+  const uuid = req.headers['x-user-uuid'];
+    return knex('users').where('uuid', uuid)
+      .then(rows => {
+        if (_.isEmpty(rows)) {
+          return knex('role').select('email').where('id', payload.sub)
+          .then(row => {
+            if (_.isEmpty(row)) {
+              return done(null, false)
+            }
+            const startTime = moment(payload.iat)
+            const nowTime = moment(new Date().getTime())
+            const timeSpent = nowTime.diff(startTime, 'hours')
+            if (timeSpent > 24) {
+              return done(null, false)
+            } else {
+              const id = payload.sub;
+              return done(null, id)
+            }
+          });
+        } else {
+          const [row] = rows
+          if (row.role !== null) {
+            return done(null, true)
+          } else {
+            return done(null, false)
+          }
+        }
+      })
+  });
+
+const adminLogin = new Strategy(jwtOptions, (req, payload, done) =>  {
   return knex('role').select('admin').where('id', payload.sub)
   .then(row => {
     if (_.isEmpty(row)) {

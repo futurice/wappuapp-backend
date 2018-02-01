@@ -36,6 +36,29 @@ function getEventById(opts = {}) {
     });
 }
 
+function addEvent(event) {
+  return knex('events').insert(event);
+}
+
+function updateEvent(event) {
+  return knex('events').where('id', event.id).update(event)
+}
+
+function getUpdateEvent(id) {
+  return knex('events').select('*').where('id', id)
+}
+
+function getAllEvents(city_id) {
+  if (city_id === '0') {
+    return knex('events').select('*')
+  }
+  return knex('events').select('*').where('city_id', city_id)
+}
+
+function deleteEvent(id) {
+  return knex('events').where('id', id).del()
+}
+
 function getEvents(opts) {
   const where = _getWhereClause(opts);
 
@@ -184,5 +207,10 @@ export {
   getEventById,
   getEvents,
   setAttendingCount,
-  isValidCheckIn
+  isValidCheckIn,
+  addEvent,
+  deleteEvent,
+  updateEvent,
+  getAllEvents,
+  getUpdateEvent
 };

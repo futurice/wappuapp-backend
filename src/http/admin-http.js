@@ -2,8 +2,6 @@ import {createJsonRoute, throwStatus} from '../util/express';
 import {assert} from '../validation';
 import * as adminCore from '../core/admin-core';
 import _ from 'lodash';
-import * as throttleCore from '../core/throttle-core';
-import * as actionCore from '../core/action-core';
 
 const deleteFeedItem = createJsonRoute(function(req, res) {
   const id = assert(req.params.id, 'common.primaryKeyId');
@@ -49,8 +47,8 @@ const unBanUser = createJsonRoute(function(req, res) {
   });
 });
 
-let sendSystemMessage = createJsonRoute(function (req, res){
-  const action = assert(_.merge(req.body, {
+let sendSystemMessage = createJsonRoute(function(req, res){
+  let action = assert(_.merge(req.body, {
     city: req.query.cityId,
   }), 'action');
 
@@ -62,27 +60,16 @@ let sendSystemMessage = createJsonRoute(function (req, res){
     throwStatus(403);
   }
 
-  
-  return throttleCore.canDoAction(action.user, action.type)
-  .then(canDoAction => {
-    if (!canDoAction && action.type !== 'TEXT' ){
-      throwStatus(429, `Too many actions of type ${ action.type }`);
-    } else {
-      let handleAction;
+  if (action.client == undefined){
+    action.client = req.client;
+    //action.client.team = 15;
+  }
 
-      if (action.type !== 'TEXT') {
-        throwStatus(400, 'Action type must be text');
-      } else {
-        action.ip = req.ip;
-        handleAction = actionCore.getActionType(action.type)
-        adminCore.sendSystemMessage(_.merge(action, {client: req.client}));
-      }
-      return handleAction
-        .then(() => throttleCore.executeAction(action.user, action.type))
-        .then(() => undefined);
+  if (action.type !== 'TEXT'){
+    throwStatus(400, `SystemMessage type must be text`)
+  }
 
-    }
-  });
+  return adminCore.sendSystemMessage(action)
 });
 
 export {
