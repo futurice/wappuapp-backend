@@ -189,6 +189,12 @@ Responses:
 
 * `200 OK` [heila type object](#heila-type-object).
 
+### `POST /api/heila-report`
+
+> Reports a bad behaving user
+
+* Body is [heila report object](#heila-report-object).
+
 ### `PUT /api/heila/:uuid`
 
 > Update heila profile text fields.
@@ -568,6 +574,17 @@ When you're GETting your own list of matches:
 
 ```
 
+### Heila report object
+
+```js
+{
+  "reporter_uuid": "UUID",
+  "bad_profile_id": "userId/heilaId (same) of the bad user",
+  "text": "explanation for the report, required, max 500"
+}
+
+
+```
 ### Event object
 
 ```js

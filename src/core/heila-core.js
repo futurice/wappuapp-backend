@@ -299,11 +299,23 @@ function deleteHeila(uuid) {
     });
 };
 
+function addHeilaReport(report) {
+
+  // just insert the row to the db
+  // --> there's no automatic notification or whatever
+  // TODO: how to get updates from these etc.
+  return knex('heila_reports').insert(report)
+    .then(rows => {
+      console.log(rows);
+    });
+};
+
 export {
   createOrUpdateHeila,
   findByUuid,
   getAllHeilas,
   getHeilaByUserId,
   getHeilaTypes,
-  deleteHeila
+  deleteHeila,
+  addHeilaReport,
 };
