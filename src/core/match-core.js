@@ -133,6 +133,9 @@ function handleMatch(matchObject) {
         .where({ 'userId1': matchObject.userId1,
                  'userId2': matchObject.userId2 })
         .update(matchObject)
+        .then(rows => {
+          return funcionCore.sendMatchNofitication(matchObject.userId1, matchObject.userId2);
+        });
     })
 }
 

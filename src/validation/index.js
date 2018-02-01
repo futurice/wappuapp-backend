@@ -47,6 +47,11 @@ const schemas = {
     text: Joi.string().min(0, 'utf8').max(500, 'utf8').required(),
   },
 
+  heila_push_receipt: {
+    uuid: common.userUuid.required(),
+    type: Joi.string().regex(/^match|msg$/).required(),
+  },
+
   feedback: {
     uuid: common.userUuid.required(),
     id: common.primaryKeyId.required(),

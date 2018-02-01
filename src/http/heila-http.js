@@ -74,10 +74,24 @@ const postHeilaReport = createJsonRoute(function(req, res) {
     });
 });
 
+const postPushNotificationReceipt = createJsonRoute(function(req, res) {
+  console.log('postPushNotificationReceipt');
+  const receipt = assert(req.body, 'heila_push_receipt');
+  console.log(receipt);
+
+  return heilaCore.handleReadReceipt(receipt)
+    .then(rowsInserted => {
+      if (rowsInserted === -1) {
+        throwStatus(500, 'Something went wrong.');
+      }
+    });
+});
+
 export {
   putHeila,
   getHeilaList,
   getHeilaTypes,
   deleteHeila,
   postHeilaReport,
+  postPushNotificationReceipt,
 };

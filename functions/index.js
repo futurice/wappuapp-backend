@@ -265,3 +265,24 @@ function updateReadReceiptAndSendPushNotification(userId, receiptType, payload) 
     });
 };
 
+exports.markRead = functions.https.onRequest((req, res) => {
+
+  // if (req.get('FUNCTION_SECRET_KEY') !== functions.config().functions.secret) {
+  //   console.log('not authenticated, FUNCTION_SECRET_KEY header is barps');
+  //   res.sendStatus(403);
+  //   return;
+  // }
+  
+  console.log(req.query);
+
+  const userId = req.query.userId;
+  const type = req.query.type;
+  const obj = {};
+  obj[type] = true;
+
+  return admin.database().ref(`/readReceipts/${userId}`)
+    .update(obj)
+    .then(r => {
+      console.log('readReceipt marked read');
+    });
+});
