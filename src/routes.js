@@ -74,7 +74,7 @@ function createRouter() {
   router.get('/updateevent/:id', requireAuth, eventHttp.getUpdateEvent);
   router.post('/admin/actions', requireAuth, adminHttp.sendSystemMessage);
   router.post('/reports', abuseHttp.reportFeedItem);
-  router.put('/admin/reports/:id', requireAuth.unless(uuidCheck), abuseHttp.resolveReport);
+  router.put('/admin/reports/:id', requireAuth, abuseHttp.resolveReport);
 
   return router;
 }
