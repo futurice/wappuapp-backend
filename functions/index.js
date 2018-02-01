@@ -28,7 +28,7 @@ exports.addPushTokenForUserId = functions.https.onRequest((req, res) => {
 });
 
 
-// this function takes an userId as an argument and removes that user's 
+// this function takes an userId as an argument and removes that user's
 // pushToken from the database. after this the user will not receive any
 // push notifications from the service anymore.
 exports.removeUserId = functions.https.onRequest((req, res) => {
@@ -48,7 +48,7 @@ exports.removeUserId = functions.https.onRequest((req, res) => {
     //   const chatsToClose = [];
     //   Object.keys(allChats).forEach(key => {
     //     if (allChats[key].users[0] == userId || allChats[key].users[1] == userId) {
-    //       chatsToClose.push(key); 
+    //       chatsToClose.push(key);
     //     }
     //   });
     //   // these are the keys for chats of this userId
@@ -64,7 +64,7 @@ exports.removeUserId = functions.https.onRequest((req, res) => {
 });
 
 exports.addNewChatBetweenUsers = functions.https.onRequest((req, res) => {
-  
+
   if (req.get('FUNCTION_SECRET_KEY') !== functions.config().functions.secret) {
     console.log('not authenticated, FUNCTION_SECRET_KEY header is barps');
     res.sendStatus(403);
@@ -74,7 +74,7 @@ exports.addNewChatBetweenUsers = functions.https.onRequest((req, res) => {
   console.log(req.query)
   const userId1 = req.query.userId1;
   const userId2 = req.query.userId2;
-  
+
   return admin.database().ref('/chats/')
          .push({
            messages: [],
@@ -112,22 +112,10 @@ exports.addNewChatBetweenUsers = functions.https.onRequest((req, res) => {
 
 
 //
-// THIS TRIGGERS ON WRITE @ /chats/whatever
-// --> check if receiver has enabled notifications
-// --> send a push notif
-exports.sendPushMessage = functions.database.ref('/chats/{chatId}/')
-  .onWrite(event => {
-    // Grab the current value of what was written to the Realtime Database.
-    const chatData = event.data.val();
-    console.log('\ŋ\ŋthere was a new write to ' + event.params.chatId);
-    console.log(chatData)
-    const users = chatData.users;
-    const lastMessageId = Object.keys(chatData.messages).slice(-1)[0];
-    const userIdForSender = chatData.messages[lastMessageId].userId;
-    const userIdForReceiver = users.filter(id => id !== userIdForSender)[0];
-    console.log(users)
-    console.log(userIdForSender)
-    console.log(userIdForReceiver)
+  //
+  //
+  //
+function sendPushMessageToUserDeviceWithPayload(userId, payload) {
     return admin.database().ref('/pushTokens').once('value').then(snapshot => {
 
       // /pushTokens is an object of this form:
@@ -138,28 +126,28 @@ exports.sendPushMessage = functions.database.ref('/chats/{chatId}/')
       // }
 
       const userIdObject = snapshot.val();
-      console.log('looking for pushToken for userId ' + userIdForReceiver);
+      console.log('looking for pushToken for userId ' + userId);
       console.log('all pushToken userIds are: ' + Object.keys(userIdObject));
 
-      if (userIdForReceiver in userIdObject) {
-        const pushToken = userIdObject[userIdForReceiver]['token'];
-        console.log('FOUND');
+      if (userId in userIdObject) {
+        const pushToken = userIdObject[userId]['token'];
+        console.log(`pushToken FOUND for userId ${userId}`);
         console.log(pushToken);
 
         // See the "Defining the message payload" section below for details
         // on how to define a message payload.
         // NOTE: the notification dictionary HAS TO BE HERE
         // read this: https://firebase.google.com/docs/cloud-messaging/concept-options#notifications
-        var payload = {
-          notification: {
-            title: 'WappuNotif!',
-            body: 'jep :-)'
-          },
-          data: {
-            kv1: 'any data here',
-            kv2: 'any data here, too'
-          }
-        };
+        //var payload = {
+          //notification: {
+            //title: 'WappuNotif!',
+            //body: 'jep :-)'
+          //},
+          //data: {
+            //kv1: 'any data here',
+            //kv2: 'any data here, too'
+          //}
+        //};
 
         // Send a message to the device corresponding to the provided
         // registration token.
@@ -174,15 +162,41 @@ exports.sendPushMessage = functions.database.ref('/chats/{chatId}/')
           });
 
       } else {
-        console.log('NOT FOUND');
+        console.log(`userId ${userId} did not have pushToken... abort sending!`);
       }
     })
-  });
+};
+
+// THIS TRIGGERS ON WRITE @ /chats/whatever
+// figure out who should receive a message
+// call the message sending logic
+exports.sendPushMessage = functions.database.ref('/chats/{chatId}/')
+  .onWrite(event => {
+    // Grab the current value of what was written to the Realtime Database.
+    const chatData = event.data.val();
+    console.log('\ŋ\ŋthere was a new write to ' + event.params.chatId);
+    console.log(chatData)
+    const users = chatData.users;
+    const lastMessageId = Object.keys(chatData.messages).slice(-1)[0];
+    const userIdForSender = chatData.messages[lastMessageId].userId;
+    const userIdForReceiver = users.filter(id => id !== userIdForSender)[0];
+    console.log(users)
+    console.log(userIdForSender)
+    console.log(userIdForReceiver)
+
+    const payload = {
+      notification: {
+        title: 'Whappu!',
+        body: 'You have a new message!'
+      }
+    };
+    return updateReadReceiptAndSendPushNotification(userIdForReceiver, 'msg', payload);
+})
 
 // this writes "closed": true to chats/chatId and so closes the chat
 // for writing. reading will still be allowed.
 exports.closeChatId = functions.https.onRequest((req, res) => {
-  
+
   if (req.get('FUNCTION_SECRET_KEY') !== functions.config().functions.secret) {
     console.log('not authenticated, FUNCTION_SECRET_KEY header is barps');
     res.sendStatus(403);
@@ -191,13 +205,63 @@ exports.closeChatId = functions.https.onRequest((req, res) => {
 
   console.log(req.query)
   const chatId = req.query.chatId;
-  
+
   return admin.database().ref(`/chats/${chatId}`)
     .update({
       "closed": true
     })
     .then(r => {
-      res.sendStatus(200); 
+      res.sendStatus(200);
     })
 });
+
+
+exports.sendMatchNotification = functions.https.onRequest((req, res) => {
+
+  if (req.get('FUNCTION_SECRET_KEY') !== functions.config().functions.secret) {
+    console.log('not authenticated, FUNCTION_SECRET_KEY header is barps');
+    res.sendStatus(403);
+    return;
+  }
+
+  console.log(req.query);
+
+  const userId = req.query.userId;
+  const payload = {
+    notification: {
+      title: 'Whappu!',
+      body: 'You have a new match!'
+    }
+  };
+  return updateReadReceiptAndSendPushNotification(userId, 'match', payload);
+  res.sendStatus(200);
+});
+
+function updateReadReceiptAndSendPushNotification(userId, receiptType, payload) {
+
+  // this first grabs the user's current readReceipt status
+  // if it doesn't exist or the value is true
+  // --> lets create it or change the value to false
+  // --> send a push notification
+  // if it exists and the value is false
+  // --> do nothing since the user has not read the earlier notification
+  // --> this prevents sending multiple notifications to the user's device
+  // --> only one per notification type (match/msg)
+  return admin.database().ref(`/readReceipts/${userId}`).once('value', snapshot => {
+    const receiptData = snapshot.val();
+    console.log(receiptData);
+    // the user has not read the p
+    if (receiptData && receiptData[receiptType] === false) {
+      console.log('user has not read the previous match notification -> abort');
+      return;
+    }
+
+    return admin.database().ref(`/readReceipts/${userId}`)
+      .update({ receiptType: false })
+      .then(r => {
+        console.log('readReceipt data updated');
+        return sendPushMessageToUserDeviceWithPayload(userId, payload);
+      })
+    });
+};
 
