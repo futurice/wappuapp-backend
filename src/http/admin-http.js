@@ -62,7 +62,6 @@ let sendSystemMessage = createJsonRoute(function(req, res){
 
   if (action.client == undefined){
     action.client = req.client;
-    //action.client.team = 15;
   }
 
   if (action.type !== 'TEXT'){
