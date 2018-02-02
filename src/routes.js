@@ -73,8 +73,11 @@ function createRouter() {
   router.post('/updateevent/:id', requireAuth, eventHttp.updateEvent);
   router.get('/updateevent/:id', requireAuth, eventHttp.getUpdateEvent);
 
+  router.get('/refreshcommentnumber/:id', feedHttp.refreshCommentNumber);
+
   router.post('/reports', abuseHttp.reportFeedItem);
   router.put('/admin/reports/:id', requireAuth, abuseHttp.resolveReport);
+
 
   return router;
 }
