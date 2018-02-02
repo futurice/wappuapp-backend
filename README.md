@@ -345,6 +345,18 @@ Responses:
 
 * `200 OK`
 
+### `GET /api/refreshcommentnumber/:id`
+
+> Get the number of comments for a feed item with the given feed_item id.
+
+Example:
+
+* Get the number of comments for a feed item with id 1: `GET /api/refreshcommentnumber/1`
+
+Responses:
+
+* `200 OK`
+
 
 ### `GET /api/image/:id`
 
