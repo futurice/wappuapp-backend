@@ -392,9 +392,11 @@ function _resolveAuthorType(row, client) {
 }
 
 function refreshCommentNumber(id, client){
-  const number = _getNumberOfComments(id, null, client)
-  return number;
-}
+  return _getNumberOfComments(id, null, client)
+  .then(result =>{
+    return result
+  });
+};
 
 export {
   getFeed,
