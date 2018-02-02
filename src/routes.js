@@ -76,8 +76,8 @@ function createRouter() {
   router.get('/refreshcommentnumber/:id', feedHttp.refreshCommentNumber);
 
   router.post('/reports', abuseHttp.reportFeedItem);
+  router.get('/admin/reports', requireAuth, abuseHttp.getReportedFeedItems);
   router.put('/admin/reports/:id', requireAuth, abuseHttp.resolveReport);
-
 
   return router;
 }
