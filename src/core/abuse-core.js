@@ -70,7 +70,22 @@ function getReportedFeedItems(){
   return knex('feed_item_reports').count('id').where('is_resolved', false)
   .then(number_of_rows =>{
     return knex.from('feed_item_reports')
-    .select()
+    .select("feed_item_reports.id as report_id",
+    "feed_item_reports.feed_item_id as id",
+    "report_creator_id",
+    "feed_item_reports.created_at",
+    "report_description",
+    "is_resolved",
+    "user_id",
+    "location",
+    "image_path",
+    "text",
+    "type",
+    "updated_at",
+    "is_banned",
+    "hot_score",
+    "city_id",
+    "parent_id")
     .innerJoin('feed_items', 'feed_item_reports.feed_item_id', 'feed_items.id' )
     .where('is_resolved', false)
     .limit(10)
