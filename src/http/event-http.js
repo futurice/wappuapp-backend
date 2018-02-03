@@ -7,11 +7,13 @@ import knex from 'knex';
 const addEvent = createJsonRoute(function(req, res) {
   var x = null;
   var y = null;
-  if (req.body.location.x) {
-    x = req.body.location.x;
-  }
-  if (req.body.location.y) {
-    y = req.body.location.y;
+  if (req.body.location) {
+    if (req.body.location.x) {
+      x = req.body.location.x;
+    }
+    if (req.body.location.y) {
+      y = req.body.location.y;
+    }
   }
   const locationcmd = 'point(' + x + ', ' + y + ')';
   const event = {
@@ -52,11 +54,13 @@ const getUpdateEvent = createJsonRoute(function(req, res) {
 const updateEvent = createJsonRoute(function(req, res) {
   var x = null;
   var y = null;
-  if (req.body.location.x) {
-    x = req.body.location.x;
-  }
-  if (req.body.location.y) {
-    y = req.body.location.y;
+  if (req.body.location) {
+    if (req.body.location.x) {
+      x = req.body.location.x;
+    }
+    if (req.body.location.y) {
+      y = req.body.location.y;
+    }
   }
   const locationcmd = 'point(' + x + ', ' + y + ')';
   const event = {

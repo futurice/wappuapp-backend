@@ -345,6 +345,18 @@ Responses:
 
 * `200 OK`
 
+### `GET /api/refreshcommentnumber/:id`
+
+> Get the number of comments for a feed item with the given feed_item id.
+
+Example:
+
+* Get the number of comments for a feed item with id 1: `GET /api/refreshcommentnumber/1`
+
+Responses:
+
+* `200 OK`
+
 
 ### `GET /api/image/:id`
 
@@ -457,6 +469,18 @@ Responses:
 * `200 OK`
 * `400 Text cannot be empty.`
 * `400 SystemMessage type must be text.`
+
+### `GET /api/admin/reports`
+
+> Get reported feed items, sorted by newest order
+
+Query paramters:
+
+* `beforeId` get reported feed_items before given Id
+
+Responses:
+
+* `200 OK` with empty body
 
 ## Response objects
 

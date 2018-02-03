@@ -19,20 +19,21 @@ function deleteFeedItem(id) {
 }
 
 function shadowBanUser(id) {
-  return knex('users').select('role').where('id', id)
+  return knex('users').select('role').where({'id': id})
   .then(role_ => {
     const [role] = role_;
-    if (role !== null) {
-      return new Error('Cannot ban moderator');
+    if (role.role !== null) {
+      throw new Error('Cannot ban moderator');
+    } else {
+      return knex('users').where('id', id).update({is_banned: true})
+      .then(updatedCount => {
+        if (updatedCount > 1) {
+          logger.error('Banned user with ID ', id);
+          throw new Error('Unexpected amount of bans happened: ', updatedCount);
+        }
+        return updatedCount;
+      })
     }
-  })
-  return knex('users').where('id', id).update({is_banned: true})
-  .then(updatedCount => {
-    if (updatedCount > 1) {
-      logger.error('Banned user with ID ', id);
-      throw new Error('Unexpected amount of bans happened: ', updatedCount);
-    }
-    return updatedCount;
   })
 }
 

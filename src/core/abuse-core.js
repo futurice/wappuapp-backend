@@ -66,7 +66,50 @@ function resolveReport(reportParams) {
     });
 }
 
+function getReportedFeedItems(params){
+  console.log(JSON.stringify(params, null, 2));
+  console.log(params.beforeId)
+
+  let whereClause = []
+
+  if (params.beforeId){
+    whereClause.push('feed_item_reports.id < ' + params.beforeId + ' AND ');
+  }
+  whereClause += 'is_resolved = false'
+
+  console.log(whereClause);
+  return knex('feed_item_reports').count('id').where('is_resolved', false)
+  .then(number_of_rows =>{
+    return knex.from('feed_item_reports')
+    .select("feed_item_reports.id as report_id",
+    "feed_item_reports.feed_item_id as id",
+    "report_creator_id",
+    "feed_item_reports.created_at",
+    "report_description",
+    "is_resolved",
+    "user_id",
+    "location",
+    "image_path",
+    "text",
+    "type",
+    "updated_at",
+    "is_banned",
+    "hot_score",
+    "city_id",
+    "parent_id")
+    .innerJoin('feed_items', 'feed_item_reports.feed_item_id', 'feed_items.id' )
+    .whereRaw(whereClause)
+    .limit(20)
+    .orderBy('report_id', 'desc')
+    .then(feed => _.map([number_of_rows, feed]))
+  })
+  .catch(err =>{
+    throw err;
+  });
+}
+
 export {
   reportFeedItem,
-  resolveReport
+  resolveReport,
+  getReportedFeedItems
 };
