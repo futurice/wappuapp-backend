@@ -460,6 +460,16 @@ Responses:
 
 * `200 OK` with empty body
 
+### `POST /api/admin/actions`
+
+> Send a systemmessage
+
+Responses:
+
+* `200 OK`
+* `400 Text cannot be empty.`
+* `400 SystemMessage type must be text.`
+
 ### `GET /api/admin/reports`
 
 > Get reported feed items, sorted by newest order
