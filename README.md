@@ -466,7 +466,7 @@ Responses:
 
 Query paramters:
 
-* `?beforeId` get reported feed_items before given Id
+* `beforeId` get reported feed_items before given Id
 
 Responses:
 
