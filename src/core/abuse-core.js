@@ -86,7 +86,6 @@ function getReportedFeedItems(params){
     "user_id",
     "location",
     "feed_items.image_path",
-    "uuid",
     "teams.name as team_name",
     "users.name",
     "users.id as user_id",
