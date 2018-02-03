@@ -171,7 +171,9 @@ UPDATE users SET is_banned = true WHERE uuid='D47DA01C-51BB-4F96-90B6-D64B77225E
 
 ### `GET /api/heila/:uuid`
 
-> List heila profiles
+> List heila profiles customized to that uuid. This is what you call
+when you want to get all unseen heilas. This filters them so that
+previous matches, UPs and DOWNs are dropped.
 
 Query parameters:
 
