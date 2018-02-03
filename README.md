@@ -460,6 +460,18 @@ Responses:
 
 * `200 OK` with empty body
 
+### `GET /api/admin/reports`
+
+> Get reported feed items, sorted by newest order
+
+Query paramters:
+
+* `?beforeId` get reported feed_items before given Id
+
+Responses:
+
+* `200 OK` with empty body
+
 ## Response objects
 
 ### Event object
