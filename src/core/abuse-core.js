@@ -80,7 +80,7 @@ function getReportedFeedItems(params){
     .select("feed_item_reports.id as report_id",
     "feed_item_reports.feed_item_id as id",
     "report_creator_id",
-    "feed_item_reports.created_at",
+    "feed_item_reports.created_at as createdAt",
     "report_description",
     "is_resolved",
     "user_id",
