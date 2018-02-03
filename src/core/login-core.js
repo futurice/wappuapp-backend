@@ -17,7 +17,7 @@ function sendTokenWithEmail(email, token) {
     method: "POST",
     path: "/v3/mail/send",
     body: {
-      personalization: [
+      personalizations: [
         {
           to: [
             {
@@ -33,7 +33,7 @@ function sendTokenWithEmail(email, token) {
       content: [
         {
           type: "text/plain",
-          value: process.env.FRONTEND_URI + "activateaccount?token=" + token
+          value: process.env.FRONTEND_URI + "/activateaccount?token=" + token
         }
       ]
     }
@@ -46,6 +46,7 @@ function sendTokenWithEmail(email, token) {
     .catch(error => {
       console.log("Error sending mail");
       console.log(error);
+      console.log(error.response.body.errors);
       return false;
     });
 }
