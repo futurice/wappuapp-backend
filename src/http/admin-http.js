@@ -1,6 +1,7 @@
 import {createJsonRoute, throwStatus} from '../util/express';
 import {assert} from '../validation';
 import * as adminCore from '../core/admin-core';
+import _ from 'lodash';
 
 const deleteFeedItem = createJsonRoute(function(req, res) {
   const id = assert(req.params.id, 'common.primaryKeyId');
@@ -46,8 +47,29 @@ const unBanUser = createJsonRoute(function(req, res) {
   });
 });
 
+let sendSystemMessage = createJsonRoute(function(req, res){
+  let action = assert(_.merge(req.body, {
+    city: req.query.cityId,
+  }), 'action');
+
+  if (_.isString(action.text) && action.text.trim().length === 0) {
+    throwStatus(400, 'Text cannot be empty.');
+  }
+
+  if (action.client == undefined){
+    action.client = req.client;
+  }
+
+  if (action.type !== 'TEXT'){
+    throwStatus(400, `SystemMessage type must be text`)
+  }
+
+  return adminCore.sendSystemMessage(action)
+});
+
 export {
   deleteFeedItem,
   shadowBanUser,
-  unBanUser
+  unBanUser,
+  sendSystemMessage
 }

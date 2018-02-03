@@ -1,5 +1,8 @@
+import _ from 'lodash';
 const {knex} = require('../util/database').connect();
 const logger = require('../util/logger')(__filename);
+import {createFeedItem} from '../core/feed-core';
+
 
 function deleteFeedItem(id) {
   return knex('feed_items').update({is_banned: true}).where({
@@ -45,8 +48,22 @@ function unBanUser(id) {
   })
 }
 
+function sendSystemMessage(action) {
+  logger.info('Announcing systemmessage!');
+  action.client.id = null;
+  return createFeedItem({
+    'type': 'TEXT',
+    'text': action.text,
+    'user': null,
+    //'isSticky': true,
+    'client': action.client,
+    'parent_id': null
+  });
+}
+
 export {
   deleteFeedItem,
   shadowBanUser,
-  unBanUser
+  unBanUser,
+  sendSystemMessage
 };
