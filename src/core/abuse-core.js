@@ -66,7 +66,18 @@ function resolveReport(reportParams) {
     });
 }
 
-function getReportedFeedItems(){
+function getReportedFeedItems(params){
+  console.log(JSON.stringify(params, null, 2));
+  console.log(params.beforeId)
+
+  let whereClause = []
+
+  if (params.beforeId){
+    whereClause.push('feed_item_reports.id < ' + params.beforeId + ' AND ');
+  }
+  whereClause += 'is_resolved = false'
+
+  console.log(whereClause);
   return knex('feed_item_reports').count('id').where('is_resolved', false)
   .then(number_of_rows =>{
     return knex.from('feed_item_reports')
@@ -87,8 +98,9 @@ function getReportedFeedItems(){
     "city_id",
     "parent_id")
     .innerJoin('feed_items', 'feed_item_reports.feed_item_id', 'feed_items.id' )
-    .where('is_resolved', false)
-    .limit(10)
+    .whereRaw(whereClause)
+    .limit(20)
+    .orderBy('report_id', 'desc')
     .then(feed => _.map([number_of_rows, feed]))
   })
   .catch(err =>{
