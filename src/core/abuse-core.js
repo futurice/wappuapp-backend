@@ -66,7 +66,23 @@ function resolveReport(reportParams) {
     });
 }
 
+function getReportedFeedItems(){
+  return knex('feed_item_reports').count('id').where('is_resolved', false)
+  .then(number_of_rows =>{
+    return knex.from('feed_item_reports')
+    .select()
+    .innerJoin('feed_items', 'feed_item_reports.feed_item_id', 'feed_items.id' )
+    .where('is_resolved', false)
+    .limit(10)
+    .then(feed => _.map([number_of_rows, feed]))
+  })
+  .catch(err =>{
+    throw err;
+  });
+}
+
 export {
   reportFeedItem,
-  resolveReport
+  resolveReport,
+  getReportedFeedItems
 };

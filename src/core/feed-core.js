@@ -395,6 +395,9 @@ function refreshCommentNumber(id, client){
   return _getNumberOfComments(id, null, client)
   .then(result =>{
     return result
+  })
+  .catch(err =>{
+    throw err;
   });
 };
 
