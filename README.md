@@ -195,6 +195,15 @@ Responses:
 
 * Body is [heila report object](#heila-report-object).
 
+### `POST /api/heila-push-receipt`
+
+> Lets the push notification service know that the user has seen
+either a match notification or a msg notification and it's OK
+to send a new one. This should be called every time the user has cleared 
+the notifications.
+
+* Body is [push notification read receipt object](#push-notification-read-receipt-object).
+
 ### `PUT /api/heila/:uuid`
 
 > Update heila profile text fields.
@@ -583,8 +592,16 @@ When you're GETting your own list of matches:
   "text": "explanation for the report, required, max 500"
 }
 
+### Push notification read receipt object
+
+```js
+{
+  "uuid": "UUID",
+  "type": "match|msg" // depending on what was read
+}
 
 ```
+
 ### Event object
 
 ```js

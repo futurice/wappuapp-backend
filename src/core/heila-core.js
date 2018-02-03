@@ -257,7 +257,7 @@ function _heilaRowToObject(row) {
   }
 
   return {
-    id: row.id,
+    id: row.userId,
     uuid: row.uuid,
     // tässä asetetaan image_urli, jolla sen voi hakea verkosta ja näyttää
     // urlia ei oikeasti ole laitettu kantaan, siellä on vain image_path
@@ -310,6 +310,16 @@ function addHeilaReport(report) {
     });
 };
 
+function handleReadReceipt(receipt) {
+  console.log('handleReadReceipt');
+  
+  return findByUuid(receipt.uuid)
+    .then(rows => {
+      console.log(rows);
+      functionCore.markRead({ userId: rows.userId, type: receipt.type });
+    });
+};
+
 export {
   createOrUpdateHeila,
   findByUuid,
@@ -318,4 +328,5 @@ export {
   getHeilaTypes,
   deleteHeila,
   addHeilaReport,
+  handleReadReceipt,
 };
