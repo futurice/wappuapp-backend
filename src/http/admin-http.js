@@ -56,10 +56,6 @@ let sendSystemMessage = createJsonRoute(function(req, res){
     throwStatus(400, 'Text cannot be empty.');
   }
 
-  if (!req.client.id) {
-    throwStatus(403);
-  }
-
   if (action.client == undefined){
     action.client = req.client;
   }
