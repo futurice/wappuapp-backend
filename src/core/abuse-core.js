@@ -24,7 +24,7 @@ function reportFeedItem(reportObj) {
     .then(users => {
       if (_.isEmpty(users)) {
         throw new Error('User not found: ' + reportObj.reportCreatorUuid);
-      }  
+      }
       const dbRow = {
         'feed_item_id': reportObj.feedItemId,
         'report_creator_id': users[0].id,
