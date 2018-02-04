@@ -68,7 +68,8 @@ function sendSystemMessage(action) {
     user: null,
     //'isSticky': true,
     client: action.client,
-    parent_id: null
+    parent_id: null,
+    city_id: action.city_id
   });
 }
 
