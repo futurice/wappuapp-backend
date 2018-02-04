@@ -95,7 +95,7 @@ export function login(email, uuid) {
     });
 }
 
-export function addmoderator(origemail, email, password) {
+export function addModerator(origemail, email, password) {
   return knex("role")
     .select("id")
     .where("email", email)
@@ -116,7 +116,7 @@ export function addmoderator(origemail, email, password) {
     });
 }
 
-export function deletemoderator(id) {
+export function deleteModerator(id) {
   return knex("role")
     .where("id", id)
     .del()
@@ -153,7 +153,7 @@ export function changePassword(password, oldpassword, user) {
     });
 }
 
-export function activateaccount(password, user) {
+export function activateAccount(password, user) {
   return knex("role")
     .where("id", user)
     .update({ password: password, activated: true })
@@ -207,7 +207,7 @@ export function modList() {
     });
 }
 
-export function forgottenpw(origemail, email) {
+export function forgottenPW(origemail, email) {
   return knex("role")
     .select("id")
     .where("email", email)
