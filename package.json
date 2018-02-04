@@ -6,8 +6,7 @@
     "npm": "^5.6.x"
   },
   "license": "MIT",
-  "author":
-    "Futurice Tammerforce <tammerforce@futurice.com> (http://tammerforce.com/)",
+  "author": "Futurice Tammerforce <tammerforce@futurice.com> (http://tammerforce.com/)",
   "contributors": [
     "Tomi Turtiainen <tomi.turtiainen@gmail.com> (http://github.com/tomi)",
     "Kimmo Brunfeldt <kimmobrunfeldt@gmail.com> (http://github.com/kimmobrunfeldt)"
@@ -42,8 +41,6 @@
     "passport-jwt": "^3.0.1",
     "passport-local": "^1.0.0",
     "pg": "^7.4.0",
-    "redis": "^2.8.0",
-    "request": "^2.83.0",
     "redis": "^2.7.1",
     "request": "^2.69.0",
     "sendgrid": "5.2.3",
@@ -74,10 +71,8 @@
   },
   "scripts": {
     "postinstall": "bash ./tools/run-migrations-and-seeds.sh",
-    "debug":
-      "nodemon --inspect --watch ./src -e js --exec \"babel-node --presets es2015 src/index.js\"",
-    "start":
-      "source .env && nodemon --watch ./src -e js --exec \"babel-node --presets es2015 src/index.js\"",
+    "debug": "nodemon --inspect --watch ./src -e js --exec \"babel-node --presets es2015 src/index.js\"",
+    "start": "source .env && nodemon --watch ./src -e js --exec \"babel-node --presets es2015 src/index.js\"",
     "precommit": "lint-staged",
     "test": "source .env-test && mocha --compilers js:babel-core/register",
     "ci": "bash ./tools/ci.sh",
@@ -86,7 +81,10 @@
   },
   "lint-staged": {
     "linters": {
-      "src/**/*.js": ["eslint", "git add"]
+      "src/**/*.js": [
+        "eslint",
+        "git add"
+      ]
     }
   }
 }
