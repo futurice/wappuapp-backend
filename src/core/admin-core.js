@@ -60,7 +60,6 @@ function unBanUser(id) {
 }
 
 function sendSystemMessage(action) {
-  logger.info("Announcing systemmessage!");
   action.client.id = null;
   return createFeedItem({
     type: "TEXT",
@@ -69,7 +68,7 @@ function sendSystemMessage(action) {
     //'isSticky': true,
     client: action.client,
     parent_id: null,
-    city_id: action.city_id
+    city: action.city
   });
 }
 

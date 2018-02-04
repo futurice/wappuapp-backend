@@ -49,7 +49,7 @@ const unBanUser = createJsonRoute(function(req, res) {
 
 let sendSystemMessage = createJsonRoute(function(req, res){
   let action = assert(_.merge(req.body, {
-    city: req.query.cityId,
+    city: req.body.cityId,
   }), 'action');
 
   if (_.isString(action.text) && action.text.trim().length === 0) {
