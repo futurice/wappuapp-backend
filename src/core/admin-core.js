@@ -1,5 +1,8 @@
+import _ from 'lodash';
 const {knex} = require('../util/database').connect();
 const logger = require('../util/logger')(__filename);
+import {createFeedItem} from '../core/feed-core';
+
 
 function deleteFeedItem(id) {
   return knex('feed_items').update({is_banned: true}).where({
@@ -16,13 +19,21 @@ function deleteFeedItem(id) {
 }
 
 function shadowBanUser(id) {
-  return knex('users').where('id', id).update({is_banned: true})
-  .then(updatedCount => {
-    if (updatedCount > 1) {
-      logger.error('Banned user with ID ', id);
-      throw new Error('Unexpected amount of bans happened: ', updatedCount);
+  return knex('users').select('role').where({'id': id})
+  .then(role_ => {
+    const [role] = role_;
+    if (role.role !== null) {
+      throw new Error('Cannot ban moderator');
+    } else {
+      return knex('users').where('id', id).update({is_banned: true})
+      .then(updatedCount => {
+        if (updatedCount > 1) {
+          logger.error('Banned user with ID ', id);
+          throw new Error('Unexpected amount of bans happened: ', updatedCount);
+        }
+        return updatedCount;
+      })
     }
-    return updatedCount;
   })
 }
 
@@ -37,8 +48,22 @@ function unBanUser(id) {
   })
 }
 
+function sendSystemMessage(action) {
+  logger.info('Announcing systemmessage!');
+  action.client.id = null;
+  return createFeedItem({
+    'type': 'TEXT',
+    'text': action.text,
+    'user': null,
+    //'isSticky': true,
+    'client': action.client,
+    'parent_id': null
+  });
+}
+
 export {
   deleteFeedItem,
   shadowBanUser,
-  unBanUser
+  unBanUser,
+  sendSystemMessage
 };

@@ -35,7 +35,18 @@ const resolveReport = createJsonRoute(function(req, res) {
     });
 });
 
+const getReportedFeedItems = createJsonRoute(function(req, res) {
+  const Params = assert({
+    beforeId: req.query.beforeId
+  }
+  ,
+  "getReportedItems"
+);
+  return abuseCore.getReportedFeedItems(Params);
+});
+
 export {
   reportFeedItem,
-  resolveReport
+  resolveReport,
+  getReportedFeedItems
 };

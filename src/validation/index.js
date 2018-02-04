@@ -146,6 +146,9 @@ const schemas = {
   reportResolveParams: {
     reportId: common.primaryKeyId.required(),
     banned: Joi.boolean()
+  },
+  getReportedItems: {
+    beforeId: Joi.number().integer().min(0)
   }
 };
 

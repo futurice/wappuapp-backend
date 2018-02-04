@@ -66,7 +66,59 @@ function resolveReport(reportParams) {
     });
 }
 
+function getReportedFeedItems(params){
+
+  let whereClause = []
+  if (params.beforeId){
+    whereClause.push('feed_item_reports.id < ' + params.beforeId + ' AND ');
+  }
+  whereClause += 'is_resolved = false'
+
+  return knex('feed_item_reports').count('id').where('is_resolved', false)
+  .then(number_of_rows =>{
+    return knex.from('feed_item_reports')
+    .select("feed_item_reports.id as report_id",
+    "feed_item_reports.feed_item_id as id",
+    "report_creator_id",
+    "feed_item_reports.created_at as createdAt",
+    "report_description",
+    "is_resolved",
+    "user_id",
+    "location",
+    "feed_items.image_path",
+    "teams.name as team_name",
+    "users.name",
+    "users.id as user_id",
+    "text",
+    "type",
+    "feed_items.is_banned",
+    "hot_score",
+    "teams.city_id",
+    "parent_id",)
+    .innerJoin('feed_items', 'feed_item_reports.feed_item_id', 'feed_items.id' )
+    .innerJoin('users', 'feed_item_reports.report_creator_id', 'users.id')
+    .innerJoin('teams', 'users.team_id', 'teams.id')
+    .whereRaw(whereClause)
+    .limit(20)
+    .orderBy('report_id', 'desc')
+    .then(feed => {
+      for (var i = 0; i < feed.length; i++){
+        feed[i].author = {
+          id: feed[i].user_id,
+          name: feed[i]['name'],
+          team: feed[i]['team_name']
+        }
+      }
+      return _.map([number_of_rows, feed])
+    })
+  })
+  .catch(err =>{
+    throw err;
+  });
+}
+
 export {
   reportFeedItem,
-  resolveReport
+  resolveReport,
+  getReportedFeedItems
 };

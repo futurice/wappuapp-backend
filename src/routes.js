@@ -80,22 +80,25 @@ function createRouter() {
   router.get('/mood', wappuMood.getMood);
 
   router.post('/login', requireLogin, loginHttp.login);
-  router.post('/changepassword', requireAuth, loginHttp.changepw);
-  router.post('/activateaccount', requireAuth, loginHttp.activateaccount);
-  router.post('/addmoderator', requireAdmin, loginHttp.addmoderator);
-  router.get('/forgottenpassword/:email', loginHttp.forgottenpw);
+  router.post('/changepassword', requireAuth, loginHttp.changePW);
+  router.post('/activateaccount', requireAuth, loginHttp.activateAccount);
+  router.post('/addmoderator', requireAdmin, loginHttp.addModerator);
+  router.get('/forgottenpassword/:email', loginHttp.forgottenPW);
   router.put('/promote/:id', requireAdmin, loginHttp.promote);
   router.put('/demote/:id', requireAdmin, loginHttp.demote);
   router.put('/admin/users/:id/ban', requireAuth.unless(uuidCheck), adminHttp.shadowBanUser);
   router.put('/admin/users/:id/unban', requireAuth.unless(uuidCheck), adminHttp.unBanUser);
-  router.delete('/deletemoderator/:id', requireAdmin, loginHttp.deletemoderator);
-  router.get('/moderatorlist', requireAdmin, loginHttp.modlist);
+  router.delete('/deletemoderator/:id', requireAdmin, loginHttp.deleteModerator);
+  router.get('/moderatorlist', requireAdmin, loginHttp.modList);
   router.post('/addevent', requireAuth, eventHttp.addEvent);
   router.delete('/deleteevent/:id', requireAuth, eventHttp.deleteEvent);
   router.post('/updateevent/:id', requireAuth, eventHttp.updateEvent);
   router.get('/updateevent/:id', requireAuth, eventHttp.getUpdateEvent);
 
+  router.get('/refreshcommentnumber/:id', feedHttp.refreshCommentNumber);
+
   router.post('/reports', abuseHttp.reportFeedItem);
+  router.get('/admin/reports', requireAuth, abuseHttp.getReportedFeedItems);
   router.put('/admin/reports/:id', requireAuth, abuseHttp.resolveReport);
 
   return router;
