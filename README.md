@@ -664,6 +664,7 @@ Images is an array of [feed objects](#feed-objects).
   "team": "TiTe",
   "numSimas": "1",
   "image_url": "https://...." || null,
+  "heila": true|false,
   "images": [
     {
       "id": "2",
