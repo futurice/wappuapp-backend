@@ -338,7 +338,7 @@ Examples:
 * Load 20 more feed items: `GET /api/feed?beforeId=123&limit=20`
 
     Assuming the id of oldest/last feed item client currently has is `123`.
-    
+
 * Get the comments for a feed item with id 7: `GET /api/feed?parent_id=7`
 
 Responses:
@@ -459,6 +459,173 @@ Query paramters:
 Responses:
 
 * `200 OK` with empty body
+
+### `POST /api/login`
+
+> Login to gain admin/moderator
+
+Body:
+
+* `email`
+* `password`
+
+Responses:
+
+* `200 OK` with JWT token and level of rights
+* `401 Unauthorized`
+
+### `POST /api/addmoderator`
+
+> New moderator creation, requires admin rights
+
+Body:
+
+* `email`
+
+Responses:
+
+* `200 OK`
+* `401 Unauthorized`
+
+### `DELETE /api/deletemoderator`
+
+> Delete moderator or admin, requires admin rights
+
+Query parameters:
+
+* `:id` specifies the user id to delete
+
+Responses:
+
+* `200 OK`
+* `401 Unauthorized`
+
+### `PUT /api/promote`
+
+> Promote moderator to admin, requires admin rights
+
+Query parameters:
+
+* `:id` specifies the user id to promote
+
+Responses:
+
+* `200 OK`
+* `401 Unauthorized`
+
+### `PUT /api/demote`
+
+> Demote admin to moderator, requires admin rights
+
+Query parameters:
+
+* `:id` specifies the user id to demote
+
+Responses:
+
+* `200 OK`
+* `401 Unauthorized`
+
+### `POST /api/changepassword`
+
+> Change password for current account
+
+Body:
+
+* `oldpassword` needs to match the old password
+* `newpassword` new password to be set
+
+Responses:
+
+* `200 OK`
+* `401 Unauthorized`
+
+### `POST /api/activateaccount`
+
+> Activate new account and set password for it
+
+Body:
+
+* `password`
+
+Responses:
+
+* `200 OK`
+* `401 Unauthorized`
+
+### `GET /api/forgottenpassword`
+
+> Sends email to the account password has been forgotten from
+
+Query parameters:
+
+* `:email` email attached to the account that the password has been forgotten from
+
+Responses:
+
+* `200 OK`
+* `404 User not found`
+
+### `GET /api/moderatorlist`
+
+> Lists moderators and admins in the system, requires admin rights
+
+Responses:
+
+* `200 OK` with list of moderators
+* `401 Unauthorized`
+
+### `POST /api/addevent`
+
+> Add new event
+
+Body:
+
+* All the data for event
+
+Responses:
+
+* `200 OK`
+* `401 Unauthorized`
+
+### `DELETE /api/deleteevent`
+
+> Deletes specific event
+
+Query parameters:
+
+* `:id` specifies the event id to delete
+
+Responses:
+
+* `200 OK`
+* `401 Unauthorized`
+
+### `GeT /api/updateevent`
+
+> Get all data of specific event that is to be updated
+
+Query parameters:
+
+* `:id` specifies the user event id to be updated
+
+Responses:
+
+* `200 OK` with event data
+* `401 Unauthorized`
+
+### `POST /api/updateevent`
+
+> Update event with the data in the body
+
+Body:
+
+* All event data
+
+Responses:
+
+* `200 OK`
+* `401 Unauthorized`
 
 ## Response objects
 
