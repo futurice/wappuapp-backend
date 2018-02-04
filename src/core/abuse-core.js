@@ -95,11 +95,10 @@ function resolveReport(reportParams) {
   });
 }
 
-function getReportedFeedItems(params){
-
-  let whereClause = []
-  if (params.beforeId){
-    whereClause.push('feed_item_reports.id < ' + params.beforeId + ' AND ');
+function getReportedFeedItems(params) {
+  let whereClause = [];
+  if (params.beforeId) {
+    whereClause.push("feed_item_reports.id < " + params.beforeId + " AND ");
   }
   whereClause += "is_resolved = false";
 
@@ -134,7 +133,7 @@ function getReportedFeedItems(params){
           "feed_item_reports.feed_item_id",
           "feed_items.id"
         )
-        .innerJoin("users", "feed_item_reports.report_creator_id", "users.id")
+        .innerJoin("users", "feed_item_reports.report_creator_id", "users.uuid")
         .innerJoin("teams", "users.team_id", "teams.id")
         .whereRaw(whereClause)
         .limit(20)
