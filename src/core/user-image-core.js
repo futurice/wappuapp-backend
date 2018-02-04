@@ -2,7 +2,7 @@ import _ from 'lodash';
 const {knex} = require('../util/database').connect();
 import {GCS_CONFIG} from '../util/gcs';
 
-const targetFolder = 'user_content';
+const targetFolder = 'profile_pictures';
 
 /**
  * Get image by it's id.
@@ -57,25 +57,18 @@ function _rowToImage(row) {
 
   const imagePath = row['image_path'];
 
-  imageObj.url = prefixImageWithGCS(imagePath);
+  if (process.env.DISABLE_IMGIX === 'true' || _.endsWith(imagePath, 'gif')) {
+    imageObj.url = GCS_CONFIG.baseUrl + '/' + GCS_CONFIG.bucketName + '/' + imagePath;
+  } else {
+    imageObj.url =
+      'https://' + GCS_CONFIG.bucketName + '.imgix.net/' + imagePath +
+      process.env.IMGIX_QUERY;
+  }
 
   return imageObj;
 }
 
-function prefixImageWithGCS(imagePath) {
-  if (imagePath === "") {
-    return "";
-  }
-  if (process.env.DISABLE_IMGIX === 'true' || _.endsWith(imagePath, 'gif')) {
-    return GCS_CONFIG.baseUrl + '/' + GCS_CONFIG.bucketName + '/' + imagePath;
-  } else {
-    return 'https://' + GCS_CONFIG.bucketName + '.imgix.net/' + imagePath +
-      process.env.IMGIX_QUERY;
-  }
-}
-
 export {
   targetFolder,
-  getImageById,
-  prefixImageWithGCS,
+  getImageById
 };

@@ -6,5 +6,5 @@ exports.seed = function(knex, Promise) {
     team_id: 1,
     name: 'Hessu Kypärä',
     uuid: 'hessu'
-  });
+  })
 };

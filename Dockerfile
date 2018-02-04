@@ -1,9 +1,9 @@
-FROM node:4.8.4-alpine
+FROM node:9.5.0-alpine
 
 # For Google Cloud Services
 RUN apk upgrade
 RUN apk add --update \
-    libc6-compat
+  libc6-compat
 
 WORKDIR /app
 
