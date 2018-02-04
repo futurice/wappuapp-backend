@@ -12,7 +12,7 @@ const login = createJsonRoute(function(req, res) {
   return loginCore.login(email, uuid);
 });
 
-const addmoderator = createJsonRoute(function(req, res, next) {
+const addModerator = createJsonRoute(function(req, res, next) {
   var email = req.body.email;
   if (!email) {
     return throwStatus(400, "Email must be provided");
@@ -28,14 +28,14 @@ const addmoderator = createJsonRoute(function(req, res, next) {
     .createHash("md5")
     .update(password)
     .digest("hex");
-  return loginCore.addmoderator(req.body.email, email, password);
+  return loginCore.addModerator(req.body.email, email, password);
 });
 
-const deletemoderator = createJsonRoute(function(req, res, next) {
-  return loginCore.deletemoderator(req.params.id);
+const deleteModerator = createJsonRoute(function(req, res, next) {
+  return loginCore.deleteModerator(req.params.id);
 });
 
-const changepw = createJsonRoute(function(req, res, next) {
+const changePW = createJsonRoute(function(req, res, next) {
   const oldpassword = crypto
     .createHash("md5")
     .update(req.body.oldpassword)
@@ -47,19 +47,19 @@ const changepw = createJsonRoute(function(req, res, next) {
   return loginCore.changePassword(newpassword, oldpassword, req.user);
 });
 
-const activateaccount = createJsonRoute(function(req, res, next) {
+const activateAccount = createJsonRoute(function(req, res, next) {
   const password = crypto
     .createHash("md5")
     .update(req.body.password)
     .digest("hex");
-  return loginCore.activateaccount(password, req.user);
+  return loginCore.activateAccount(password, req.user);
 });
 
-const forgottenpw = createJsonRoute(function(req, res, next) {
+const forgottenPW = createJsonRoute(function(req, res, next) {
   const cipher = crypto.createCipher("aes192", process.env.CRYPTO_PASSWORD);
   var email = cipher.update(req.params.email, "utf8", "hex");
   email += cipher.final("hex");
-  return loginCore.forgottenpw(req.params.email, email);
+  return loginCore.forgottenPW(req.params.email, email);
 });
 
 const promote = createJsonRoute(function(req, res, next) {
@@ -70,7 +70,7 @@ const demote = createJsonRoute(function(req, res, next) {
   return loginCore.demote(req.params.id);
 });
 
-const modlist = createJsonRoute(function(req, res, next) {
+const modList = createJsonRoute(function(req, res, next) {
   return loginCore.modList().then(rows => {
     for (var i = 0; i < rows.length; i++) {
       const decipher = crypto.createDecipher(
@@ -86,13 +86,13 @@ const modlist = createJsonRoute(function(req, res, next) {
 });
 
 export {
-  modlist,
-  deletemoderator,
+  modList,
+  deleteModerator,
   promote,
   demote,
-  changepw,
-  forgottenpw,
+  changePW,
+  forgottenPW,
   login,
-  addmoderator,
-  activateaccount
+  addModerator,
+  activateAccount
 };

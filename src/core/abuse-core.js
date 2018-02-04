@@ -9,7 +9,18 @@ function _sanitizeText(text) {
 }
 
 function reportFeedItem(reportObj) {
-  return knex('users').select('id').where('uuid', reportObj.reportCreatorUuid)
+  return knex('feed_item_reports').select('feed_item_id', 'report_creator_id')
+  .where({
+    'report_creator_id': reportObj.reportCreatorUuid,
+    'feed_item_id': reportObj.feedItemId
+  })
+  .then(check =>{
+    console.log(check)
+    if (!_.isEmpty(check)){
+      throw new Error('User has already reported this message: ' + reportObj.feed_item_id)
+    }
+    else {
+      return knex('users').select('id').where('uuid', reportObj.reportCreatorUuid)
     .then(users => {
       if (_.isEmpty(users)) {
         throw new Error('User not found: ' + reportObj.reportCreatorUuid);
@@ -37,6 +48,8 @@ function reportFeedItem(reportObj) {
           throw err;
         });
     });
+    }
+  });
 }
 
 function resolveReport(reportParams) {
@@ -67,6 +80,18 @@ function resolveReport(reportParams) {
 }
 
 function getReportedFeedItems(params){
+
+  return knex('feed_item_reports').select('feed_item_id', 'report_creator_id')
+  .where({
+    'report_creator_id': 1,
+    'feed_item_id': 4
+})
+  .then(check =>{
+    console.log(check)
+    if (!_.isEmpty(check)){
+      throw new Error('User has already reported this message')
+    }
+  })
 
   let whereClause = []
   if (params.beforeId){
