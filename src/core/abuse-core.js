@@ -117,7 +117,7 @@ function getReportedFeedItems(params) {
           "is_resolved",
           "user_id",
           "location",
-          "feed_items.image_path",
+          "feed_items.image_path AS url",
           "teams.name as team_name",
           "users.name",
           "users.id as user_id",
