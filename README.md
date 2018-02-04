@@ -460,6 +460,7 @@ Responses:
 
 * `200 OK` with empty body
 
+<<<<<<< HEAD
 ### `POST /api/login`
 
 > Login to gain admin/moderator
@@ -560,10 +561,16 @@ Responses:
 Query parameters:
 
 * `:email` email attached to the account that the password has been forgotten from
+=======
+### `POST /api/admin/actions`
+
+> Send a systemmessage
+>>>>>>> 63011b4d580f5d911e6a59ecdbb6f7f0c7657874
 
 Responses:
 
 * `200 OK`
+<<<<<<< HEAD
 * `404 User not found`
 
 ### `GET /api/moderatorlist`
@@ -626,6 +633,22 @@ Responses:
 
 * `200 OK`
 * `401 Unauthorized`
+=======
+* `400 Text cannot be empty.`
+* `400 SystemMessage type must be text.`
+
+### `GET /api/admin/reports`
+
+> Get reported feed items, sorted by newest order
+
+Query paramters:
+
+* `beforeId` get reported feed_items before given Id
+
+Responses:
+
+* `200 OK` with empty body
+>>>>>>> 63011b4d580f5d911e6a59ecdbb6f7f0c7657874
 
 ## Response objects
 
