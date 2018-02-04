@@ -112,10 +112,10 @@ function getUserDetails(opts) {
     if (!userDetails) {
       return null;
     }
-    
+
     userDetails.images = images;
     userDetails.image_url = null;
-    
+
     if (userImagePath) {
       userDetails.image_url = prefixImageWithGCS(userImagePath);
     }
@@ -201,7 +201,7 @@ function _userRowToObject(row) {
   if (row.image_path !== "") {
     obj["image_url"] = prefixImageWithGCS(row.image_path);
   } else {
-    obj["image_url"] = null; 
+    obj["image_url"] = null;
   }
 
   return obj;

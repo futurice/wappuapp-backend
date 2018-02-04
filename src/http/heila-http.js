@@ -1,10 +1,9 @@
-import * as userCore from '../core/user-core';
 import * as heilaCore from '../core/heila-core';
 import {throwStatus, createJsonRoute} from '../util/express';
 import {assert} from '../validation';
 
 const deleteHeila = createJsonRoute(function(req, res) {
-  const uuid = req.params.uuid; 
+  const uuid = req.params.uuid;
   console.log('deleteHeila ' + uuid);
   return heilaCore.deleteHeila(uuid)
     .then(rowsInserted => undefined)

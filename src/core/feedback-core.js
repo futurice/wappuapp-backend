@@ -1,5 +1,3 @@
-import _ from 'lodash';
-const BPromise = require('bluebird');
 const {knex} = require('../util/database').connect();
 
 function giveFeedback(feedback) {
@@ -7,10 +5,10 @@ function giveFeedback(feedback) {
   console.log(feedback);
   return knex('events')
     .select('events.id')
-    .then(rows => {
-      const event_ids = rows.map(r => r.id);
-      
-      if (event_ids.indexOf(parseInt(feedback.id)) === -1) {
+    .then(eRows => {
+      const eventIds = eRows.map(r => r.id);
+
+      if (eventIds.indexOf(parseInt(feedback.id)) === -1) {
         // event id doesn't exist
         return -1;
       }
@@ -18,10 +16,10 @@ function giveFeedback(feedback) {
       return knex('feedback')
       .insert({
         uuid: feedback.uuid,
-        event_id: feedback.id,
-        feeback_text: feedback.text,
+        event_id: feedback.id, // eslint-disable-line
+        feeback_text: feedback.text, // eslint-disable-line
         grade: feedback.grade
-       }).then(rows => {
+       }).then(fRows => {
          // success
          return 1;
        }).catch(err => {
@@ -34,6 +32,6 @@ function giveFeedback(feedback) {
     })
 }
 
-export{
+export {
    giveFeedback
 };

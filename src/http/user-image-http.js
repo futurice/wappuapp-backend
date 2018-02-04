@@ -4,32 +4,14 @@
 'use strict';
 
 import * as gcs from '../util/gcs';
-import * as actionCore from '../core/action-core';
-import {createJsonRoute, throwStatus} from '../util/express';
-import * as userCore from '../core/user-core';
 import * as userImageCore from '../core/user-image-core';
-import {assert} from '../validation';
 import {decodeBase64Image} from '../util/base64';
 import { processImage } from '../util/image-processor';
-
-import { createOrUpdateUser } from '../core/user-core';
 
 const logger = require('../util/logger')(__filename);
 const uuidV1 = require('uuid/v1');
 
 const ALLOWED_MIME_TYPES = new Set(['image/jpeg', 'image/gif', 'image/png']);
-
-function getAndValidateUser(uuid) {
-  console.log('getAndValidateUser')
-  return userCore.findByUuid(uuid)
-    .then(user => {
-      if (user === null) {
-        throwStatus(400, `User with uuid ${ uuid } does not exist`);
-      }
-
-      return user;
-    });
-}
 
 function uploadImage(imageName, imageFile, imageOpts) {
   logger.info('Uploading', imageName);
@@ -62,14 +44,11 @@ function putUserImage(imgBase64, uuid) {
     let image;
     try {
       image = decodeBase64Image(imgBase64);
-    } catch(e) {
+    } catch (e) {
       console.log(e);
       reject(e);
     }
-    //const { imageText, imageTextPosition } = req.body;
-    //const imageOpts = { imageText, imageTextPosition };
     const imageOpts = {};
-    const inputData = {};
 
     const fileName = `${ userImageCore.targetFolder }/${ uuidV1() }`;
     return uploadImage(fileName, image, imageOpts)

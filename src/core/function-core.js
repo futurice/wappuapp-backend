@@ -52,8 +52,8 @@ function removeUserId(userId) {
   })
 };
 
-function closeChatId(chatId) {
-  console.log('closeChatId');
+function closeChat(chatId) {
+  console.log('closeChat');
   const current_url = `${BASE_URL}/closeChatId?chatId=${chatId}`;
   console.log(current_url);
   return fetch(current_url, {
@@ -106,4 +106,5 @@ export {
   removeUserId,
   markRead,
   sendMatchNotification,
+  closeChat,
 }

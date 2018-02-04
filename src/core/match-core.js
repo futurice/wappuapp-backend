@@ -1,4 +1,3 @@
-const BPromise = require('bluebird');
 const {knex} = require('../util/database').connect();
 
 import * as functionCore from './function-core';
@@ -66,11 +65,11 @@ function createOrUpdateMatch(match) {
 
     let currentUserString;
     if (matchObject.userId1 === match.fromUserId) {
-      matchObject["opinion1"] = match.opinion;
-      currentUserString = "1";
+      matchObject['opinion1'] = match.opinion;
+      currentUserString = '1';
     } else {
-      matchObject["opinion2"] = match.opinion;
-      currentUserString = "2";
+      matchObject['opinion2'] = match.opinion;
+      currentUserString = '2';
     }
 
     // this retrieves a row where from and to are the same
@@ -134,7 +133,7 @@ function handleMatch(matchObject) {
                  'userId2': matchObject.userId2 })
         .update(matchObject)
         .then(rows => {
-          return funcionCore.sendMatchNofitication(matchObject.userId1, matchObject.userId2);
+          return functionCore.sendMatchNofitication(matchObject.userId1, matchObject.userId2);
         });
     })
 }

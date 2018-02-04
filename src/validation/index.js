@@ -40,7 +40,7 @@ const schemas = {
     pushToken: Joi.string().min(0, 'utf8').max(250, 'utf8').optional(),
     class_year: Joi.string().min(0).max(4).optional(),
   },
-  
+
   heila_report: {
     reporter_uuid: common.userUuid.required(),
     bad_profile_id: common.primaryKeyId.required(),
