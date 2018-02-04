@@ -72,7 +72,7 @@ function createRouter() {
   router.delete('/deleteevent/:id', requireAuth, eventHttp.deleteEvent);
   router.post('/updateevent/:id', requireAuth, eventHttp.updateEvent);
   router.get('/updateevent/:id', requireAuth, eventHttp.getUpdateEvent);
-
+  router.post('/admin/actions', requireAuth, adminHttp.sendSystemMessage);
   router.get('/refreshcommentnumber/:id', feedHttp.refreshCommentNumber);
 
   router.post('/reports', abuseHttp.reportFeedItem);
