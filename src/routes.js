@@ -36,6 +36,7 @@ function createRouter() {
   // userId:tä vastaavan heilan
   router.get('/heila/:uuid', heilaHttp.getHeilaList);
   router.get('/heila-types', heilaHttp.getHeilaTypes);
+  router.post('/heila-report', heilaHttp.postHeilaReport);
   // päivittää oman heilaprofiilin tekstikenttätietoja
   router.put('/heila/:uuid', heilaHttp.putHeila);
   router.delete('/heila/:uuid', heilaHttp.deleteHeila);

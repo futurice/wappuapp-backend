@@ -60,9 +60,24 @@ const getHeilaTypes = createJsonRoute(function(req, res) {
       return list;
     });
 });
+
+const postHeilaReport = createJsonRoute(function(req, res) {
+  console.log('postHeilaReport');
+  const report = assert(req.body, 'heila_report');
+  console.log(report);
+
+  return heilaCore.addHeilaReport(report)
+    .then(rowsInserted => {
+      if (rowsInserted === -1) {
+        throwStatus(500, 'Something went wrong.');
+      }
+    });
+});
+
 export {
   putHeila,
   getHeilaList,
   getHeilaTypes,
   deleteHeila,
+  postHeilaReport,
 };
