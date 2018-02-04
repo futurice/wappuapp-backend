@@ -1,4 +1,5 @@
 import _ from "lodash";
+import {GCS_CONFIG} from '../util/gcs';
 const { knex } = require("../util/database").connect();
 
 function _sanitizeText(text) {
@@ -117,7 +118,7 @@ function getReportedFeedItems(params) {
           "is_resolved",
           "user_id",
           "location",
-          "feed_items.image_path AS url",
+          "feed_items.image_path",
           "teams.name as team_name",
           "users.name",
           "users.id as user_id",
@@ -138,13 +139,27 @@ function getReportedFeedItems(params) {
         .whereRaw(whereClause)
         .limit(20)
         .orderBy("report_id", "desc")
+
         .then(feed => {
           for (var i = 0; i < feed.length; i++) {
             feed[i].author = {
               id: feed[i].user_id,
               name: feed[i]["name"],
               team: feed[i]["team_name"]
-            };
+            }
+
+            if (feed[i].type === 'IMAGE') {
+              const imagePath = feed[i]['image_path'];
+
+              if (process.env.DISABLE_IMGIX === 'true' || _.endsWith(imagePath, 'gif')) {
+                feed[i].url = GCS_CONFIG.baseUrl + '/' + GCS_CONFIG.bucketName + '/' + imagePath;
+              }
+              else {
+                feed[i].url =
+                  'https://' + GCS_CONFIG.bucketName + '.imgix.net/' + imagePath +
+                  process.env.IMGIX_QUERY;
+              }
+            }
           }
           return _.map([number_of_rows, feed]);
         });
