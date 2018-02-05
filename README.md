@@ -4,9 +4,7 @@
 
 Dependencies:
 
-* Node 4.x or 5.x + npm 2.x - Use NVM to manage different Node versions
-
- *Use NPM 2*.x, the current Babel configuration has issues with NPM 3.x and doesn't work ~~properly~~ at all with it
+* Node 9.x + npm 5.x
 
 * Postgres with PostGis extension
 
@@ -524,9 +522,9 @@ Responses:
 
 ## Adminpanel endpoints
 
-### `DELETE /api/admin/feed/:id`
+### `PUT /api/admin/feed/:id`
 
-> Delete item from feed as a moderator
+> Delete item from feed as a moderator (shadowbans it)
 
 Query paramters:
 
@@ -581,6 +579,25 @@ Query paramters:
 Responses:
 
 * `200 OK` with empty body
+
+### `POST /api/reports`
+
+> Saves a report into the db
+
+Responses:
+
+* `200 OK` with empty body
+* `404 No such feed item`
+* `404 no such user`
+
+### PUT `/api/admin/reports/:id`
+
+> Resolves a report, on ban resolves all for the same feed item
+
+Responses:
+
+* `200 OK` with empty body
+* `404 not found`
 
 ### `POST /api/login`
 
