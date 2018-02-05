@@ -157,8 +157,7 @@ function createFeedItem(feedItem, trx) {
     'type':       feedItem.type,
     'city_id':    feedItem.city || knex.raw('(SELECT city_id FROM teams WHERE id = ?)', [feedItem.client.team]),
     // Division to bring time stamp's accuracy inline with postgres values.
-    'hot_score':  _.round(score.hotScore(0, moment.utc().valueOf() / 1000), 4),
-    'parent_id': feedItem.parent_id,
+    'hot_score':  _.round(score.hotScore(0, moment.utc().valueOf() / 1000), 4)
   };
 
   const location = feedItem.location;

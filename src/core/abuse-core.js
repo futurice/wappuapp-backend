@@ -1,5 +1,5 @@
 import _ from "lodash";
-import {GCS_CONFIG} from '../util/gcs';
+import { GCS_CONFIG } from "../util/gcs";
 const { knex } = require("../util/database").connect();
 
 function _sanitizeText(text) {
@@ -9,6 +9,10 @@ function _sanitizeText(text) {
   return text.replace(/(\n|\r)+/g, " ");
 }
 
+/*
+  Checks if the user has already reported the given feed item,
+  if not, adds a report for it.
+*/
 function reportFeedItem(reportObj) {
   return knex("feed_item_reports")
     .select("feed_item_id", "report_creator_id")
@@ -62,6 +66,12 @@ function reportFeedItem(reportObj) {
     });
 }
 
+/*
+  Resolves the given feed item report, whether it is banned or not.
+  If the item is banned, it also resolves all of the other reports
+  for the same item. As of this writing not banning does not resolve
+  all of the reports, could be changed quite easily.
+*/
 function resolveReport(reportParams) {
   return knex.transaction(function(trx) {
     return trx("feed_item_reports")
@@ -96,6 +106,10 @@ function resolveReport(reportParams) {
   });
 }
 
+/*
+  Fetches all of the reported feed items after a certain date.
+  Also fetches information on the reporter and the feed item itself.
+*/
 function getReportedFeedItems(params) {
   let whereClause = [];
   if (params.beforeId) {
@@ -146,17 +160,27 @@ function getReportedFeedItems(params) {
               id: feed[i].user_id,
               name: feed[i]["name"],
               team: feed[i]["team_name"]
-            }
+            };
 
-            if (feed[i].type === 'IMAGE') {
-              const imagePath = feed[i]['image_path'];
+            if (feed[i].type === "IMAGE") {
+              const imagePath = feed[i]["image_path"];
 
-              if (process.env.DISABLE_IMGIX === 'true' || _.endsWith(imagePath, 'gif')) {
-                feed[i].url = GCS_CONFIG.baseUrl + '/' + GCS_CONFIG.bucketName + '/' + imagePath;
-              }
-              else {
+              if (
+                process.env.DISABLE_IMGIX === "true" ||
+                _.endsWith(imagePath, "gif")
+              ) {
                 feed[i].url =
-                  'https://' + GCS_CONFIG.bucketName + '.imgix.net/' + imagePath +
+                  GCS_CONFIG.baseUrl +
+                  "/" +
+                  GCS_CONFIG.bucketName +
+                  "/" +
+                  imagePath;
+              } else {
+                feed[i].url =
+                  "https://" +
+                  GCS_CONFIG.bucketName +
+                  ".imgix.net/" +
+                  imagePath +
                   process.env.IMGIX_QUERY;
               }
             }
