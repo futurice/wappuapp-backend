@@ -112,10 +112,10 @@ function getUserDetails(opts) {
     if (!userDetails) {
       return null;
     }
-    
+
     userDetails.images = images;
     userDetails.image_url = null;
-    
+
     if (userImagePath) {
       userDetails.image_url = prefixImageWithGCS(userImagePath);
     }
@@ -141,6 +141,7 @@ function _queryUserDetails(userId) {
   const sqlString = `
   SELECT
     users.name AS name,
+    users.heila AS heila,
     teams.name AS team,
     COALESCE(num_simas, 0) AS num_simas
   FROM users
@@ -164,10 +165,12 @@ function _queryUserDetails(userId) {
       }
 
       const rowObj = result.rows[0];
+      console.log(rowObj);
       return {
         name: rowObj['name'],
         team: rowObj['team'],
-        numSimas: rowObj['num_simas']
+        numSimas: rowObj['num_simas'],
+        heila: rowObj['heila'],
       };
     });
 }
@@ -198,7 +201,7 @@ function _userRowToObject(row) {
   if (row.image_path !== "") {
     obj["image_url"] = prefixImageWithGCS(row.image_path);
   } else {
-    obj["image_url"] = null; 
+    obj["image_url"] = null;
   }
 
   return obj;

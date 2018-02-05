@@ -1,7 +1,6 @@
 'use strict';
 
 import streamifier from 'streamifier';
-import * as base64 from './base64';
 const logger = require('./logger')(__filename);
 
 const requireEnvs = require('./require-envs');

@@ -1,10 +1,9 @@
-import * as userCore from '../core/user-core';
 import * as heilaCore from '../core/heila-core';
 import {throwStatus, createJsonRoute} from '../util/express';
 import {assert} from '../validation';
 
 const deleteHeila = createJsonRoute(function(req, res) {
-  const uuid = req.params.uuid; 
+  const uuid = req.params.uuid;
   console.log('deleteHeila ' + uuid);
   return heilaCore.deleteHeila(uuid)
     .then(rowsInserted => undefined)
@@ -74,10 +73,24 @@ const postHeilaReport = createJsonRoute(function(req, res) {
     });
 });
 
+const postPushNotificationReceipt = createJsonRoute(function(req, res) {
+  console.log('postPushNotificationReceipt');
+  const receipt = assert(req.body, 'heila_push_receipt');
+  console.log(receipt);
+
+  return heilaCore.handleReadReceipt(receipt)
+    .then(rowsInserted => {
+      if (rowsInserted === -1) {
+        throwStatus(500, 'Something went wrong.');
+      }
+    });
+});
+
 export {
   putHeila,
   getHeilaList,
   getHeilaTypes,
   deleteHeila,
   postHeilaReport,
+  postPushNotificationReceipt,
 };

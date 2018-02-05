@@ -1,9 +1,7 @@
 import _ from 'lodash';
-import * as feedCore from './feed-core.js';
 import { prefixImageWithGCS } from './image-core.js'
 import { GCS_CONFIG } from '../util/gcs';
 import * as functionCore from './function-core.js';
-const BPromise = require('bluebird');
 const {knex} = require('../util/database').connect();
 
 function createOrUpdateHeila(heila) {
@@ -257,7 +255,7 @@ function _heilaRowToObject(row) {
   }
 
   return {
-    id: row.id,
+    id: row.userId,
     uuid: row.uuid,
     // tässä asetetaan image_urli, jolla sen voi hakea verkosta ja näyttää
     // urlia ei oikeasti ole laitettu kantaan, siellä on vain image_path
@@ -278,7 +276,7 @@ function getHeilaTypes() {
 
 function deleteHeila(uuid) {
   // first drops the row from heilas table
-  // then toggles the true/false of users table 
+  // then toggles the true/false of users table
   // for this uuid
   // this IS a side-effect if you think about it
   // from the users table's perspective, yes.
@@ -303,10 +301,21 @@ function addHeilaReport(report) {
 
   // just insert the row to the db
   // --> there's no automatic notification or whatever
+  // so Futurice folks has to query the db
   // TODO: how to get updates from these etc.
   return knex('heila_reports').insert(report)
     .then(rows => {
       console.log(rows);
+    });
+};
+
+function handleReadReceipt(receipt) {
+  console.log('handleReadReceipt');
+
+  return findByUuid(receipt.uuid)
+    .then(rows => {
+      console.log(rows);
+      functionCore.markRead({ userId: rows.userId, type: receipt.type });
     });
 };
 
@@ -318,4 +327,5 @@ export {
   getHeilaTypes,
   deleteHeila,
   addHeilaReport,
+  handleReadReceipt,
 };

@@ -52,9 +52,41 @@ function removeUserId(userId) {
   })
 };
 
-function closeChatId(chatId) {
-  console.log('closeChatId');
+function closeChat(chatId) {
+  console.log('closeChat');
   const current_url = `${BASE_URL}/closeChatId?chatId=${chatId}`;
+  console.log(current_url);
+  return fetch(current_url, {
+    method: 'GET',
+    headers: {
+      'Content-Type': 'application/json',
+      'FUNCTION_SECRET_KEY': process.env.FUNCTION_SECRET_KEY
+    }
+  })
+  .catch(err => {
+    console.log(err);
+  })
+};
+
+function markRead(userId, type) {
+  console.log('markRead');
+  const current_url = `${BASE_URL}/markReadReceipt?userId=${userId}&type=${type}`;
+  console.log(current_url);
+  return fetch(current_url, {
+    method: 'GET',
+    headers: {
+      'Content-Type': 'application/json',
+      'FUNCTION_SECRET_KEY': process.env.FUNCTION_SECRET_KEY
+    }
+  })
+  .catch(err => {
+    console.log(err);
+  })
+};
+
+function sendMatchNotification(userId1, userId2) {
+  console.log('sendMatchNotification');
+  const current_url = `${BASE_URL}/sendMatchNotification?userId1=${userId1}&userId2=${userId2}`;
   console.log(current_url);
   return fetch(current_url, {
     method: 'GET',
@@ -72,4 +104,7 @@ export {
   createChatForTwoUsers,
   addPushNotificationTokenForUserId,
   removeUserId,
+  markRead,
+  sendMatchNotification,
+  closeChat,
 }
