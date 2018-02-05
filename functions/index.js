@@ -4,8 +4,9 @@ const functions = require('firebase-functions');
 const admin = require('firebase-admin');
 admin.initializeApp(functions.config().firebase);
 
-// // Create and Deploy Your First Cloud Functions
-// // https://firebase.google.com/docs/functions/write-firebase-functions
+// Create and Deploy Your First Cloud Functions
+// OFFICIAL DOCUMENTATION
+// https://firebase.google.com/docs/functions/write-firebase-functions
 
 
 // THIS FUNCTION ADDS PUSHTOKEN FOR USERID
@@ -24,9 +25,7 @@ exports.addPushTokenForUserId = functions.https.onRequest((req, res) => {
     console.log('pushToken added for userId ' + userId);
     res.sendStatus(200);
   });
-
 });
-
 
 // this function takes an userId as an argument and removes that user's
 // pushToken from the database. after this the user will not receive any
@@ -63,6 +62,9 @@ exports.removeUserId = functions.https.onRequest((req, res) => {
 
 });
 
+// this function adds a new chat between two users
+// the chat will be in /messages and it will have a random key
+// there will be an initial message in the chat which can be tuned below
 exports.addNewChatBetweenUsers = functions.https.onRequest((req, res) => {
 
   if (req.get('FUNCTION_SECRET_KEY') !== functions.config().functions.secret) {
@@ -94,27 +96,8 @@ exports.addNewChatBetweenUsers = functions.https.onRequest((req, res) => {
     });
 });
 
-// OFFICIAL EXAMPLE FOR TRIGGERING GCF ON WRITE
-//
-// Listens for new messages added to /messages/:pushId/original and creates an
-// uppercase version of the message to /messages/:pushId/uppercase
-//exports.makeUppercase = functions.database.ref('/messages/{pushId}/original')
-    //.onWrite(event => {
-      //// Grab the current value of what was written to the Realtime Database.
-      //const original = event.data.val();
-      //console.log('Uppercasing', event.params.pushId, original);
-      //const uppercase = original.toUpperCase();
-      //// You must return a Promise when performing asynchronous tasks inside a Functions such as
-      //// writing to the Firebase Realtime Database.
-      //// Setting an "uppercase" sibling in the Realtime Database returns a Promise.
-      //return event.data.ref.parent.child('uppercase').set(uppercase);
-    //});
-
-
-//
-  //
-  //
-  //
+// this function is called from other functions that want to send a push notification
+// --> when a match is done AND when there's a new chat message
 function sendPushMessageToUserDeviceWithPayload(userId, payload) {
     return admin.database().ref('/pushTokens').once('value').then(snapshot => {
 
@@ -138,16 +121,18 @@ function sendPushMessageToUserDeviceWithPayload(userId, payload) {
         // on how to define a message payload.
         // NOTE: the notification dictionary HAS TO BE HERE
         // read this: https://firebase.google.com/docs/cloud-messaging/concept-options#notifications
-        //var payload = {
-          //notification: {
-            //title: 'WappuNotif!',
-            //body: 'jep :-)'
-          //},
-          //data: {
-            //kv1: 'any data here',
-            //kv2: 'any data here, too'
-          //}
-        //};
+
+        // something like this:
+        //   var payload = {
+          //   notification: {
+          //     title: 'WappuNotif!',
+          //     body: 'jep :-)'
+          //   },
+          //   data: {
+          //     kv1: 'any data here',
+          //     kv2: 'any data here, too'
+          //   }
+          // };
 
         // Send a message to the device corresponding to the provided
         // registration token.
@@ -170,6 +155,9 @@ function sendPushMessageToUserDeviceWithPayload(userId, payload) {
 // THIS TRIGGERS ON WRITE @ /chats/whatever
 // figure out who should receive a message
 // call the message sending logic
+// the receiver of this message is the other person in the chat
+// ----> first get the new message's sender
+// ----> figure out the second party in the chat
 exports.sendPushMessage = functions.database.ref('/chats/{chatId}/')
   .onWrite(event => {
     // Grab the current value of what was written to the Realtime Database.
@@ -208,14 +196,14 @@ exports.closeChatId = functions.https.onRequest((req, res) => {
 
   return admin.database().ref(`/chats/${chatId}`)
     .update({
-      "closed": true
+      'closed': true
     })
     .then(r => {
       res.sendStatus(200);
     })
 });
 
-
+// this function sends a match notification
 exports.sendMatchNotification = functions.https.onRequest((req, res) => {
 
   if (req.get('FUNCTION_SECRET_KEY') !== functions.config().functions.secret) {
@@ -237,6 +225,7 @@ exports.sendMatchNotification = functions.https.onRequest((req, res) => {
   res.sendStatus(200);
 });
 
+// this handles readreceipt logic
 function updateReadReceiptAndSendPushNotification(userId, receiptType, payload) {
 
   // this first grabs the user's current readReceipt status
@@ -267,12 +256,12 @@ function updateReadReceiptAndSendPushNotification(userId, receiptType, payload) 
 
 exports.markRead = functions.https.onRequest((req, res) => {
 
-  // if (req.get('FUNCTION_SECRET_KEY') !== functions.config().functions.secret) {
-  //   console.log('not authenticated, FUNCTION_SECRET_KEY header is barps');
-  //   res.sendStatus(403);
-  //   return;
-  // }
-  
+  if (req.get('FUNCTION_SECRET_KEY') !== functions.config().functions.secret) {
+    console.log('not authenticated, FUNCTION_SECRET_KEY header is barps');
+    res.sendStatus(403);
+    return;
+  }
+
   console.log(req.query);
 
   const userId = req.query.userId;
