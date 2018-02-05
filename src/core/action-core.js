@@ -19,6 +19,7 @@ function createAction(action) {
     'text':           _sanitizeText(action.text),
     'ip':             action.ip,
     'event_id':       action.eventId,
+    'parent_id':      action.parent_id,
   };
 
   const location = action.location;
