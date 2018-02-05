@@ -7,6 +7,14 @@
 * serve functions locally for debugging etc.:
   firebase serve --only functions 
 
+* set function http endpoint header secret key:
+  firebase functions:config:set functions.secret=""
+
+  this header is added in function-core for all firebase function http
+  communication and checked in the function handler
+  --> if missing, do nothing
+  this should also be configured in .env
+
 * database.rules.json should be uploaded to firebase database
 
 * all firebase functions are called from core/function-core
