@@ -1,0 +1,42 @@
+
+git diff --name-status af4eb39fef415480c9c03f64f39243c346f89264 HEAD
+lisätyt tavarat:
+
+funktiot, jotka laitetaan firebaseen
+dokumentaatio: README.md + index.js
+A	functions/README.md
+A	functions/database.rules.json
+A	functions/index.js
+A	functions/package.json
+A	functions/yarn.lock
+
+migraatiot
+uusia tauluja heilas, matches, feedbacks
+muutoksia tehty users-tauluun
+A	migrations/20171104220247_add_heilas_table.js
+A	migrations/20171119160940_add_imagedata_to_user_profiles.js
+A	migrations/20171119161831_add_heila_field_to_user_profiles.js
+A	migrations/20171216170940_add_feedbacks.js
+A	migrations/20180101200116_add_matches_table.js
+A	migrations/20180107114259_add_pushToken_to_heila_table.js
+A	migrations/20180122125823_add_heila_looking_for_types.js
+A	migrations/20180122133316_heila_table_type_changes.js.js
+A	migrations/20180125210351_add_class_year_to_heila_profile.js
+A	migrations/20180128161305_add_heila_report_table.js.js
+A	migrations/20180203162718_class_year_to_string.js
+A	seeds/heila_profile.js
+A	seeds/heila_types.js
+
+kaikki uusi logiikka bäkkärillä näissä
+dokumentaatio projektin juuressa olevassa README.md:ssä eli
+kaikki uudet api endpointit dokumentoitu siellä
+näistä kommunikointi firebase-funktioiden kanssa function-coren läpi
+A	src/core/feedback-core.js
+A	src/core/function-core.js
+A	src/core/heila-core.js
+A	src/core/match-core.js
+A	src/core/user-image-core.js
+A	src/http/feedback-http.js
+A	src/http/heila-http.js
+A	src/http/match-http.js
+A	src/http/user-image-http.js
