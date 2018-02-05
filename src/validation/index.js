@@ -30,7 +30,55 @@ const schemas = {
   user: {
     uuid: common.userUuid.required(),
     name: Joi.string().min(1, 'utf8').max(50, 'utf8').required(),
-    team: common.team.required()
+    team: common.team.required(),
+    heila: Joi.boolean().optional()
+  },
+
+  heila: {
+    uuid: common.userUuid.required(),
+    bio_text: Joi.string().min(0, 'utf8').max(250, 'utf8').required(),
+    bio_looking_for_type_id: Joi.number().integer().min(0).max(5).optional(),
+    pushToken: Joi.string().min(0, 'utf8').max(250, 'utf8').optional(),
+    class_year: Joi.string().min(0).max(4).optional(),
+  },
+
+  heila_report: {
+    reporter_uuid: common.userUuid.required(),
+    bad_profile_id: common.primaryKeyId.required(),
+    text: Joi.string().min(0, 'utf8').max(500, 'utf8').required(),
+  },
+
+  heila_push_receipt: {
+    uuid: common.userUuid.required(),
+    type: Joi.string().regex(/^match|msg$/).required(),
+  },
+
+  feedback: {
+    uuid: common.userUuid.required(),
+    id: common.primaryKeyId.required(),
+    grade: Joi.number().integer().min(0).max(5).optional(),
+    text: Joi.string().min(0, 'utf8').max(5000, 'utf8').optional(),
+  },
+
+  match: {
+    uuid: common.userUuid.required(),
+    matchedUserId: common.primaryKeyId.required(),
+    opinion: Joi.string().regex(/^UP|DOWN$/).required()
+  },
+
+  matchBan: {
+    uuid: common.userUuid.required(),
+    matchedUserId: common.primaryKeyId.required(),
+    firebaseChatId: Joi.string().required()
+  },
+
+  matchesList: {
+    uuid: common.userUuid.required(),
+  },
+
+  userImage: {
+    uuid: common.userUuid.required(),
+    imageData: Joi.string().required(),
   },
 
   userQueryParams: {

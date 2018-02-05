@@ -9,6 +9,13 @@ const putUser = createJsonRoute(function(req, res) {
     .then(rowsInserted => undefined);
 });
 
+const putUserImage = createJsonRoute(function(req, res) {
+  const user = assert(req.body, 'userImage');
+
+  return userCore.createOrUpdateUser(user)
+    .then(rowsInserted => undefined);
+});
+
 const getUserByUuid = createJsonRoute(function(req, res) {
   return userCore.findByUuid(req.params.uuid)
   .then(user => {
@@ -43,6 +50,7 @@ const getUserById = createJsonRoute(function(req, res) {
 
 export {
   putUser,
+  putUserImage,
   getUserByUuid,
   getUserById
 };
