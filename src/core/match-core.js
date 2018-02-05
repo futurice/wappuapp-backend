@@ -35,9 +35,6 @@ function _uuidToUserId(uuid) {
 // 7. if new chat was created, save the chatId to the db
 
 function createOrUpdateMatch(match) {
-  console.log('updateMatch')
-  console.log(match)
-
   // this retrieves the userId of the matching user
   return _uuidToUserId(match.uuid)
   .then(userId => {
@@ -87,8 +84,8 @@ function createOrUpdateMatch(match) {
           const earlierRow = rows[0];
           // check if the row in DB already has this user's new opinion
           if (earlierRow['opinion' + currentUserString] !== match.opinion) {
-            console.log('opinion changed or missing --> update with this matchObject:');
-            console.log(matchObject);
+            // console.log('opinion changed or missing --> update with this matchObject:');
+            // console.log(matchObject);
             return knex('matches')
               .returning('id')
               .where({ 'userId1': matchObject.userId1,
@@ -97,12 +94,12 @@ function createOrUpdateMatch(match) {
               .then(updatedRows => {
                 const otherUserString = currentUserString === '1' ? '2' : '1';
                 const otherUserOpinion = earlierRow['opinion' + otherUserString];
-                console.log('currentUserString: ' + currentUserString);
-                console.log('currentUserOpinion: ' + match.opinion);
-                console.log('oterUserString: ' + otherUserString);
-                console.log('oterUserOpinion: ' + otherUserOpinion);
+                // console.log('currentUserString: ' + currentUserString);
+                // console.log('currentUserOpinion: ' + match.opinion);
+                // console.log('oterUserString: ' + otherUserString);
+                // console.log('oterUserOpinion: ' + otherUserOpinion);
                 if (match.opinion === 'UP' && otherUserOpinion === 'UP') {
-                  console.log('both users have UP');
+                  // console.log('both users have UP');
                   // if the row ALREADY has firebaseChatId then the two users
                   // already have a chat in Firebase -> no need to create a new one
                   // this could happen if one first UPs, then the other UPs, then
@@ -124,8 +121,6 @@ function handleMatch(matchObject) {
   // 2. save the chat key in db
   return functionCore.createChatForTwoUsers(matchObject)
     .then(chatFirebaseKey => {
-      console.log('chatFirebaseKey')
-      console.log(chatFirebaseKey)
       matchObject['firebaseChatId'] = chatFirebaseKey;
       return knex('matches')
         .returning('id')
@@ -146,14 +141,11 @@ function getListOfMatches(uuid) {
         .where('userId1', userId)
         .orWhere('userId2', userId)
         .then(rows => {
-          console.log(`${uuid} --> ${userId} --> :: `);
-          // console.log(rows);
           rows = rows.filter(row => {
             return row.opinion1 === 'UP' &&
                    row.opinion2 === 'UP' &&
                    row.firebaseChatId;
           });
-          // console.log(rows);
           return rows;
         })
     })

@@ -1,0 +1,20 @@
+{
+  "rules": {
+    "chats": {
+      ".read": false,
+      ".write": false,
+      "$chatId": {
+        ".read": true,
+        ".write": "data.child('closed').val() !== true"
+      }
+    },
+    "pushTokens": {
+      ".read": false,
+    	".write": false
+    },
+    "readReceipts": {
+      ".read": false,
+      ".write": false
+    }
+  }
+}

@@ -1,8 +1,8 @@
 const {knex} = require('../util/database').connect();
 
 function giveFeedback(feedback) {
-  console.log('feedbackCore::giveFeedback');
-  console.log(feedback);
+  //console.log('feedbackCore::giveFeedback');
+  //console.log(feedback);
   return knex('events')
     .select('events.id')
     .then(eRows => {

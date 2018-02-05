@@ -7,8 +7,6 @@ const BPromise = require('bluebird');
 const {knex} = require('../util/database').connect();
 
 function createOrUpdateUser(user) {
-  console.log('createOrUpdateUser');
-  console.log(user.uuid);
   return findByUuid(user.uuid)
   .then(foundUser => {
     if (foundUser === null) {
@@ -24,8 +22,6 @@ function createOrUpdateUser(user) {
 }
 
 function createUser(user) {
-  console.log('createUser')
-  console.log(user)
   const dbRow = _makeUserDbRow(user);
   return knex('users').returning('id').insert(dbRow)
     .then(rows => {
@@ -38,11 +34,7 @@ function createUser(user) {
 }
 
 function runDbUpdate(user) {
-  console.log('runDbUpdate');
-  console.log(user);
   const dbRow = _makeUserDbRow(user);
-  console.log('dbRow')
-  console.log(dbRow)
   return knex('users').returning('id').update(dbRow)
     .where('uuid', user.uuid)
     .then(rows => {
@@ -53,13 +45,11 @@ function runDbUpdate(user) {
 }
 
 function updateUser(user) {
-  console.log('updateUser')
   return runDbUpdate(user);
 }
 
 function updateUserImage(user) {
-  console.log('updateUserImage')
-    // putUserImage asettaa kuvan kantaan itsenäisesti
+  // putUserImage asettaa kuvan kantaan itsenäisesti
   return putUserImage(user.imageData, user.uuid)
   .then(uploadedImageName => {
     // alkup. user-objektissa ei image_pathia mukana
@@ -114,9 +104,10 @@ function getUserDetails(opts) {
     }
 
     userDetails.images = images;
-    userDetails.image_url = null;
+    userDetails.image_url = null; //eslint-disable-line
 
     if (userImagePath) {
+      //eslint-disable-next-line
       userDetails.image_url = prefixImageWithGCS(userImagePath);
     }
 
@@ -129,11 +120,8 @@ function _getUserImageUrl(userId) {
     .select('users.*')
     .where({ id: userId })
     .then(users => {
-      //console.log('users')
-      //console.log(users)
       const user = users[0]
-      //console.log(user)
-      return user.image_path;
+      return user.image_path; //eslint-disable-line
     })
 };
 
@@ -165,7 +153,6 @@ function _queryUserDetails(userId) {
       }
 
       const rowObj = result.rows[0];
-      console.log(rowObj);
       return {
         name: rowObj['name'],
         team: rowObj['team'],
@@ -198,10 +185,10 @@ function _userRowToObject(row) {
     heila: row.heila,
   };
 
-  if (row.image_path !== "") {
-    obj["image_url"] = prefixImageWithGCS(row.image_path);
+  if (row.image_path !== '') {
+    obj['image_url'] = prefixImageWithGCS(row.image_path);
   } else {
-    obj["image_url"] = null;
+    obj['image_url'] = null;
   }
 
   return obj;

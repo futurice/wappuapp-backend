@@ -3,9 +3,7 @@ import {createJsonRoute, throwStatus} from '../util/express';
 import {assert} from '../validation';
 
 const postFeedback = createJsonRoute(function(req, res) {
-  console.log('giving feedback to event');
   const feedback = assert(req.body, 'feedback');
-  console.log(feedback)
   return feedbackCore.giveFeedback(feedback)
    .then(ret => {
      if (ret === -1) {

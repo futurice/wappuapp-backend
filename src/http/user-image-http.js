@@ -38,13 +38,13 @@ function validateMimeType(mimetype) {
 
 function putUserImage(imgBase64, uuid) {
   return new Promise(function(resolve, reject) {
-
-    console.log('\n\nputUserImage')
+    //console.log('\n\nputUserImage')
     // console.log(imgBase64)
     let image;
     try {
       image = decodeBase64Image(imgBase64);
     } catch (e) {
+      console.log('something went wrong in putUserImage');
       console.log(e);
       reject(e);
     }
@@ -53,8 +53,8 @@ function putUserImage(imgBase64, uuid) {
     const fileName = `${ userImageCore.targetFolder }/${ uuidV1() }`;
     return uploadImage(fileName, image, imageOpts)
             .then(uploadedImage => {
-              console.log('image upload ok!')
-              console.log('updating user fields in db')
+              //console.log('image upload ok!')
+              //console.log('updating user fields in db')
               resolve(uploadedImage.imageName);
             })
             .catch(e => {
