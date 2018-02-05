@@ -5,8 +5,6 @@ import * as functionCore from './function-core.js';
 const {knex} = require('../util/database').connect();
 
 function createOrUpdateHeila(heila) {
-  console.log('createOrUpdateHeila')
-  console.log(heila)
   return _findUserIdByUuid(heila.uuid)
     .then(userId => {
       heila['userId'] = userId;
@@ -23,7 +21,6 @@ function createOrUpdateHeila(heila) {
 
 // creates a row in the heilas table
 function createHeila(heila) {
-  console.log('createHeila')
   const dbRow = _makeHeilaDbRow(heila);
   return knex('heilas').returning('userId').insert(dbRow)
     .then(rows => {
@@ -41,9 +38,7 @@ function createHeila(heila) {
 }
 
 function updateHeila(heila) {
-  console.log('updateHeila')
   const dbRow = _makeHeilaDbRow(heila);
-  console.log(dbRow)
   return knex('heilas').returning('userId').update(dbRow)
     .where('uuid', heila.uuid)
     .then(rows => {
@@ -109,39 +104,37 @@ function getAllHeilas(uuid) {
         if (_.isEmpty(userRows)) {
           return [];
         }
-        console.log('userRows::::')
-        console.log(userRows)
         const heilaIds = userRows.map(user => {
           return user.uuid;
         })
-        console.log(heilaIds)
+        //console.log(heilaIds)
         return knex('heilas')
           .select('heilas.*')
           .whereIn('uuid', heilaIds)
           .then(heilaRows => {
-            console.log(heilaRows);
+            //console.log(heilaRows);
             if (_.isEmpty(heilaRows)) {
               return [];
             }
             const unfilteredHeilalist = _heilaRowsToObjectList(_mergeUserHeilaRows(userRows, heilaRows));
-            console.log('unfilteredHeilaList:')
-            console.log(unfilteredHeilalist)
+            //console.log('unfilteredHeilaList:')
+            //console.log(unfilteredHeilalist)
             const myType = unfilteredHeilalist.filter(h => h.id == userId)[0].bio_looking_for_type_id || -1;
-            console.log('my_type');
-            console.log(myType);
-            console.log('unfilteredList:');
-            console.log(unfilteredHeilalist);
+            //console.log('my_type');
+            //console.log(myType);
+            //console.log('unfilteredList:');
+            //console.log(unfilteredHeilalist);
 
             return knex('matches')
               .select('matches.*')
               .where({ 'userId1': userId })
               .orWhere({ 'userId2': userId })
               .then(previousMatches => {
-                console.log('all previous matches:');
-                console.log(previousMatches);
+                //console.log('all previous matches:');
+                //console.log(previousMatches);
                 const filterOutIds = previousMatches.map(match => match.userId1 === userId ? match.userId2 : match.userId1);
-                console.log('filterOudIds');
-                console.log(filterOutIds);
+                //console.log('filterOudIds');
+                //console.log(filterOutIds);
 
                 const filtered = unfilteredHeilalist.filter(elem => {
                   return filterOutIds.indexOf(parseInt(elem.id)) === -1;
@@ -165,7 +158,6 @@ function getAllHeilas(uuid) {
 }
 
 function getHeilaByUserId(userId) {
-  console.log('getHeilaByUserId');
   return knex('users')
     .select('users.*')
     .where({ id: userId })
@@ -173,17 +165,13 @@ function getHeilaByUserId(userId) {
       if (_.isEmpty(userRows)) {
         return [];
       }
-      console.log('userRows::::')
-      console.log(userRows)
       const heilaIds = userRows.map(user => {
         return user.uuid;
       })
-      console.log(heilaIds)
       return knex('heilas')
         .select('heilas.*')
         .whereIn('uuid', heilaIds)
         .then(heilaRows => {
-          console.log(heilaRows);
           if (_.isEmpty(heilaRows)) {
             return [];
           }
@@ -206,8 +194,6 @@ function _mergeUserHeilaRows(userRows, heilaRows) {
       }
     }
   })
-  console.log('merged userRows:');
-  console.log(userRows);
   return userRows;
 }
 
@@ -227,8 +213,6 @@ function _heilaRowsToObjectList(userList) {
         class_year: user.class_year,
       }
     })
-  console.log("heilaList")
-  console.log(heilaList)
   return heilaList;
 }
 
@@ -246,8 +230,6 @@ function _makeHeilaDbRow(heila) {
 
 // jscs:disable requireCamelCaseOrUpperCaseIdentifiers
 function _heilaRowToObject(row) {
-  console.log("heilaRowToObject")
-  console.log(row)
   // jos kuvaa ei ole uploadattu, palautetaan tyhjä merkkijono
   let url = null;
   if (row.image_path) {
@@ -310,11 +292,9 @@ function addHeilaReport(report) {
 };
 
 function handleReadReceipt(receipt) {
-  console.log('handleReadReceipt');
-
+  // console.log('handleReadReceipt');
   return findByUuid(receipt.uuid)
     .then(rows => {
-      console.log(rows);
       functionCore.markRead({ userId: rows.userId, type: receipt.type });
     });
 };
