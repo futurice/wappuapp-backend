@@ -1,4 +1,7 @@
 
+* firebase cli tools should be installed globally to the system
+  in order to tune this things
+
 * functions has been documented in index.js
 * in order to modify functions, modify index.js
 
