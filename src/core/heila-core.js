@@ -27,11 +27,11 @@ function createHeila(heila) {
       if (_.isEmpty(rows)) {
         throw new Error('Heila row creation failed: ' + dbRow);
       }
-      if (heila.pushToken) {
-        // this adds the pushToken to Firebase database
+      if (heila.push_token) {
+        // this adds the push_token to Firebase database
         // so that the "send push message to user" function
-        // triggered by new chat msg write can use the pushToken immediately
-        functionCore.addPushNotificationTokenForUserId(heila.userId, heila.pushToken);
+        // triggered by new chat msg write can use the push_token immediately
+        functionCore.addPushNotificationTokenForUserId(heila.userId, heila.push_token);
       }
       return rows.length;
     });
@@ -46,11 +46,11 @@ function updateHeila(heila) {
         throw new Error('Heila row update failed: ' + dbRow);
       }
 
-      if (heila.pushToken) {
-        // this adds the pushToken to Firebase database
+      if (heila.push_token) {
+        // this adds the push_token to Firebase database
         // so that the "send push message to user" function
-        // triggered by new chat msg write can use the pushToken immediately
-        functionCore.addPushNotificationTokenForUserId(heila.userId, heila.pushToken);
+        // triggered by new chat msg write can use the push_token immediately
+        functionCore.addPushNotificationTokenForUserId(heila.userId, heila.push_token);
       }
 
       return rows;
@@ -200,7 +200,7 @@ function _makeHeilaDbRow(heila) {
     'uuid': heila.uuid,
     'bio_text': heila.bio_text,
     'bio_looking_for_type_id': heila.bio_looking_for_type_id,
-    'pushToken': heila.pushToken,
+    'push_token': heila.push_token,
     'class_year': heila.class_year,
   };
   return dbRow;
