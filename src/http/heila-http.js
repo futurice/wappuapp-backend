@@ -16,12 +16,11 @@ const deleteHeila = createJsonRoute(function(req, res) {
 const putHeila = createJsonRoute(function(req, res) {
   const heila = assert(req.body, 'heila');
   return heilaCore.createOrUpdateHeila(heila)
-    .then(rowsInserted => {
-      if (rowsInserted === -1) {
+    .then(rowsInserted => undefined)
+    .catch(err => {
         console.log('something went wrong in putHeila');
         throwStatus(500, 'Something went wrong.');
-      }
-    });
+    })
 });
 
 const getHeilaList = createJsonRoute(function(req, res) {
@@ -34,9 +33,7 @@ const getHeilaList = createJsonRoute(function(req, res) {
     return heilaCore.getHeilaByUserId(userId)
     .then(heila => {
       if (heila === null) {
-        const err = new Error('Heila not found: ' + userId);
-        err.status = 404;
-        throw err;
+        throwStatus(404, 'Heila was not found!');
       }
       return heila;
     });

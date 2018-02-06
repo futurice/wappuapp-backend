@@ -31,14 +31,10 @@ function createRouter() {
   const router = express.Router();
   requireAuth.unless = require('express-unless')
 
-  // palauttaa listan heiloja, joita voi frontissa näyttää heilanselauksessa
-  // jos antaa query parametrin ?userId=jotakin, niin palauttaa vain tuota
-  // userId:tä vastaavan heilan
-  router.get('/heila/:uuid', heilaHttp.getHeilaList);
+  router.get('/heila/:uuid?', heilaHttp.getHeilaList);
   router.get('/heila-types', heilaHttp.getHeilaTypes);
   router.post('/heila-report', heilaHttp.postHeilaReport);
   router.post('/heila-push-receipt', heilaHttp.postPushNotificationReceipt);
-  // päivittää oman heilaprofiilin tekstikenttätietoja
   router.put('/heila/:uuid', heilaHttp.putHeila);
   router.delete('/heila/:uuid', heilaHttp.deleteHeila);
 

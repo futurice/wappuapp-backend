@@ -38,7 +38,7 @@ const schemas = {
     uuid: common.userUuid.required(),
     bio_text: Joi.string().min(0, 'utf8').max(250, 'utf8').required(),
     bio_looking_for_type_id: Joi.number().integer().min(0).max(5).optional(),
-    pushToken: Joi.string().min(0, 'utf8').max(250, 'utf8').optional(),
+    push_token: Joi.string().min(0, 'utf8').max(250, 'utf8').optional(),
     class_year: Joi.string().min(0).max(4).optional(),
   },
 
