@@ -53,13 +53,8 @@ function updateHeila(heila) {
         functionCore.addPushNotificationTokenForUserId(heila.userId, heila.pushToken);
       }
 
-      return rows.length;
+      return rows;
     })
-    .catch(err => {
-      console.log('something went wrong when updating heila profile');
-      console.log(err);
-      return -1;
-    });
 }
 
 function _findUserIdByUuid(uuid) {

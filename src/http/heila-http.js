@@ -16,12 +16,11 @@ const deleteHeila = createJsonRoute(function(req, res) {
 const putHeila = createJsonRoute(function(req, res) {
   const heila = assert(req.body, 'heila');
   return heilaCore.createOrUpdateHeila(heila)
-    .then(rowsInserted => {
-      if (rowsInserted === -1) {
+    .then(rowsInserted => undefined)
+    .catch(err => {
         console.log('something went wrong in putHeila');
         throwStatus(500, 'Something went wrong.');
-      }
-    });
+    })
 });
 
 const getHeilaList = createJsonRoute(function(req, res) {
