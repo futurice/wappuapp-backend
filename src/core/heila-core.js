@@ -67,7 +67,6 @@ function _findUserIdByUuid(uuid) {
 }
 
 function findByUuid(uuid) {
-  console.log('heila-core::findByUuid ' + uuid);
   return knex('heilas')
     .select(
       'heilas.*'
@@ -83,9 +82,8 @@ function findByUuid(uuid) {
 }
 
 function getAllHeilas(uuid) {
-  console.log('getAllHeilas for uuid ' + uuid);
 
-  // palauttaa listan, jossa tällaisia objekteja:
+  // returns a list of objects like this
   // { id: string, name: string, image_url: string,
   //   team_id: int, bio_text: string, bio_looking_for_type_id: int }
 
@@ -102,34 +100,22 @@ function getAllHeilas(uuid) {
         const heilaIds = userRows.map(user => {
           return user.uuid;
         })
-        //console.log(heilaIds)
         return knex('heilas')
           .select('heilas.*')
           .whereIn('uuid', heilaIds)
           .then(heilaRows => {
-            //console.log(heilaRows);
             if (_.isEmpty(heilaRows)) {
               return [];
             }
             const unfilteredHeilalist = _heilaRowsToObjectList(_mergeUserHeilaRows(userRows, heilaRows));
-            //console.log('unfilteredHeilaList:')
-            //console.log(unfilteredHeilalist)
             const myType = unfilteredHeilalist.filter(h => h.id == userId)[0].bio_looking_for_type_id || -1;
-            //console.log('my_type');
-            //console.log(myType);
-            //console.log('unfilteredList:');
-            //console.log(unfilteredHeilalist);
 
             return knex('matches')
               .select('matches.*')
               .where({ 'userId1': userId })
               .orWhere({ 'userId2': userId })
               .then(previousMatches => {
-                //console.log('all previous matches:');
-                //console.log(previousMatches);
                 const filterOutIds = previousMatches.map(match => match.userId1 === userId ? match.userId2 : match.userId1);
-                //console.log('filterOudIds');
-                //console.log(filterOutIds);
 
                 const filtered = unfilteredHeilalist.filter(elem => {
                   return filterOutIds.indexOf(parseInt(elem.id)) === -1;
@@ -177,10 +163,8 @@ function getHeilaByUserId(userId) {
 }
 
 function _mergeUserHeilaRows(userRows, heilaRows) {
-  // mergetään user-profiilit ja heila-profiilit
-  // lopputuloksena palautetaan lista, jossa
-  // sekä userin tiedot että heilan tiedot samassa
-  // objektissa
+  // merge users and heilas
+  // return a list of objects including all fields
   userRows.forEach(user => {
     for (let i = 0; i < heilaRows.length; i += 1) {
       if (user.uuid === heilaRows[i].uuid) {
@@ -194,8 +178,7 @@ function _mergeUserHeilaRows(userRows, heilaRows) {
 
 function _heilaRowsToObjectList(userList) {
 
-  // userList sisältää _VAIN_ heila: true -tyyppisiä profiileja
-
+  // userList only inlcludes profiles where heila field is true
   const heilaList = userList
     .map(user => {
       return {
@@ -225,7 +208,7 @@ function _makeHeilaDbRow(heila) {
 
 // jscs:disable requireCamelCaseOrUpperCaseIdentifiers
 function _heilaRowToObject(row) {
-  // jos kuvaa ei ole uploadattu, palautetaan tyhjä merkkijono
+  // if no image has been uploaded, return an empty string
   let url = null;
   if (row.image_path) {
     url = `${GCS_CONFIG.baseUrl}/${GCS_CONFIG.bucketName}/${row.image_path}`;
@@ -234,8 +217,7 @@ function _heilaRowToObject(row) {
   return {
     id: row.userId,
     uuid: row.uuid,
-    // tässä asetetaan image_urli, jolla sen voi hakea verkosta ja näyttää
-    // urlia ei oikeasti ole laitettu kantaan, siellä on vain image_path
+    // this is a URL that points to GCS, the db only stores the path to that
     image_url: url,
     bio_text: row.bio_text,
     bio_looking_for_type_id: row.bio_looking_for_type_id,
