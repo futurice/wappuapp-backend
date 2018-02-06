@@ -23,11 +23,9 @@ Dependencies:
 
 * Docker
 
-  Using Docker to run wappuapp-backend with wappuapp-adminpanel requires
-  - Docker 17.0.6 =>
-  - Docker Compose 1.11.2 =>
-
-  Clone this repo into the wappuapp-adminpanel folder and look for instructions there
+  Using Docker to run wappuapp-backend requires
+  * Docker 17.0.6 =>
+  * Docker Compose 1.11.2 =>
 
 ## Get started
 
@@ -50,6 +48,14 @@ Dependencies:
 * `knex migrate:latest` Run migrations to local database
 * `knex seed:run` Create seed data to local database
 * `npm start` Start express server locally
+* Server runs at http://localhost:9000
+
+### Using Docker
+
+* `sh tools/init.sh` to make sure .env exists, fill in the blanks
+* `sh tools/start-docker-with-migrations.sh` to start the docker-environment with migrations and seeds
+* `sh tools/start-docker.sh` to start the docker-environment after migrations and seeds have already been ran
+* Postgres, Redis, Node are all installed and running, follow instructions on the screen.
 * Server runs at http://localhost:9000
 
 Start using [API endpoints](#api-endpoints).
