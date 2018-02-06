@@ -25,6 +25,7 @@
 
 * the schema of the database looks like this:
 
+```
 {
   chats: {
     random_id: {
@@ -65,4 +66,4 @@
     .
   }
 }
-
+```
