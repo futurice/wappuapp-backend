@@ -6,10 +6,8 @@ const postFeedback = createJsonRoute(function(req, res) {
   const feedback = assert(req.body, 'feedback');
   return feedbackCore.giveFeedback(feedback)
    .then(ret => {
-     if (ret === -1) {
+     if (!ret) {
       throwStatus(404, `Event id ${feedback.id} does not exist`);
-     } else if (ret === 0) {
-      throwStatus(500);
      }
    })
 });

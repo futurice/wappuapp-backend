@@ -29,7 +29,7 @@ const GCS_CONFIG = {
   'project_id': process.env.GCS_PROJECT_ID,
   'private_key_id': process.env.GCS_PRIVATE_KEY_ID,
   //'private_key': process.env.GCS_PRIVATE_KEY,
-  // seuraava rivi olettaa, että env var on suoraan gcs accounting credentials jsonin stringi
+  // the next line expects the env var to be the string from GCS account credentials
   'private_key': process.env.GCS_PRIVATE_KEY_STRING.replace(/\\n/g, '\n'),
   'client_email': process.env.GCS_CLIENT_EMAIL,
   'client_id': process.env.GCS_CLIENT_ID,
@@ -40,7 +40,7 @@ const GCS_CONFIG = {
 
   credentials: {
     //'private_key': PRIVATE_KEY,
-    // seuraava rivi olettaa, että env var on suoraan gcs accounting credentials jsonin stringi
+    // the next line expects the env var to be the string from GCS account credentials
     'private_key': process.env.GCS_PRIVATE_KEY_STRING.replace(/\\n/g, '\n'),
     'client_email': process.env.GCS_CLIENT_EMAIL
   }

@@ -13,7 +13,6 @@ admin.initializeApp(functions.config().firebase);
 exports.addPushTokenForUserId = functions.https.onRequest((req, res) => {
 
   if (req.get('FUNCTION_SECRET_KEY') !== functions.config().functions.secret) {
-    console.log('not authenticated, FUNCTION_SECRET_KEY header is barps');
     res.sendStatus(403);
     return;
   }
@@ -22,7 +21,6 @@ exports.addPushTokenForUserId = functions.https.onRequest((req, res) => {
   const pushToken = req.query.pushToken;
 
   admin.database().ref('/pushTokens/' + userId).set({token: pushToken}).then(snapshot => {
-    console.log('pushToken added for userId ' + userId);
     res.sendStatus(200);
   });
 });
@@ -33,7 +31,6 @@ exports.addPushTokenForUserId = functions.https.onRequest((req, res) => {
 exports.removeUserId = functions.https.onRequest((req, res) => {
 
   if (req.get('FUNCTION_SECRET_KEY') !== functions.config().functions.secret) {
-    console.log('not authenticated, FUNCTION_SECRET_KEY header is barps');
     res.sendStatus(403);
     return;
   }
@@ -41,7 +38,6 @@ exports.removeUserId = functions.https.onRequest((req, res) => {
   const userId = req.query.userId;
 
   return admin.database().ref('/pushTokens/' + userId).set({ token: null }).then(snapshot => {
-    console.log('pushToken removed from userId ' + userId);
     // return admin.database().ref('/chats/').once('value').then(snapshot => {
     //   const allChats = snapshot.val();
     //   const chatsToClose = [];
@@ -54,8 +50,6 @@ exports.removeUserId = functions.https.onRequest((req, res) => {
     //   // TODO: it should be decided what to do with them
     //   // leave open, close them?
     //   // should the other user be notified somehow?
-    //   console.log('chatsToClose:');
-    //   console.log(chatsToClose);
     // });
     res.sendStatus(200);
   });
@@ -68,12 +62,10 @@ exports.removeUserId = functions.https.onRequest((req, res) => {
 exports.addNewChatBetweenUsers = functions.https.onRequest((req, res) => {
 
   if (req.get('FUNCTION_SECRET_KEY') !== functions.config().functions.secret) {
-    console.log('not authenticated, FUNCTION_SECRET_KEY header is barps');
     res.sendStatus(403);
     return;
   }
 
-  console.log(req.query)
   const userId1 = req.query.userId1;
   const userId2 = req.query.userId2;
 
@@ -83,15 +75,13 @@ exports.addNewChatBetweenUsers = functions.https.onRequest((req, res) => {
            users: [userId1, userId2]
          })
     .then(snapshot => {
-      console.log('chat record was added for users ' + userId1 + ' and ' + userId2);
       const chatKey = snapshot.ref.toString().split('/').slice(-1)[0];
-      console.log(`chatKey: ${chatKey}`);
       res.send({ 'chatKey': chatKey });
       return admin.database().ref(`/chats/${chatKey}/messages`)
              .push({
-               msg: 'Welcome to whappu chat! Please do not share any private information.',
-               userId: '-1',
-               ts: (new Date()).getTime().toString()
+                msg: 'Welcome to whappu chat! Please do not share any private information.',
+                userId: '-1',
+                ts: (new Date()).getTime().toString()
              })
     });
 });
@@ -109,13 +99,9 @@ function sendPushMessageToUserDeviceWithPayload(userId, payload) {
       // }
 
       const userIdObject = snapshot.val();
-      console.log('looking for pushToken for userId ' + userId);
-      console.log('all pushToken userIds are: ' + Object.keys(userIdObject));
 
       if (userId in userIdObject) {
         const pushToken = userIdObject[userId]['token'];
-        console.log(`pushToken FOUND for userId ${userId}`);
-        console.log(pushToken);
 
         // See the "Defining the message payload" section below for details
         // on how to define a message payload.
@@ -140,14 +126,11 @@ function sendPushMessageToUserDeviceWithPayload(userId, payload) {
           .then(function(response) {
             // See the MessagingDevicesResponse reference documentation for
             // the contents of response.
-            console.log("Successfully sent message:", response);
           })
           .catch(function(error) {
-            console.log("Error sending message:", error);
           });
 
       } else {
-        console.log(`userId ${userId} did not have pushToken... abort sending!`);
       }
     })
 };
@@ -162,15 +145,10 @@ exports.sendPushMessage = functions.database.ref('/chats/{chatId}/')
   .onWrite(event => {
     // Grab the current value of what was written to the Realtime Database.
     const chatData = event.data.val();
-    console.log('\ŋ\ŋthere was a new write to ' + event.params.chatId);
-    console.log(chatData)
     const users = chatData.users;
     const lastMessageId = Object.keys(chatData.messages).slice(-1)[0];
     const userIdForSender = chatData.messages[lastMessageId].userId;
     const userIdForReceiver = users.filter(id => id !== userIdForSender)[0];
-    console.log(users)
-    console.log(userIdForSender)
-    console.log(userIdForReceiver)
 
     const payload = {
       notification: {
@@ -186,12 +164,10 @@ exports.sendPushMessage = functions.database.ref('/chats/{chatId}/')
 exports.closeChatId = functions.https.onRequest((req, res) => {
 
   if (req.get('FUNCTION_SECRET_KEY') !== functions.config().functions.secret) {
-    console.log('not authenticated, FUNCTION_SECRET_KEY header is barps');
     res.sendStatus(403);
     return;
   }
 
-  console.log(req.query)
   const chatId = req.query.chatId;
 
   return admin.database().ref(`/chats/${chatId}`)
@@ -207,12 +183,9 @@ exports.closeChatId = functions.https.onRequest((req, res) => {
 exports.sendMatchNotification = functions.https.onRequest((req, res) => {
 
   if (req.get('FUNCTION_SECRET_KEY') !== functions.config().functions.secret) {
-    console.log('not authenticated, FUNCTION_SECRET_KEY header is barps');
     res.sendStatus(403);
     return;
   }
-
-  console.log(req.query);
 
   const userId = req.query.userId;
   const payload = {
@@ -238,17 +211,14 @@ function updateReadReceiptAndSendPushNotification(userId, receiptType, payload) 
   // --> only one per notification type (match/msg)
   return admin.database().ref(`/readReceipts/${userId}`).once('value', snapshot => {
     const receiptData = snapshot.val();
-    console.log(receiptData);
     // the user has not read the p
     if (receiptData && receiptData[receiptType] === false) {
-      console.log('user has not read the previous match notification -> abort');
       return;
     }
 
     return admin.database().ref(`/readReceipts/${userId}`)
       .update({ receiptType: false })
       .then(r => {
-        console.log('readReceipt data updated');
         return sendPushMessageToUserDeviceWithPayload(userId, payload);
       })
     });
@@ -257,12 +227,9 @@ function updateReadReceiptAndSendPushNotification(userId, receiptType, payload) 
 exports.markRead = functions.https.onRequest((req, res) => {
 
   if (req.get('FUNCTION_SECRET_KEY') !== functions.config().functions.secret) {
-    console.log('not authenticated, FUNCTION_SECRET_KEY header is barps');
     res.sendStatus(403);
     return;
   }
-
-  console.log(req.query);
 
   const userId = req.query.userId;
   const type = req.query.type;
@@ -271,7 +238,5 @@ exports.markRead = functions.https.onRequest((req, res) => {
 
   return admin.database().ref(`/readReceipts/${userId}`)
     .update(obj)
-    .then(r => {
-      console.log('readReceipt marked read');
-    });
+    .then(r => r);
 });

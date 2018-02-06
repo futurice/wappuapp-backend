@@ -3,7 +3,7 @@ const BPromise = require('bluebird');
 const {knex} = require('../util/database').connect();
 import {getDistance} from '../util/geometry';
 import moment from 'moment-timezone';
-import { getFeed } from "./feed-core";
+import { getFeed } from './feed-core';
 
 /**
  *
@@ -85,17 +85,23 @@ function getEvents(opts) {
     .orderBy('start_time', 'asc')
     .then(rows => _.map(rows, _rowToEvent))
     .then(events => {
-
-      // get all actions and filter checkins in order to add them
-      // into the event details
+      
+      // get actions of CHECK_IN_TYPE and count and group
+      // by event_id
       return knex('actions')
-        .select('*')
+        .select('event_id')
         .where({ action_type_id: 9 })
+        .count('event_id')
+        .groupBy('event_id')
         .then(checkIns => {
-          events.forEach(event => {
-            event['checkinCount'] = checkIns.filter(c => c.event_id == event.event_id).length;
+          const checkInObject = {};
+          checkIns.forEach(ci => checkInObject[ci.event_id] = ci.count);
+          return events.map(event => {
+          // add checkinCounts to events
+            event['checkinCount'] = (event.id in checkInObject)
+              ? parseInt(checkInObject[event.id]) : 0;
+            return event;
           })
-          return events;
         })
     })
 };

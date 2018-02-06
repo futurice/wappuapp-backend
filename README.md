@@ -187,6 +187,12 @@ Query parameters:
 
 * `userId` Integer. If specified, returns only that single heila profile.
 
+In essence, you can query in either of these three ways:
+
+* /api/heila/lkjsadlkfjsalkdjflkjdsaflkaj <--- returns customized list matching uuid
+* /api/heila?userId=10 <--- returns heila profile by id 10
+* /api/heila/?userId=10 <--- same as above
+
 Responses:
 
 * `200 OK` List of [heila object](#heila-object).
