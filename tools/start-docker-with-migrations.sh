@@ -9,7 +9,7 @@ project="wappuapp"
 backend="${project}_backend"
 database="${project}_database"
 
-sh tools/start-dev-env.sh
+sh tools/start-docker.sh
 
 export backend_container="$(docker ps --filter "name=${backend}" --format "{{.Names}}")"
 export database_container="$(docker ps --filter "name=${database}" --format "{{.Names}}")"
