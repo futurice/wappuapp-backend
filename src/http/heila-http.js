@@ -33,9 +33,7 @@ const getHeilaList = createJsonRoute(function(req, res) {
     return heilaCore.getHeilaByUserId(userId)
     .then(heila => {
       if (heila === null) {
-        const err = new Error('Heila not found: ' + userId);
-        err.status = 404;
-        throw err;
+        throwStatus(404, 'Heila was not found!');
       }
       return heila;
     });
