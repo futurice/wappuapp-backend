@@ -101,15 +101,12 @@ function findByUuid(uuid) {
 // have been filtered out --> returns only "fresh" profiles
 function getAllHeilas(uuid) {
   
-
   return getHeilaByUuid(uuid)
     .then(myProfile => {
       // my profile is now an object holding the requestors profile
       return knex('heilas')
         .join('users', 'heilas.userId', 'users.id')
         .then(rows => {
-          console.log('ROWS')
-          console.log(rows);
           if (_.isEmpty(rows)) {
             return [];
           }
@@ -127,6 +124,7 @@ function getAllHeilas(uuid) {
                
               const myPreviousMatches = previousMatches.filter(elem => {
                 if (elem.userId1 === userId) {
+                  return !!elem.opinion1;
                 } else {
                   return !!elem.opinion2;
                 }
