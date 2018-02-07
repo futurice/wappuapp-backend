@@ -705,7 +705,6 @@ If you're updating the user with a PUT from the client:
   "uuid": "UUID",
   "name": "NAME",
   "team": team number,
-  "heila": true|false
 }
 ```
 
@@ -716,7 +715,7 @@ If you're getting the user with a GET from the backend:
   "uuid": "de305d54-75b4-431b-adb2-eb6b9e546014",
   "name": "Hessu Kypärä",
   "image_url": "https://..." | null , // if no image, null
-  "heila": true|false
+  "heila": true|false // this field is automatically updated when the user creates/updates/removes the heila profile
 }
 ```
 

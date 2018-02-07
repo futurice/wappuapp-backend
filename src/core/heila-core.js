@@ -15,6 +15,22 @@ function createOrUpdateHeila(heila) {
         } else {
           return updateHeila(heila);
         }
+      })
+      .then(rows => {
+        // this is a side-effect but a good tradeoff:
+        // when someone makes changes to the profile's
+        // heila row, let's automatically make sure that
+        // the heila field is true in users table
+        // this field is set to false when the profile
+        // is removed from the service
+        // this saves the client from doing multiple requests
+        // for simply updating/creating or deleting a profile
+        // --> this way the user's heila field completely
+        // depends on the status of his/her profile
+        return knex('users')
+          .where('uuid', heila.uuid)
+          .update({ 'heila': true })
+          .then(rows => undefined)
       });
     })
 }
@@ -52,7 +68,6 @@ function updateHeila(heila) {
         // triggered by new chat msg write can use the push_token immediately
         functionCore.addPushNotificationTokenForUserId(heila.userId, heila.push_token);
       }
-
       return rows;
     })
 }
