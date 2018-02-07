@@ -96,85 +96,75 @@ function findByUuid(uuid) {
     });
 }
 
+// returns a customized heila list; this means that
+// the profiles that have already been UPed or DOWNed
+// have been filtered out --> returns only "fresh" profiles
 function getAllHeilas(uuid) {
+  
 
-  // returns a list of objects like this
-  // { id: string, name: string, image_url: string,
-  //   team_id: int, bio_text: string, bio_looking_for_type_id: int }
+  return getHeilaByUuid(uuid)
+    .then(myProfile => {
+      // my profile is now an object holding the requestors profile
+      return knex('heilas')
+        .join('users', 'heilas.userId', 'users.id')
+        .then(rows => {
+          console.log('ROWS')
+          console.log(rows);
+          if (_.isEmpty(rows)) {
+            return [];
+          }
+          
+          const userId = parseInt(myProfile.id); // TODO
+          // this is now a list of all profiles EXCEPT the requestors own profile
+          const unfilteredHeilalist = _heilaRowsToObjectList(rows).filter(h => h.id != userId);
 
-  return _findUserIdByUuid(uuid)
-  .then(userId => {
+          // get all matches where this particular user is involved
+          return knex('matches')
+            .select('matches.*')
+            .where({ 'userId1': userId })
+            .orWhere({ 'userId2': userId })
+            .then(previousMatches => {
+               
+              const myPreviousMatches = previousMatches.filter(elem => {
+                if (elem.userId1 === userId) {
+                } else {
+                  return !!elem.opinion2;
+                }
+              });
 
-    return knex('users')
-      .select('users.*')
-      .where({ heila: true })
-      .then(userRows => {
-        if (_.isEmpty(userRows)) {
-          return [];
-        }
-        const heilaIds = userRows.map(user => {
-          return user.uuid;
+              const filterOutIds = myPreviousMatches.map(match => match.userId1 === userId ? match.userId2 : match.userId1);
+
+              const filtered = unfilteredHeilalist.filter(elem => {
+                return filterOutIds.indexOf(parseInt(elem.id)) === -1;
+              });
+
+              const sameTypes = [];
+              const otherTypes = [];
+              const myType = myProfile.bio_looking_for_type_id;
+
+              filtered.forEach(heila => {
+                if (heila.bio_looking_for_type_id === myType) {
+                  sameTypes.push(heila);
+                } else {
+                  otherTypes.push(heila);
+                }
+              });
+              return sameTypes.concat(otherTypes);
+            })
         })
-        return knex('heilas')
-          .select('heilas.*')
-          .whereIn('uuid', heilaIds)
-          .then(heilaRows => {
-            if (_.isEmpty(heilaRows)) {
-              return [];
-            }
-            const unfilteredHeilalist = _heilaRowsToObjectList(_mergeUserHeilaRows(userRows, heilaRows));
-            const myType = unfilteredHeilalist.filter(h => h.id == userId)[0].bio_looking_for_type_id || -1;
-
-            return knex('matches')
-              .select('matches.*')
-              .where({ 'userId1': userId })
-              .orWhere({ 'userId2': userId })
-              .then(previousMatches => {
-                const filterOutIds = previousMatches.map(match => match.userId1 === userId ? match.userId2 : match.userId1);
-
-                const filtered = unfilteredHeilalist.filter(elem => {
-                  return filterOutIds.indexOf(parseInt(elem.id)) === -1;
-                });
-
-                const sameTypes = [];
-                const otherTypes = [];
-
-                filtered.forEach(heila => {
-                  if (heila.bio_looking_for_type_id === myType) {
-                    sameTypes.push(heila);
-                  } else {
-                    otherTypes.push(heila);
-                  }
-                });
-                return sameTypes.concat(otherTypes);
-              })
-          })
-      })
   })
 }
 
-// this is used for requesting details about a single
-// profile
+// this is used for requesting details about a single profile
 function getHeilaByUserId(userId) {
   return knex('users')
-    .select('users.*')
-    .where({ id: userId })
-    .then(userRows => {
-      if (_.isEmpty(userRows)) {
+    .join('heilas', 'users.id', 'heilas.userId')
+    .where({ 'users.id': userId })
+    .then(rows => {
+      if (_.isEmpty(rows)) {
         return [];
       }
-      const heilaIds = userRows.map(user => {
-        return user.uuid;
-      })
-      return knex('heilas')
-        .select('heilas.*')
-        .whereIn('uuid', heilaIds)
-        .then(heilaRows => {
-          if (_.isEmpty(heilaRows)) {
-            return [];
-          }
-          return _heilaRowsToObjectList(_mergeUserHeilaRows(userRows, heilaRows))[0];
-        })
+      return _heilaRowsToObjectList(rows)[0];
     })
 }
 
