@@ -24,13 +24,27 @@ const putHeila = createJsonRoute(function(req, res) {
 });
 
 const getHeilaList = createJsonRoute(function(req, res) {
+  // this may be called in three ways:
+  // /api/heila/:uuid --> customized list
+  // /api/heila?userId=x --> x's profile
+  // /api/heila?uuid=x --> x's profile (this is the callers own profile)
   const userId = req.query.userId;
+  const uuidQuery = req.query.uuid;
   const uuid = req.params.uuid;
 
   // if there's a query param for userId, then return only that
   if (userId) {
-    //console.log('get single heila details by userId' + userId);
     return heilaCore.getHeilaByUserId(userId)
+    .then(heila => {
+      if (heila === null) {
+        throwStatus(404, 'Heila was not found!');
+      }
+      return heila;
+    });
+  // if there's a query param for uuid, then the client is asking
+  // his/her own details --> return that
+  } else if (uuidQuery) {
+    return heilaCore.getHeilaByUuid(uuidQuery)
     .then(heila => {
       if (heila === null) {
         throwStatus(404, 'Heila was not found!');

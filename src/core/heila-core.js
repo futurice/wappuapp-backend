@@ -138,6 +138,8 @@ function getAllHeilas(uuid) {
   })
 }
 
+// this is used for requesting details about a single
+// profile
 function getHeilaByUserId(userId) {
   return knex('users')
     .select('users.*')
@@ -159,7 +161,19 @@ function getHeilaByUserId(userId) {
           return _heilaRowsToObjectList(_mergeUserHeilaRows(userRows, heilaRows))[0];
         })
     })
+}
 
+// this is used for requesting details about your OWN profile
+function getHeilaByUuid(uuid) {
+  return knex('users')
+    .join('heilas', 'users.id', 'heilas.userId')
+    .where({ 'users.uuid': uuid })
+    .then(rows => {
+      if (_.isEmpty(rows)) {
+        return [];
+      }
+      return _heilaRowsToObjectList(rows)[0];
+    })
 }
 
 function _mergeUserHeilaRows(userRows, heilaRows) {
@@ -281,6 +295,7 @@ export {
   findByUuid,
   getAllHeilas,
   getHeilaByUserId,
+  getHeilaByUuid,
   getHeilaTypes,
   deleteHeila,
   addHeilaReport,

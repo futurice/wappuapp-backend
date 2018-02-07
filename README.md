@@ -181,9 +181,9 @@ Query parameters:
 
 In essence, you can query in either of these three ways:
 
-* /api/heila/lkjsadlkfjsalkdjflkjdsaflkaj <--- returns customized list matching uuid
+* /api/heila/lkjsadlkfj <--- returns customized list matching uuid
 * /api/heila?userId=10 <--- returns heila profile by id 10
-* /api/heila/?userId=10 <--- same as above
+* /api/heila/?uuid=x <--- returns heila profile of the calling user
 
 Responses:
 
