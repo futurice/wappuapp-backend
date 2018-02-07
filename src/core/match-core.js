@@ -128,7 +128,7 @@ function handleMatch(matchObject) {
                  'userId2': matchObject.userId2 })
         .update(matchObject)
         .then(rows => {
-          return functionCore.sendMatchNofitication(matchObject.userId1, matchObject.userId2);
+          return functionCore.sendMatchNotification(matchObject.userId1, matchObject.userId2);
         });
     })
 }
