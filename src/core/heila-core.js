@@ -103,6 +103,9 @@ function getAllHeilas(uuid) {
   
   return getHeilaByUuid(uuid)
     .then(myProfile => {
+      console.log('myProfile')
+      console.log(myProfile)
+
       // my profile is now an object holding the requestors profile
       return knex('heilas')
         .join('users', 'heilas.userId', 'users.id')
@@ -110,10 +113,19 @@ function getAllHeilas(uuid) {
           if (_.isEmpty(rows)) {
             return [];
           }
+
+          const allHeilaProfiles = _heilaRowsToObjectList(rows);
+
+          // myProfile is an empty list --> user is not registered
+          // and activated the heila profile --> return all heilas
+          // for viewing pleasure
+          if (myProfile.length === 0) {
+            return allHeilaProfiles;
+          }
           
           const userId = parseInt(myProfile.id); // TODO
           // this is now a list of all profiles EXCEPT the requestors own profile
-          const unfilteredHeilalist = _heilaRowsToObjectList(rows).filter(h => h.id != userId);
+          const unfilteredHeilalist = allHeilaProfiles.filter(h => h.id != userId);
 
           // get all matches where this particular user is involved
           return knex('matches')
