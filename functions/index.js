@@ -13,7 +13,7 @@ admin.initializeApp(functions.config().firebase);
 exports.addPushTokenForUserId = functions.https.onRequest((req, res) => {
 
   if (req.get('FUNCTION_SECRET_KEY') !== functions.config().functions.secret) {
-    res.sendStatus(403);
+    res.sendStatus(401);
     return;
   }
 
@@ -31,7 +31,7 @@ exports.addPushTokenForUserId = functions.https.onRequest((req, res) => {
 exports.removeUserId = functions.https.onRequest((req, res) => {
 
   if (req.get('FUNCTION_SECRET_KEY') !== functions.config().functions.secret) {
-    res.sendStatus(403);
+    res.sendStatus(401);
     return;
   }
 
@@ -62,7 +62,7 @@ exports.removeUserId = functions.https.onRequest((req, res) => {
 exports.addNewChatBetweenUsers = functions.https.onRequest((req, res) => {
 
   if (req.get('FUNCTION_SECRET_KEY') !== functions.config().functions.secret) {
-    res.sendStatus(403);
+    res.sendStatus(401);
     return;
   }
 
@@ -164,7 +164,7 @@ exports.sendPushMessage = functions.database.ref('/chats/{chatId}/')
 exports.closeChatId = functions.https.onRequest((req, res) => {
 
   if (req.get('FUNCTION_SECRET_KEY') !== functions.config().functions.secret) {
-    res.sendStatus(403);
+    res.sendStatus(401);
     return;
   }
 
@@ -183,7 +183,7 @@ exports.closeChatId = functions.https.onRequest((req, res) => {
 exports.sendMatchNotification = functions.https.onRequest((req, res) => {
 
   if (req.get('FUNCTION_SECRET_KEY') !== functions.config().functions.secret) {
-    res.sendStatus(403);
+    res.sendStatus(401);
     return;
   }
 
@@ -227,7 +227,7 @@ function updateReadReceiptAndSendPushNotification(userId, receiptType, payload) 
 exports.markRead = functions.https.onRequest((req, res) => {
 
   if (req.get('FUNCTION_SECRET_KEY') !== functions.config().functions.secret) {
-    res.sendStatus(403);
+    res.sendStatus(401);
     return;
   }
 
