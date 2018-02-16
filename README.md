@@ -4,9 +4,7 @@
 
 Dependencies:
 
-* Node 4.x or 5.x + npm 2.x
-
- *Use NPM 2*.x, the current Babel configuration has issues with NPM 3.x and doesn't work ~~properly~~ at all with it
+* Node 9.x + npm 5.x
 
 * Postgres with PostGis extension
 
@@ -22,6 +20,12 @@ Dependencies:
   ```
 
 * Heroku toolbelt
+
+* Docker
+
+  Using Docker to run wappuapp-backend requires
+  * Docker 17.0.6 =>
+  * Docker Compose 1.11.2 =>
 
 ## Get started
 
@@ -46,12 +50,22 @@ Dependencies:
 * `npm start` Start express server locally
 * Server runs at http://localhost:9000
 
+### Using Docker
+
+* `sh tools/init.sh` to make sure .env exists, fill in the blanks
+* `sh tools/start-docker-with-migrations.sh` to start the docker-environment with migrations and seeds
+* `sh tools/start-docker.sh` to start the docker-environment after migrations and seeds have already been ran
+* Postgres, Redis, Node are all installed and running, follow instructions on the screen.
+* Server runs at http://localhost:9000
+
 Start using [API endpoints](#api-endpoints).
 
 Environments:
 
 * `qa` https://wappuapp-backend-qa.herokuapp.com
 * `prod` https://wappuapp-backend.herokuapp.com
+
+Instructions for running wappuapp-backend with wappuapp-adminpanel are in the adminpanel's README.
 
 ## Techstack
 
@@ -167,6 +181,94 @@ UPDATE users SET is_banned = true WHERE uuid='D47DA01C-51BB-4F96-90B6-D64B77225E
 * Be prepared that some of these endpoints are not documented correctly
 * Token authentication is required. Token is sent in `x-token` header.
 
+
+
+### `GET /api/heila/:uuid`
+
+> List heila profiles customized to that uuid. This is what you call
+when you want to get all unseen heilas. This filters them so that
+previous matches, UPs and DOWNs are dropped.
+
+Query parameters:
+
+* `userId` Integer. If specified, returns only that single heila profile.
+
+In essence, you can query in either of these three ways:
+
+* /api/heila/lkjsadlkfj <--- returns customized list matching uuid
+* /api/heila?userId=10 <--- returns heila profile by id 10
+* /api/heila/?uuid=x <--- returns heila profile of the calling user
+
+Responses:
+
+* `200 OK` List of [heila object](#heila-object).
+
+### `GET /api/heila-types`
+
+> List all possible heila bio_looking_for types
+
+Responses:
+
+* `200 OK` [heila type object](#heila-type-object).
+
+### `POST /api/heila-report`
+
+> Reports a bad behaving user
+
+* Body is [heila report object](#heila-report-object).
+
+### `POST /api/heila-push-receipt`
+
+> Lets the push notification service know that the user has seen
+either a match notification or a msg notification and it's OK
+to send a new one. This should be called every time the user has cleared 
+the notifications.
+
+* Body is [push notification read receipt object](#push-notification-read-receipt-object).
+
+### `PUT /api/heila/:uuid`
+
+> Update heila profile text fields.
+
+* Body is [heila bio object](#heila-bio-object).
+
+### `DELETE /api/heila/:uuid`
+
+> Deletes the heila profile AND switches the user profile's heila to false.
+  The user will also stop receiving any push notifications from the service.
+
+
+### `POST /api/heila/matches`
+
+> This POSTs a match telling that "this user made an UP for that user"
+
+* Body is [match object](#match-object).
+
+Responses:
+* `200 OK`
+
+### `GET /api/heila/matches/:uuid`
+
+> List of matches
+
+Responses:
+* `200 OK` List of [match objects](#match-object).
+
+
+### `POST /api/heila/matches/close`
+
+> This POSTs a note that this particular chat should be CLOSED.
+This will disable writing to that Firebase chat.
+The chat will still be open for reading by the other user.
+
+* Body is [match object close](#match-object-close).
+
+Responses:
+* `200 OK`
+
+
+
+
 ### `GET /api/events`
 
 > List events
@@ -189,6 +291,15 @@ Responses:
 
 * `200 OK` Body is one of [event object](#event-object) with an array of images that are [image feed objects](#feed-objects).
 * `404 Not Found` Event not found
+
+
+### `POST /api/feedback/:id`
+
+Responses:
+
+* `200 OK`
+
+Body is a [feedback object](#feedback-object).
 
 
 ### `GET /api/teams`
@@ -256,6 +367,15 @@ Responses:
 
 * `200 OK`
 
+### `PUT /api/users/:uuid/image`
+
+> Saves user profile picture. If a picture was already set, overwrites it.
+
+Body is one of [user image object](#user-image-object).
+
+Responses:
+
+* `200 OK`
 
 ### `GET /api/users/:uuid`
 
@@ -329,6 +449,20 @@ Examples:
 
     Assuming the id of oldest/last feed item client currently has is `123`.
 
+* Get the comments for a feed item with id 7: `GET /api/feed?parent_id=7`
+
+Responses:
+
+* `200 OK`
+
+### `GET /api/refreshcommentnumber/:id`
+
+> Get the number of comments for a feed item with the given feed_item id.
+
+Example:
+
+* Get the number of comments for a feed item with id 1: `GET /api/refreshcommentnumber/1`
+
 Responses:
 
 * `200 OK`
@@ -351,7 +485,6 @@ Responses:
 > Delete item from feed
 
 `:id` Is the id of an item in the feed.
-
 
 ### `GET /api/mood`
 
@@ -399,7 +532,352 @@ Responses:
 
 * `200 OK` Body is one of [radio objects](#radio-object).
 
+## Adminpanel endpoints
+
+### `PUT /api/admin/feed/:id`
+
+> Delete item from feed as a moderator (shadowbans it)
+
+Query paramters:
+
+* `:id` Is the id of an item in the feed.
+
+Responses:
+
+* `200 OK` with empty body
+
+### `PUT /api/admin/users/:uuid/ban`
+
+> Shadowban user as a moderator
+
+Query paramters:
+
+* `:uuid` Is the uuid of an user
+
+Responses:
+
+* `200 OK` with empty body
+
+### `PUT /api/admin/users/:uuid/unban`
+
+> Unban user as a moderator
+
+Query paramters:
+
+* `:uuid` Is the uuid of an user
+
+Responses:
+
+* `200 OK` with empty body
+
+### `POST /api/admin/actions`
+
+> Send a systemmessage
+
+Responses:
+
+* `200 OK`
+* `400 Text cannot be empty.`
+* `400 SystemMessage type must be text.`
+
+### `GET /api/admin/reports`
+
+> Get reported feed items, sorted by newest order
+
+Query paramters:
+
+* `beforeId` get reported feed_items before given Id
+
+Responses:
+
+* `200 OK` with empty body
+
+### `POST /api/reports`
+
+> Saves a report into the db
+
+Responses:
+
+* `200 OK` with empty body
+* `404 No such feed item`
+* `404 no such user`
+
+### PUT `/api/admin/reports/:id`
+
+> Resolves a report, on ban resolves all for the same feed item
+
+Responses:
+
+* `200 OK` with empty body
+* `404 not found`
+
+### `POST /api/login`
+
+> Login to gain admin/moderator
+
+Body:
+
+* `email`
+* `password`
+
+Responses:
+
+* `200 OK` with JWT token and level of rights
+* `401 Unauthorized`
+
+### `POST /api/addmoderator`
+
+> New moderator creation, requires admin rights
+
+Body:
+
+* `email`
+
+Responses:
+
+* `200 OK`
+* `401 Unauthorized`
+
+### `DELETE /api/deletemoderator`
+
+> Delete moderator or admin, requires admin rights
+
+Query parameters:
+
+* `:id` specifies the user id to delete
+
+Responses:
+
+* `200 OK`
+* `401 Unauthorized`
+
+### `PUT /api/promote`
+
+> Promote moderator to admin, requires admin rights
+
+Query parameters:
+
+* `:id` specifies the user id to promote
+
+Responses:
+
+* `200 OK`
+* `401 Unauthorized`
+
+### `PUT /api/demote`
+
+> Demote admin to moderator, requires admin rights
+
+Query parameters:
+
+* `:id` specifies the user id to demote
+
+Responses:
+
+* `200 OK`
+* `401 Unauthorized`
+
+### `POST /api/changepassword`
+
+> Change password for current account
+
+Body:
+
+* `oldpassword` needs to match the old password
+* `newpassword` new password to be set
+
+Responses:
+
+* `200 OK`
+* `401 Unauthorized`
+
+### `POST /api/activateaccount`
+
+> Activate new account and set password for it
+
+Body:
+
+* `password`
+
+Responses:
+
+* `200 OK`
+* `401 Unauthorized`
+
+### `GET /api/forgottenpassword`
+
+> Sends email to the account password has been forgotten from
+
+Query parameters:
+
+* `:email` email attached to the account that the password has been forgotten from
+
+
+### `GET /api/moderatorlist`
+
+> Lists moderators and admins in the system, requires admin rights
+
+Responses:
+
+* `200 OK` with list of moderators
+* `401 Unauthorized`
+
+### `POST /api/addevent`
+
+> Add new event
+
+Body:
+
+* All the data for event
+
+Responses:
+
+* `200 OK`
+* `401 Unauthorized`
+
+### `DELETE /api/deleteevent`
+
+> Deletes specific event
+
+Query parameters:
+
+* `:id` specifies the event id to delete
+
+Responses:
+
+* `200 OK`
+* `401 Unauthorized`
+
+### `GeT /api/updateevent`
+
+> Get all data of specific event that is to be updated
+
+Query parameters:
+
+* `:id` specifies the user event id to be updated
+
+Responses:
+
+* `200 OK` with event data
+* `401 Unauthorized`
+
+### `POST /api/updateevent`
+
+> Update event with the data in the body
+
+Body:
+
+* All event data
+
+Responses:
+
+* `200 OK`
+* `401 Unauthorized`
+
 ## Response objects
+
+
+### Match object
+
+When you're POSTin your opinion about another user:
+
+```js
+{
+  "uuid": "this is your own uuid",
+  "matchedUserId": "this is the USERID of the user you're UPing/DOWNing",
+  "opinion": "UP|DOWN"
+}
+```
+
+When you're GETting your own list of matches:
+
+```js
+{
+  NOT DECIDED YET BUT IS ALREADY RETURNING:
+  "firebaseChatId": "key that points to /chats/*** in firebase"
+}
+```
+
+### Match object close
+
+```js
+{
+  "uuid": "this is your own uuid",
+  "matchedUserId": "this is the USERID of the user you're closing the chat with",
+  "firebaseChatId": "this is the firebaseChatId your chat is located at"
+}
+```
+
+### Heila type object
+
+```js
+[
+    {
+        "id": 1,
+        "type": "New buddies to spend this Wappu with"
+    },
+    {
+        "id": 2,
+        "type": "Light-hearted fun"
+    },
+    {
+        "id": 3,
+        "type": "Serious romantic buzz!!"
+    },
+    {
+        "id": 4,
+        "type": "Philosophical debates about the true nature of Wappu"
+    }
+]
+
+```
+
+### Heila object
+
+```js
+{
+  "id": 2002,
+  "name": "Pate Papparainen",
+  "team_id": 1,
+  "image_url": "https://..." | null // if no image, then null
+  "bio_text": "I'm very nice",
+  "bio_looking_for_type_id": TYPE_ID,
+  "class_year": "11" // two char string 
+}
+
+```
+
+### Heila bio object
+
+```js
+{
+  "uuid": "UUID",
+  "bio_text": string, // length of 0 is fine
+  "bio_looking_for_type_id": TYPE_ID,
+  "push_token": "this is the push notif token generated by FCM.getPushToken()",
+  "class_year": "11"
+}
+
+```
+
+### Heila report object
+
+```js
+{
+  "reporter_uuid": "UUID",
+  "bad_profile_id": "userId/heilaId (same) of the bad user",
+  "text": "explanation for the report, required, max 500"
+}
+
+### Push notification read receipt object
+
+```js
+{
+  "uuid": "UUID",
+  "type": "match|msg" // depending on what was read
+}
+
+```
 
 ### Event object
 
@@ -422,8 +900,20 @@ Responses:
   "city": 3,
   "fbEventId": null,
   "attendingCount": 0,
+  "checkingCount": 0,
   "radius": 400,
   "images": []
+}
+```
+
+### Feedback object
+
+```js
+{
+  "id": 1234,
+  "text": "blaa blaa bububu pöx", // optional, max 5000 char
+  "grade": [0-5], // optional,
+  "uuid": "kdjfdakdf" // uuid of the giver
 }
 ```
 
@@ -448,6 +938,8 @@ Images is an array of [feed objects](#feed-objects).
   "name": "Hessu Kypärä",
   "team": "TiTe",
   "numSimas": "1",
+  "image_url": "https://...." || null,
+  "heila": true|false,
   "images": [
     {
       "id": "2",
@@ -469,14 +961,39 @@ Images is an array of [feed objects](#feed-objects).
       "url": "https://storage.googleapis.com/wappuapp/user_content/123.jpg"
     }
   ]
-}```
+}
+```
 
 ### User object
+
+If you're updating the user with a PUT from the client:
+
+
+```js
+{
+  "uuid": "UUID",
+  "name": "NAME",
+  "team": team number,
+}
+```
+
+If you're getting the user with a GET from the backend:
 
 ```js
 {
   "uuid": "de305d54-75b4-431b-adb2-eb6b9e546014",
-  "name": "Hessu Kypärä"
+  "name": "Hessu Kypärä",
+  "image_url": "https://..." | null , // if no image, null
+  "heila": true|false // this field is automatically updated when the user creates/updates/removes the heila profile
+}
+```
+
+### User image object
+
+```
+{ 
+  "uuid": "UUID",
+  "imageData": 'base64encodedimage'
 }
 ```
 

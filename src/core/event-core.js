@@ -3,7 +3,7 @@ const BPromise = require('bluebird');
 const {knex} = require('../util/database').connect();
 import {getDistance} from '../util/geometry';
 import moment from 'moment-timezone';
-import { getFeed } from "./feed-core";
+import { getFeed } from './feed-core';
 
 /**
  *
@@ -33,7 +33,31 @@ function getEventById(opts = {}) {
 
         return event;
       });
+
     });
+}
+
+function addEvent(event) {
+  return knex('events').insert(event);
+}
+
+function updateEvent(event) {
+  return knex('events').where('id', event.id).update(event)
+}
+
+function getUpdateEvent(id) {
+  return knex('events').select('*').where('id', id)
+}
+
+function getAllEvents(city_id) {
+  if (city_id === '0') {
+    return knex('events').select('*')
+  }
+  return knex('events').select('*').where('city_id', city_id)
+}
+
+function deleteEvent(id) {
+  return knex('events').where('id', id).del()
 }
 
 function getEvents(opts) {
@@ -59,7 +83,27 @@ function getEvents(opts) {
     ])
     .whereRaw(where.sql, where.params)
     .orderBy('start_time', 'asc')
-    .then(rows => _.map(rows, _rowToEvent));
+    .then(rows => _.map(rows, _rowToEvent))
+    .then(events => {
+      
+      // get actions of CHECK_IN_TYPE and count and group
+      // by event_id
+      return knex('actions')
+        .select('event_id')
+        .where({ action_type_id: 9 })
+        .count('event_id')
+        .groupBy('event_id')
+        .then(checkIns => {
+          const checkInObject = {};
+          checkIns.forEach(ci => checkInObject[ci.event_id] = ci.count);
+          return events.map(event => {
+          // add checkinCounts to events
+            event['checkinCount'] = (event.id in checkInObject)
+              ? parseInt(checkInObject[event.id]) : 0;
+            return event;
+          })
+        })
+    })
 };
 
 function setAttendingCount(facebookEventId, attendingCount) {
@@ -113,6 +157,7 @@ function _rowToEvent(row) {
     city:           row['city'],
     fbEventId:      row['fb_event_id'],
     attendingCount: row['attending_count'],
+    checkingCount:  row['checkinCount'],
     radius:         row['radius'],
     location: {
       latitude:  _.get(row, 'location.y', null),
@@ -184,5 +229,10 @@ export {
   getEventById,
   getEvents,
   setAttendingCount,
-  isValidCheckIn
+  isValidCheckIn,
+  addEvent,
+  deleteEvent,
+  updateEvent,
+  getAllEvents,
+  getUpdateEvent
 };

@@ -1,5 +1,8 @@
 import _ from 'lodash';
 import * as feedCore from './feed-core.js';
+import { putUserImage } from '../http/user-image-http.js';
+import { prefixImageWithGCS } from './image-core.js';
+
 const BPromise = require('bluebird');
 const {knex} = require('../util/database').connect();
 
@@ -9,7 +12,11 @@ function createOrUpdateUser(user) {
     if (foundUser === null) {
       return createUser(user);
     } else {
-      return updateUser(user);
+      if (user.imageData) {
+        return updateUserImage(user);
+      } else {
+        return updateUser(user);
+      }
     }
   });
 }
@@ -26,7 +33,7 @@ function createUser(user) {
     });
 }
 
-function updateUser(user) {
+function runDbUpdate(user) {
   const dbRow = _makeUserDbRow(user);
   return knex('users').returning('id').update(dbRow)
     .where('uuid', user.uuid)
@@ -34,9 +41,23 @@ function updateUser(user) {
       if (_.isEmpty(rows)) {
         throw new Error('User row update failed: ' + dbRow);
       }
-
-      return rows.length;
     });
+}
+
+function updateUser(user) {
+  return runDbUpdate(user);
+}
+
+function updateUserImage(user) {
+  // putUserImage asettaa kuvan kantaan itsenäisesti
+  return putUserImage(user.imageData, user.uuid)
+  .then(uploadedImageName => {
+    // alkup. user-objektissa ei image_pathia mukana
+    // asetetaan image_path
+    user['image_path'] = uploadedImageName;
+    delete user['imageData'];
+    runDbUpdate(user);
+  })
 }
 
 function findByUuid(uuid) {
@@ -63,6 +84,7 @@ function findByUuid(uuid) {
  */
 function getUserDetails(opts) {
   const userDetailsQuery = _queryUserDetails(opts.userId);
+  const userImageQuery = _getUserImageUrl(opts.userId);
 
   const imagesQuery = feedCore.getFeed({
     client:        opts.client,
@@ -73,23 +95,41 @@ function getUserDetails(opts) {
   });
 
   return BPromise.all([
+    userImageQuery,
     userDetailsQuery,
     imagesQuery
-  ]).spread((userDetails, images) => {
+  ]).spread((userImagePath, userDetails, images) => {
     if (!userDetails) {
       return null;
     }
 
     userDetails.images = images;
+    userDetails.image_url = null; //eslint-disable-line
+
+    if (userImagePath) {
+      //eslint-disable-next-line
+      userDetails.image_url = prefixImageWithGCS(userImagePath);
+    }
 
     return userDetails;
   });
 }
 
+function _getUserImageUrl(userId) {
+  return knex('users')
+    .select('users.*')
+    .where({ id: userId })
+    .then(users => {
+      const user = users[0]
+      return user.image_path; //eslint-disable-line
+    })
+};
+
 function _queryUserDetails(userId) {
   const sqlString = `
   SELECT
     users.name AS name,
+    users.heila AS heila,
     teams.name AS team,
     COALESCE(num_simas, 0) AS num_simas
   FROM users
@@ -116,7 +156,8 @@ function _queryUserDetails(userId) {
       return {
         name: rowObj['name'],
         team: rowObj['team'],
-        numSimas: rowObj['num_simas']
+        numSimas: rowObj['num_simas'],
+        heila: rowObj['heila'],
       };
     });
 }
@@ -125,7 +166,9 @@ function _makeUserDbRow(user) {
   const dbRow = {
     'uuid': user.uuid,
     'name': user.name,
-    'team_id': user.team
+    'team_id': user.team,
+    'image_path': user.image_path,
+    'heila': user.heila
   };
 
   return dbRow;
@@ -133,13 +176,22 @@ function _makeUserDbRow(user) {
 
 // jscs:disable requireCamelCaseOrUpperCaseIdentifiers
 function _userRowToObject(row) {
-  return {
+  let obj = {
     id: row.id,
     name: row.name,
     uuid: row.uuid,
     team: row.team_id,
-    isBanned: row.is_banned
+    isBanned: row.is_banned,
+    heila: row.heila,
   };
+
+  if (row.image_path !== '') {
+    obj['image_url'] = prefixImageWithGCS(row.image_path);
+  } else {
+    obj['image_url'] = null;
+  }
+
+  return obj;
 }
 
 export {
