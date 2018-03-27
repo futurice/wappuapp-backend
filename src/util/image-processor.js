@@ -5,40 +5,36 @@ const logger = require('../util/logger')(__filename);
 
 // # Image Caption settings
 const BAR_HEIGHT = 60;
-const BAR_COLOR = 'rgba(221, 73, 151, .6)';
+const BAR_COLOR = 'rgba(251, 16, 149, .45)';
 const FONT_SIZE = 38;
 const DEFAULT_WIDTH = 1024;
 const DEFAULT_HEIGHT = 1024;
-const TEXT_COLOR = '#FEFF77';
+const TEXT_COLOR = '#FFFFFF';
 
 // # Helper functions to calculate position of Image Caption Elements
 
 // y0 of rectangle
 // prevent drawing over image
 function getRectangleTop(imageHeight, rectPosition, rectHeight) {
-  return Math.min(
-    imageHeight * rectPosition,
-    imageHeight - rectHeight
-  );
+  return Math.min(imageHeight * rectPosition, imageHeight - rectHeight);
 }
 
 // y1 of rectangle
 // prevent drawing over image
 function getRectangleBottom(imageHeight, rectPosition, rectHeight) {
-  return Math.min(
-    imageHeight * rectPosition + rectHeight,
-    imageHeight
-  );
+  return Math.min(imageHeight * rectPosition + rectHeight, imageHeight);
 }
 // Text position
 // Calculate vertical offset from center
 // rectPosition [0, 1]
 const textBaselineAdjust = 2;
-function getTextPositionFromCenter (imageHeight, rectPosition, rectHeight) {
-  return Math.min(
-    (rectPosition - 0.5) * imageHeight + rectHeight / 2,
-    imageHeight / 2 - rectHeight / 2
-  ) + textBaselineAdjust;
+function getTextPositionFromCenter(imageHeight, rectPosition, rectHeight) {
+  return (
+    Math.min(
+      (rectPosition - 0.5) * imageHeight + rectHeight / 2,
+      imageHeight / 2 - rectHeight / 2
+    ) + textBaselineAdjust
+  );
 }
 
 // ImageMagick does not support emojis atm.
@@ -46,71 +42,71 @@ function getTextPositionFromCenter (imageHeight, rectPosition, rectHeight) {
 // emojis are replaced with characters
 const emojiReplacer = (text = '') =>
   text
-  .replace(/😀/g, ':)')
-  .replace(/😁/g, ':D')
-  .replace(/😂/g, ':D')
-  .replace(/🤣/g, ':D')
-  .replace(/😃/g, '=D')
-  .replace(/😄/g, '=)')
-  .replace(/😅/g, ':)')
-  .replace(/😆/g, 'x)')
-  .replace(/😉/g, ';)')
-  .replace(/😎/g, 'B)')
-  .replace(/😍/g, ':)')
-  .replace(/😘/g, ':)')
-  .replace(/😗/g, ':)')
-  .replace(/😙/g, ':)')
-  .replace(/🙂/g, ':)')
-  .replace(/🤗/g, ':)')
-  .replace(/🤔/g, '')
-  .replace(/😐/g, ':|')
-  .replace(/😝/g, 'xP')
-  .replace(/😜/g, ';P')
-  .replace(/😓/g, ';(')
-  .replace(/☹/g, ':(')
-  .replace(/🙁/g, ':(')
-  .replace(/😢/g, ':`(')
-  .replace(/😦/g, ':(')
-  .replace(/😩/g, ':(')
-  .replace(/😬/g, ':()')
-  .replace(/😰/g, ':()')
-  .replace(/😲/g, ':O')
-  .replace(/😬/g, ':O')
-  .replace(/😟/g, ':(')
-  .replace(/😦/g, ':(')
-  .replace(/😧/g, ':(')
-  .replace(/😨/g, ':(')
-  .replace(/😰/g, ':(')
-  .replace(/👎/g, ':(')
-  .replace(/😳/g, '8|')
-  .replace(/😳/g, ':|')
-  .replace(/😩/g, 'D:')
-  .replace(/😭/g, ':`O')
-  .replace(/😵/g, 'x()')
-  .replace(/😇/g, ':)')
-  .replace(/😺/g, ':)')
-  .replace(/💩/g, ':)')
-  .replace(/💀/g, ':)')
-  .replace(/😵/g, '')
-  .replace(/😡/g, '')
-  .replace(/😠/g, '')
-  .replace(/😷/g, '')
-  .replace(/🤒/g, '')
-  .replace(/🤕/g, '')
-  .replace(/🤢/g, '')
-  .replace(/🤧/g, '')
-  .replace(/🤧/g, '')
-  .replace(/🙈/g, '')
-  .replace(/🙉/g, '')
-  .replace(/🙊/g, '')
-  .replace(/👍/g, 'ok')
-  .replace(/👌/g, 'ok')
-  .replace(/❤/g, '<3')
-  .replace(/💙/g, '<3')
-  .replace(/💚/g, '<3')
-  .replace(/💛/g, '<3')
-  .replace(/💕/g, '<3')
-  .replace(/💋/g, 'XOXO');
+    .replace(/😀/g, ':)')
+    .replace(/😁/g, ':D')
+    .replace(/😂/g, ':D')
+    .replace(/🤣/g, ':D')
+    .replace(/😃/g, '=D')
+    .replace(/😄/g, '=)')
+    .replace(/😅/g, ':)')
+    .replace(/😆/g, 'x)')
+    .replace(/😉/g, ';)')
+    .replace(/😎/g, 'B)')
+    .replace(/😍/g, ':)')
+    .replace(/😘/g, ':)')
+    .replace(/😗/g, ':)')
+    .replace(/😙/g, ':)')
+    .replace(/🙂/g, ':)')
+    .replace(/🤗/g, ':)')
+    .replace(/🤔/g, '')
+    .replace(/😐/g, ':|')
+    .replace(/😝/g, 'xP')
+    .replace(/😜/g, ';P')
+    .replace(/😓/g, ';(')
+    .replace(/☹/g, ':(')
+    .replace(/🙁/g, ':(')
+    .replace(/😢/g, ':`(')
+    .replace(/😦/g, ':(')
+    .replace(/😩/g, ':(')
+    .replace(/😬/g, ':()')
+    .replace(/😰/g, ':()')
+    .replace(/😲/g, ':O')
+    .replace(/😬/g, ':O')
+    .replace(/😟/g, ':(')
+    .replace(/😦/g, ':(')
+    .replace(/😧/g, ':(')
+    .replace(/😨/g, ':(')
+    .replace(/😰/g, ':(')
+    .replace(/👎/g, ':(')
+    .replace(/😳/g, '8|')
+    .replace(/😳/g, ':|')
+    .replace(/😩/g, 'D:')
+    .replace(/😭/g, ':`O')
+    .replace(/😵/g, 'x()')
+    .replace(/😇/g, ':)')
+    .replace(/😺/g, ':)')
+    .replace(/💩/g, ':)')
+    .replace(/💀/g, ':)')
+    .replace(/😵/g, '')
+    .replace(/😡/g, '')
+    .replace(/😠/g, '')
+    .replace(/😷/g, '')
+    .replace(/🤒/g, '')
+    .replace(/🤕/g, '')
+    .replace(/🤢/g, '')
+    .replace(/🤧/g, '')
+    .replace(/🤧/g, '')
+    .replace(/🙈/g, '')
+    .replace(/🙉/g, '')
+    .replace(/🙊/g, '')
+    .replace(/👍/g, 'ok')
+    .replace(/👌/g, 'ok')
+    .replace(/❤/g, '<3')
+    .replace(/💙/g, '<3')
+    .replace(/💚/g, '<3')
+    .replace(/💛/g, '<3')
+    .replace(/💕/g, '<3')
+    .replace(/💋/g, 'XOXO');
 
 // # Drawing image with Caption
 // Images with caption are resized to default max dimensions
@@ -130,37 +126,35 @@ function processImageWithCaption(imageBuffer, { imageText = '', imageTextPositio
           }
 
           // Get size of resized image
-          gm(resizedBuffer)
-          .size((err, value) => {
-            const imageSize = !value || err
-              ? { width: DEFAULT_WIDTH, height: DEFAULT_HEIGHT }
-              : value;
+          gm(resizedBuffer).size((err, value) => {
+            const imageSize =
+              !value || err ? { width: DEFAULT_WIDTH, height: DEFAULT_HEIGHT } : value;
 
             // Start drawing on top of resized img
             gm(resizedBuffer)
-            // Draw background for text
-            .fill(BAR_COLOR)
-            .drawRectangle(
-              0,
-              getRectangleTop(imageSize.height, textPosition, BAR_HEIGHT),
-              imageSize.width,
-              getRectangleBottom(imageSize.height, textPosition, BAR_HEIGHT)
-            )
-            // Draw text
-            .fill(TEXT_COLOR)
-            .fontSize(FONT_SIZE)
-            .encoding('Unicode')
-            .drawText(
-              0,
-              getTextPositionFromCenter(imageSize.height, textPosition, BAR_HEIGHT),
-              formattedImageText,
-              'Center'
-            )
-            .toBuffer('JPG', (error, resultBuffer) => {
-              error ? reject(error) : resolve(resultBuffer);
-            });
-          })
-      })
+              // Draw background for text
+              .fill(BAR_COLOR)
+              .drawRectangle(
+                0,
+                getRectangleTop(imageSize.height, textPosition, BAR_HEIGHT),
+                imageSize.width,
+                getRectangleBottom(imageSize.height, textPosition, BAR_HEIGHT)
+              )
+              // Draw text
+              .fill(TEXT_COLOR)
+              .fontSize(FONT_SIZE)
+              .encoding('Unicode')
+              .drawText(
+                0,
+                getTextPositionFromCenter(imageSize.height, textPosition, BAR_HEIGHT),
+                formattedImageText,
+                'Center'
+              )
+              .toBuffer('JPG', (error, resultBuffer) => {
+                error ? reject(error) : resolve(resultBuffer);
+              });
+          });
+        });
     } catch (err) {
       logger.error('Error with drawing image caption:', err);
       logger.error(err.stack);
@@ -195,7 +189,4 @@ function processImage(imageBuffer, imageOpts = {}) {
   }
 }
 
-
-export {
-  processImage
-};
+export { processImage };
