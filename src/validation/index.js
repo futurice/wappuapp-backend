@@ -20,6 +20,10 @@ const schemas = {
     text: Joi.string().when('type', { is: 'TEXT', then: Joi.required() }),
     eventId: common.primaryKeyId.when('type', { is: 'CHECK_IN_EVENT', then: Joi.required()}),
     city: common.primaryKeyId,
+    feedItemId: common.primaryKeyId.when('type', {
+      is: 'COMMENT',
+      then: Joi.required(),
+    }),
     location: Joi.object({
       latitude: Joi.number(),
       longitude: Joi.number()
