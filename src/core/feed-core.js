@@ -314,6 +314,7 @@ function _actionToFeedObject(row, client) {
       type: _resolveAuthorType(row, client),
     },
     createdAt: row['created_at'],
+    commentCount: row['comment_count'],
   };
 
   if (row.location) {
