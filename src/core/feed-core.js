@@ -28,7 +28,7 @@ function getStickySqlString(city) {
       feed_items.hot_score as hot_score,
       0 as top_score,
       feed_items.is_sticky,
-      COALESCE(votes.value, 0) as user_vote
+      COALESCE(votes.value, 0) as user_vote,
       users.profile_picture_url AS profile_picture_url,
       COUNT(comments) AS comment_count
     FROM feed_items
