@@ -1,6 +1,6 @@
 import _ from 'lodash';
 const { knex } = require('../util/database').connect();
-import { GCS_CONFIG } from '../util/gcs';
+import { GCS_CONFIG, pathToUrl } from '../util/gcs';
 import CONST from '../constants';
 const logger = require('../util/logger')(__filename);
 import * as score from './score-core';
@@ -177,6 +177,8 @@ function getFeedItem(id, client) {
     return knex
       .select([
         'comments.text',
+        'comments.image_path as imagePath',
+        'comments.user_id as userId',
         'users.name AS userName',
         'comments.created_at AS createdAt',
         'users.profile_picture_url AS profilePicture',
@@ -185,12 +187,24 @@ function getFeedItem(id, client) {
       .innerJoin('users', 'users.id', 'comments.user_id')
       .where('feed_item_id', '=', id)
       .orderBy('comments.created_at', 'ASC')
-      .then(comments => {
+      .then(rows => {
         const feedItem = _actionToFeedObject(row, client);
+        const comments = _.map(rows, row => _rowToCommentObject(row));
         feedItem.comments = comments || [];
         return feedItem;
       });
   });
+}
+
+function _rowToCommentObject(row) {
+  return {
+    text: row['text'],
+    userName: row['userName'],
+    userId: row['userId'],
+    createdAt: row['createdAt'],
+    imagePath: pathToUrl(row['imagePath']),
+    profilePicture: pathToUrl(row['profilePicture']),
+  };
 }
 
 function _sanitizeText(text) {
@@ -312,6 +326,7 @@ function _actionToFeedObject(row, client) {
       name: row['user_name'],
       team: row['team_name'],
       type: _resolveAuthorType(row, client),
+      profilePicture: pathToUrl(row['profile_picture_url']),
     },
     createdAt: row['created_at'],
     commentCount: row['comment_count'],
