@@ -52,7 +52,7 @@
     "fuse.js": "^2.2.0",
     "iconv-lite": "^0.4.13",
     "jscs": "^2.11.0",
-    "mocha": "^2.4.5",
+    "mocha": "^3.5.3",
     "mocha-cli": "^1.0.0",
     "nodemon": "^1.9.1",
     "superagent": "^1.8.0",
@@ -62,7 +62,8 @@
   "scripts": {
     "postinstall": "bash ./tools/run-migrations-and-seeds.sh",
     "debug": "babel-node-debug --debug-brk src/index.js",
-    "start": "source .env && nodemon --watch ./src -e js --exec \"babel-node --presets es2015 src/index.js\"",
+    "start":
+      "source .env && nodemon --watch ./src -e js --exec \"babel-node --presets es2015 src/index.js\"",
     "test": "source .env-test && mocha --compilers js:babel-core/register",
     "ci": "bash ./tools/ci.sh",
     "eslint": "eslint --ext .js ./src",
