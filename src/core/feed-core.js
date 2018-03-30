@@ -190,7 +190,7 @@ function getFeedItem(id, client) {
       .orderBy('comments.created_at', 'ASC')
       .then(rows => {
         const feedItem = _actionToFeedObject(row, client);
-        const comments = _.map(rows, row => _rowToCommentObject(row, client));
+        const comments = _.map(rows, commentRow => _rowToCommentObject(commentRow, client));
         feedItem.comments = comments || [];
         return feedItem;
       });
@@ -206,7 +206,8 @@ function _rowToCommentObject(row, client) {
     createdAt: row['createdAt'],
     imagePath: pathToUrl(row['imagePath']),
     profilePicture: pathToUrl(row['profilePicture']),
-    authorType: _resolveAuthorType({ user_id: row['userId'] }, client),
+    myId: client.id,
+    authorType: _resolveAuthorType({ user_id: row['userId'] || row['user_id'] }, client),
   };
 }
 
