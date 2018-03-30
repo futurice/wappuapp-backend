@@ -197,7 +197,7 @@ function getFeedItem(id, client) {
   });
 }
 
-function _rowToCommentObject(row) {
+function _rowToCommentObject(row, client) {
   return {
     id: row['commentId'],
     text: row['text'],
