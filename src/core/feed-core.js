@@ -206,7 +206,7 @@ function _rowToCommentObject(row, client) {
     createdAt: row['createdAt'],
     imagePath: pathToUrl(row['imagePath']),
     profilePicture: pathToUrl(row['profilePicture']),
-    authorType: _resolveAuthorType({ user_id: row['userId'].toString() }, client),
+    authorType: _resolveAuthorType(row['userId'].toString(), client),
   };
 }
 
@@ -328,7 +328,7 @@ function _actionToFeedObject(row, client) {
       id: row['user_id'],
       name: row['user_name'],
       team: row['team_name'],
-      type: _resolveAuthorType(row, client),
+      type: _resolveAuthorType(row['user_id'], client),
       profilePicture: pathToUrl(row['profile_picture_url']),
     },
     createdAt: row['created_at'],
@@ -422,9 +422,7 @@ function _getTeamNameSql(cityId) {
         .toString();
 }
 
-function _resolveAuthorType(row, client) {
-  const rowUserId = row['user_id'];
-
+function _resolveAuthorType(rowUserId, client) {
   if (rowUserId === null) {
     return CONST.AUTHOR_TYPES.SYSTEM;
   } else if (rowUserId === client.id) {
