@@ -176,6 +176,7 @@ function getFeedItem(id, client) {
 
     return knex
       .select([
+        'comments.id as commentId',
         'comments.text',
         'comments.image_path as imagePath',
         'comments.user_id as userId',
@@ -198,6 +199,7 @@ function getFeedItem(id, client) {
 
 function _rowToCommentObject(row) {
   return {
+    id: row['commentId'],
     text: row['text'],
     userName: row['userName'],
     userId: row['userId'],
