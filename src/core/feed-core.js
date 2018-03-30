@@ -206,8 +206,7 @@ function _rowToCommentObject(row, client) {
     createdAt: row['createdAt'],
     imagePath: pathToUrl(row['imagePath']),
     profilePicture: pathToUrl(row['profilePicture']),
-    myId: client.id,
-    authorType: _resolveAuthorType({ user_id: row['userId'] || row['user_id'] }, client),
+    authorType: _resolveAuthorType({ user_id: row['userId'].toString() }, client),
   };
 }
 
