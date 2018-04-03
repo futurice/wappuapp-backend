@@ -101,7 +101,7 @@ function _groupEventsById(events, headers) {
 }
 
 function _getLatest(eventsById, headers) {
-  return _.map(eventsById, events => _.maxBy(events, event => event[headers['Aikaleima']]));
+  return _.map(eventsById, events => _.maxBy(events, event => event[headers['Timestamp']]));
 }
 
 function _getCode(city, index, event, headers) {
