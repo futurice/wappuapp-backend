@@ -281,5 +281,21 @@ exports.seed = function(knex, Promise) {
       name: 'AYY',
       image_path: 'https://storage.googleapis.com/wappuapp/assets/ayylogo.png',
     });
+  })
+  .then(() => {
+    return util.insertOrUpdate(knex, 'teams', {
+      id: 35,
+      city_id: cities['Otaniemi'],
+      name: 'NuDe',
+      image_path: 'https://storage.googleapis.com/wappuapp/assets/nude.png',
+    });
+  })
+  .then(() => {
+    return util.insertOrUpdate(knex, 'teams', {
+      id: 36,
+      city_id: cities['Otaniemi'],
+      name: 'Probba',
+      image_path: 'https://storage.googleapis.com/wappuapp/assets/probba.png',
+    });
   });
 };
