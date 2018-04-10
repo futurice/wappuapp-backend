@@ -1,6 +1,6 @@
-const {knex} = require('../util/database').connect();
+const { knex } = require('../util/database').connect();
 import _ from 'lodash';
-import {deepChangeKeyCase} from '../util';
+import { deepChangeKeyCase } from '../util';
 
 function getTeams(opts) {
   const isBanned = opts.client && !!opts.client.isBanned;
@@ -44,8 +44,8 @@ function getTeams(opts) {
       actions_score.image_path AS image_path,
       ROUND(SUM(COALESCE(actions_score.value, 0)) + SUM(COALESCE(vote_score.value, 0))) as score,
       actions_score.city_id AS city
-    FROM ${ actionScoreSql } AS actions_score
-    LEFT JOIN ${ voteScoreSql } vote_score ON vote_score.team_id = actions_score.team_id
+    FROM ${actionScoreSql} AS actions_score
+    LEFT JOIN ${voteScoreSql} vote_score ON vote_score.team_id = actions_score.team_id
   `;
 
   let params = [];
@@ -57,7 +57,7 @@ function getTeams(opts) {
   }
 
   if (whereClauses.length > 0) {
-    sqlString += ` WHERE ${ whereClauses.join(' AND ')}`;
+    sqlString += ` WHERE ${whereClauses.join(' AND ')}`;
   }
 
   sqlString += `
@@ -65,12 +65,14 @@ function getTeams(opts) {
     ORDER BY score DESC, id
   `;
 
-  return knex.raw(sqlString, params)
-  .then(result => {
-    return _.map(result.rows, row => deepChangeKeyCase(row, 'camelCase'));
+  return knex.raw(sqlString, params).then(result => {
+    const noScoreRows = _.map(result.rows, row => {
+      row.score = '0';
+      return row;
+    });
+
+    return _.map(noScoreRows, row => deepChangeKeyCase(row, 'camelCase'));
   });
 }
 
-export {
-  getTeams
-};
+export { getTeams };
