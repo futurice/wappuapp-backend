@@ -1,1433 +1,1315 @@
 [
   {
     "id": "id",
-    "start": "2017-03-25T09:00:00.000Z",
-    "end": "2017-04-18T09:00:00+03:00",
-    "title": "Live Tue April 18th at 9:00",
-    "host": "",
-    "prod": "",
-    "desc": "",
-    "photo": "",
-    "thumb": ""
+    "title": "Radiodiodi 2018 intro",
+    "description": "Radiodiodi 2018 starttaa! Studiossa toimitus kertoo kuulumisia ja tapahtumia vuoden varrelta ja on mitä todennäköisimmin juhlatunnelmissa.",
+    "start": "2018-04-16T09:00:00+03:00",
+    "end": "2018-04-16T10:00:00+03:00",
+    "team": "Radiodiodin toimitus",
+    "genre": "Puheohjelma"
   },
   {
     "id": "id",
-    "start": "2017-04-18T09:00:00+03:00",
-    "end": "2017-04-18T10:00:00+03:00",
-    "title": "Lähetys alkaa",
-    "prod": "",
-    "desc": "",
-    "photo": "",
-    "thumb": ""
+    "title": "Puoli kiloa päivässä",
+    "description": "Kasvin turinoita kaikenlaisista aiheista maasta taivaaseen.",
+    "start": "2018-04-16T10:00:00+03:00",
+    "end": "2018-04-16T12:00:00+03:00",
+    "team": "Kasvi & Satunnaiset",
+    "genre": "Talk/Puujalka",
+    "image": "kasvi1.jpg"
   },
   {
     "id": "id",
-    "start": "2017-04-18T10:00:00+03:00",
-    "end": "2017-04-18T12:00:00+03:00",
-    "title": "Behind the scenes, AYY edari -edition",
-    "prod": "",
-    "desc": "",
-    "photo": "",
-    "thumb": ""
+    "title": "AYY-hallituksen kyselytunti",
+    "description": "Ayy:n hallitus keskustelee ylioppilaskunnan ajankohtaisuuksista ja vastaa kuulijoiden kysymyksiin.",
+    "start": "2018-04-16T12:00:00+03:00",
+    "end": "2018-04-16T14:00:00+03:00",
+    "team": "AYY",
+    "genre": "",
+    "image": "ayy.jpg"
   },
   {
     "id": "id",
-    "start": "2017-04-18T12:00:00+03:00",
-    "end": "2017-04-18T15:30:00+03:00",
-    "title": "Puoli Kiloa Päivässä",
-    "prod": "",
-    "desc": "",
-    "photo": "",
-    "thumb": ""
+    "title": "HUOLTOTAUKO",
+    "start": "2018-04-16T14:00:00+03:00",
+    "end": "2018-04-16T15:00:00+03:00",
+    "team": ""
   },
   {
     "id": "id",
-    "start": "2017-04-18T15:30:00+03:00",
-    "end": "2017-04-18T18:00:00+03:00",
-    "title": "Huoltoradio",
-    "prod": "",
-    "desc": "",
-    "photo": "",
-    "thumb": ""
+    "title": "Musikaalien pikaperuskurssi",
+    "description": "Musikaalimatkassa-podcastin juontajat Siiri Liitiä ja Laura Haajanen pikakurssittavat aloitteijoita ja virkistävät eksperttien muistia musiikkiteatterin saloista! Miksi musikaaleissa täytyy koko ajan laulaa? Miten monta ruumista keskimääräisessä musikaalissa tulee? Olen saanut kutsun ensi-iltaan, miten toimin? Musikaalien pikaperuskurssi vastaa kahdessa tunnissa näihin kysymyksiin, muihin kysymyksiin ja kysymyksiin, joita kukaan ei ymmärtänyt edes esittää. Lisäksi soitamme parhaat, räävittömimmät ja kummallisimmat musikaalibiisit. Tämän kuunneltuasi olet valmis vaikka paikkaamaan pääroolia ja teet missä tahansa kulturellissa seurassa vaikutuksen laajalla musikaaliasiantuntemuksellasi! (Siiri Liitiä on öisin podcast-juontaja, päivisin Aalto-yliopiston ylioppilaskunnan tiedottaja.)",
+    "start": "2018-04-16T15:00:00+03:00",
+    "end": "2018-04-16T17:00:00+03:00",
+    "team": "Musikaalimatkassa-podcast",
+    "genre": "Musiikki",
+    "image": "musikaalimatka.jpg"
   },
   {
     "id": "id",
-    "start": "2017-04-18T18:00:00+03:00",
-    "end": "2017-04-18T20:00:00+03:00",
-    "title": "Liito-orava -klubi",
-    "prod": "",
-    "desc": "",
-    "photo": "",
-    "thumb": ""
+    "title": "Peltiradio",
+    "description": "Ajankohtaisohjelma opiskelijoita kiinnostavista asioista höystettynä parempaakin paremmalla musiikkimaulla.",
+    "start": "2018-04-16T17:00:00+03:00",
+    "end": "2018-04-16T19:00:00+03:00",
+    "team": "PLK",
+    "genre": "",
+    "image": "peltiradio.jpg"
   },
   {
     "id": "id",
-    "start": "2017-04-18T19:00:00+03:00",
-    "end": "2017-04-18T19:30:00+03:00",
-    "title": "Beetlejuice & Rönttönen: Murhamysteeri (Äänikirja)",
-    "prod": "",
-    "desc": "",
-    "photo": "",
-    "thumb": ""
+    "title": "Kivetkin kuuntelevat",
+    "description": "...",
+    "start": "2018-04-16T19:00:00+03:00",
+    "end": "2018-04-16T21:00:00+03:00",
+    "team": "Olli & Rietas täti",
+    "genre": "Höpöttely"
   },
   {
     "id": "id",
-    "start": "2017-04-18T20:00:00+03:00",
-    "end": "2017-04-18T22:00:00+03:00",
-    "title": "Mamun vuoro",
-    "prod": "",
-    "desc": "",
-    "photo": "",
-    "thumb": ""
-  },
-  {
-    "id": "id",
-    "start": "2017-04-18T22:00:00+03:00",
-    "end": "2017-04-19T00:00:00+03:00",
-    "title": "Tekijöiden yö",
-    "prod": "",
-    "desc": "",
-    "photo": "",
-    "thumb": ""
-  },
-  {
-    "id": "id",
-    "start": "2017-04-19T00:00:00+03:00",
-    "end": "2017-04-19T02:00:00+03:00",
-    "title": "Raksan pojat testaa!",
-    "prod": "",
-    "desc": "",
-    "photo": "",
-    "thumb": ""
-  },
-  {
-    "id": "id",
-    "start": "2017-04-19T02:00:00+03:00",
-    "end": "2017-04-19T09:00:00+03:00",
-    "title": "Kokopitkä Yö",
-    "prod": "",
-    "desc": "",
-    "photo": "",
-    "thumb": ""
-  },
-  {
-    "id": "id",
-    "start": "2017-04-19T09:00:00+03:00",
-    "end": "2017-04-19T10:00:00+03:00",
-    "title": "Aamumouhot",
-    "prod": "",
-    "desc": "",
-    "photo": "",
-    "thumb": ""
-  },
-  {
-    "id": "id",
-    "start": "2017-04-19T10:00:00+03:00",
-    "end": "2017-04-19T12:00:00+03:00",
-    "title": "Musiikkia ja triviaa",
-    "prod": "",
-    "desc": "",
-    "photo": "",
-    "thumb": ""
-  },
-  {
-    "id": "id",
-    "start": "2017-04-19T12:00:00+03:00",
-    "end": "2017-04-19T14:00:00+03:00",
-    "title": "Norsunluutorni mouhoaa",
-    "prod": "",
-    "desc": "",
-    "photo": "",
-    "thumb": ""
-  },
-  {
-    "id": "id",
-    "start": "2017-04-19T14:00:00+03:00",
-    "end": "2017-04-19T16:00:00+03:00",
-    "title": "Edaattorielämää",
-    "prod": "",
-    "desc": "",
-    "photo": "",
-    "thumb": ""
-  },
-  {
-    "id": "id",
-    "start": "2017-04-19T16:00:00+03:00",
-    "end": "2017-04-19T18:00:00+03:00",
-    "title": "ÄPY-Hour",
-    "prod": "",
-    "desc": "",
-    "photo": "",
-    "thumb": ""
-  },
-  {
-    "id": "id",
-    "start": "2017-04-19T18:00:00+03:00",
-    "end": "2017-04-19T18:30:00+03:00",
-    "title": "Huoltoradio",
-    "prod": "",
-    "desc": "",
-    "photo": "",
-    "thumb": ""
-  },
-  {
-    "id": "id",
-    "start": "2017-04-19T19:00:00+03:00",
-    "end": "2017-04-19T19:30:00+03:00",
-    "title": "Beetlejuice & Rönttönen: Murhamysteeri (Äänikirja)",
-    "prod": "",
-    "desc": "",
-    "photo": "",
-    "thumb": ""
-  },
-  {
-    "id": "id",
-    "start": "2017-04-19T20:00:00+03:00",
-    "end": "2017-04-19T22:00:00+03:00",
-    "title": "\"Ei mul oo mitää nimee\" t.Satu",
-    "prod": "",
-    "desc": "",
-    "photo": "",
-    "thumb": ""
-  },
-  {
-    "id": "id",
-    "start": "2017-04-19T22:00:00+03:00",
-    "end": "2017-04-20T00:00:00+03:00",
-    "title": "Mennään let's NAKS",
-    "prod": "",
-    "desc": "",
-    "photo": "",
-    "thumb": ""
-  },
-  {
-    "id": "id",
-    "start": "2017-04-20T00:00:00+03:00",
-    "end": "2017-04-20T02:00:00+03:00",
-    "title": "W4Kstreet boyz",
-    "prod": "",
-    "desc": "",
-    "photo": "",
-    "thumb": ""
-  },
-  {
-    "id": "id",
-    "start": "2017-04-20T02:00:00+03:00",
-    "end": "2017-04-20T04:00:00+03:00",
-    "title": "SM-sessio",
-    "prod": "",
-    "desc": "",
-    "photo": "",
-    "thumb": ""
-  },
-  {
-    "id": "id",
-    "start": "2017-04-20T04:00:00+03:00",
-    "end": "2017-04-20T08:00:00+03:00",
-    "title": "Kokopitkä yö",
-    "prod": "",
-    "desc": "",
-    "photo": "",
-    "thumb": ""
-  },
-  {
-    "id": "id",
-    "start": "2017-04-20T08:00:00+03:00",
-    "end": "2017-04-20T10:00:00+03:00",
-    "title": "Edaattorielämää",
-    "prod": "",
-    "desc": "",
-    "photo": "",
-    "thumb": ""
-  },
-  {
-    "id": "id",
-    "start": "2017-04-20T10:00:00+03:00",
-    "end": "2017-04-20T12:00:00+03:00",
-    "title": "GAYY",
-    "prod": "",
-    "desc": "",
-    "photo": "",
-    "thumb": ""
-  },
-  {
-    "id": "id",
-    "start": "2017-04-20T12:00:00+03:00",
-    "end": "2017-04-20T14:00:00+03:00",
-    "title": "Vincit - pääyhteistyökumppani",
-    "prod": "",
-    "desc": "",
-    "photo": "",
-    "thumb": ""
-  },
-  {
-    "id": "id",
-    "start": "2017-04-20T14:00:00+03:00",
-    "end": "2017-04-20T16:00:00+03:00",
-    "title": "Liito-orava -klubi",
-    "prod": "",
-    "desc": "",
-    "photo": "",
-    "thumb": ""
-  },
-  {
-    "id": "id",
-    "start": "2017-04-20T16:00:00+03:00",
-    "end": "2017-04-20T17:00:00+03:00",
-    "title": "Rekkaradio",
-    "prod": "",
-    "desc": "",
-    "photo": "",
-    "thumb": ""
-  },
-  {
-    "id": "id",
-    "start": "2017-04-20T17:00:00+03:00",
-    "end": "2017-04-20T18:00:00+03:00",
-    "title": "Kivetkin kuuntelevat feat. Rietas täti",
-    "prod": "",
-    "desc": "",
-    "photo": "",
-    "thumb": ""
-  },
-  {
-    "id": "id",
-    "start": "2017-04-20T18:00:00+03:00",
-    "end": "2017-04-20T20:00:00+03:00",
-    "title": "Jäynä 30",
-    "prod": "",
-    "desc": "",
-    "photo": "",
-    "thumb": ""
-  },
-  {
-    "id": "id",
-    "start": "2017-04-20T20:00:00+03:00",
-    "end": "2017-04-20T20:30:00+03:00",
-    "title": "Beetlejuice & Rönttönen: Murhamysteeri (Äänikirja)",
-    "prod": "",
-    "desc": "",
-    "photo": "",
-    "thumb": ""
-  },
-  {
-    "id": "id",
-    "start": "2017-04-20T20:00:00+03:00",
-    "end": "2017-04-20T22:00:00+03:00",
     "title": "Jesseradio",
-    "prod": "",
-    "desc": "",
-    "photo": "",
-    "thumb": ""
+    "description": "Jo kolmatta vuotta radiodiodissa, Jesseradio palaa puhuttamaan kuuntelijoitaan, vierailijoitaan, sekä asiakaspalvelijoita. Höystettynä hipeimmällä hopilla ja grooveimmilla biiteillä.",
+    "start": "2018-04-16T21:00:00+03:00",
+    "end": "2018-04-16T23:00:00+03:00",
+    "team": "Kehäkölminaisuus",
+    "genre": "Hip Hop, Elektroninen musiikki"
   },
   {
     "id": "id",
-    "start": "2017-04-20T22:00:00+03:00",
-    "end": "2017-04-21T00:00:00+03:00",
-    "title": "Kadonnutta Track 2:sta etsimässä",
-    "prod": "",
-    "desc": "",
-    "photo": "",
-    "thumb": ""
+    "title": "Kendrickkiä Alanin juontamana",
+    "description": "Soitetaan parempaa Kendrickkiä, opetetaan katsojille mitä on tarinankerronta.",
+    "start": "2018-04-16T23:00:00+03:00",
+    "end": "2018-04-17T00:00:00+03:00",
+    "team": "Alan",
+    "genre": "Räp-musiikkia selostuksella"
   },
   {
     "id": "id",
-    "start": "2017-04-21T00:00:00+03:00",
-    "end": "2017-04-21T04:00:00+03:00",
-    "title": "Tonttulinnakkeen salat",
-    "prod": "",
-    "desc": "",
-    "photo": "",
-    "thumb": ""
+    "title": "Aamuradio",
+    "description": "Mukavaa",
+    "start": "2018-04-17T00:00:00+03:00",
+    "end": "2018-04-17T03:00:00+03:00",
+    "team": "Petter Selänniemi, Linus Holmlund",
+    "genre": "Musiikki",
+    "image": "aamuradio.jpg"
   },
   {
     "id": "id",
-    "start": "2017-04-21T04:00:00+03:00",
-    "end": "2017-04-21T06:00:00+03:00",
+    "title": "Teknisesti hyvää huomenta",
+    "description": "Ajankohtaisohjelma",
+    "start": "2018-04-17T07:00:00+03:00",
+    "end": "2018-04-17T10:00:00+03:00",
+    "team": "Panu Lampi ja Onni Oksiala",
+    "genre": "Ajankohtaisohjelma",
+    "image": "teknisesti_hyvää_huomenta1.jpg"
+  },
+  {
+    "id": "id",
+    "title": "Musiikillinen tiistaiaamupäivä",
+    "description": "Maisteri Heikkonen soittaa levyjä ja lausuu (toivottavasti) soitettavaan musiikkiin liittyviä mietteitään.",
+    "start": "2018-04-17T10:00:00+03:00",
+    "end": "2018-04-17T12:00:00+03:00",
+    "team": "Petri-Tapio Heikkonen",
+    "genre": "Musiikki",
+    "image": "musiikillinen_tiistaiaamupäivä.jpg"
+  },
+  {
+    "id": "id",
+    "title": "HUOLTOTAUKO",
+    "start": "2018-04-17T12:00:00+03:00",
+    "end": "2018-04-17T12:45:00+03:00",
+    "team": ""
+  },
+  {
+    "id": "id",
+    "title": "Beetlejuice & Rönttönen",
+    "description": "Äänikirjoja lasten saduista Otaniemi-twistillä",
+    "start": "2018-04-17T12:45:00+03:00",
+    "end": "2018-04-17T13:00:00+03:00",
+    "team": "B&R",
+    "genre": "Äänikirja"
+  },
+  {
+    "id": "id",
+    "title": "Yhteistyö: ABB",
+    "description": "Yhteistyöohjelma",
+    "start": "2018-04-17T13:00:00+03:00",
+    "end": "2018-04-17T15:00:00+03:00",
+    "team": "ABB",
+    "genre": "",
+    "image": "ohjelma_abb.png"
+  },
+  {
+    "id": "id",
+    "title": "KUMPUKYLÄ",
+    "description": "Legendaarisen Kumpukylä-antologiakuunnelmatrilogian päätösosa.",
+    "start": "2018-04-17T15:00:00+03:00",
+    "end": "2018-04-17T16:00:00+03:00",
+    "team": "Kumpukylä production"
+  },
+  {
+    "id": "id",
+    "title": "Saunaseura",
+    "description": "Saunaseura iskee studion lämmöt maksimiin! Luvassa railakasta ja laajaa keskustelua ajankohtaisasioista, saunajuomien arvostelua sekä tietysti hyvää musiikkia.",
+    "start": "2018-04-17T16:00:00+03:00",
+    "end": "2018-04-17T18:00:00+03:00",
+    "team": "Saunaseura",
+    "genre": "Komedia",
+    "image": "saunaseura.jpg"
+  },
+  {
+    "id": "id",
+    "title": "Elsa-mummon tarinat",
+    "description": "",
+    "start": "2018-04-17T18:00:00+03:00",
+    "end": "2018-04-17T20:00:00+03:00",
+    "team": "Elsa-mummo ja haastattelija",
+    "genre": "Jotain aivan omaa"
+  },
+  {
+    "id": "id",
+    "title": "Vakavamielinen tilasto-ohjelma",
+    "description": "AYY:n ja HYYn yhteinen Topias & Mikhael-sektori valottaa opiskelijaliikkeen suhdetta tilastotieteeseen. Haemme valkovenäläisen kulttuurin vivahteita ajankohtaisiin todennäköisyyslaskennallisiin ongelmiin yliopistolakia ja Suomen Valtiota kunnioittaen. Vakavamielinen ja robusti keskusteluohjelma.",
+    "start": "2018-04-17T20:00:00+03:00",
+    "end": "2018-04-17T21:00:00+03:00",
+    "team": "Mikhael ja Topias",
+    "genre": "Keskusteluohjelma ja musaa"
+  },
+  {
+    "id": "id",
+    "title": "Mouhoo ja Jöijelii",
+    "description": "Harri Hylje on iloinen",
+    "start": "2018-04-17T21:00:00+03:00",
+    "end": "2018-04-17T23:00:00+03:00",
+    "team": "TJ",
+    "genre": "Erotiikka"
+  },
+  {
+    "id": "id",
     "title": "Psykoosiradio",
-    "prod": "",
-    "desc": "",
-    "photo": "",
-    "thumb": ""
+    "description": "Psykoosissa henkilön todellisuudentaju hämärtyy ja vääristyy eli henkilöllä on huomattavia vaikeuksia erottaa tosi epätodesta.",
+    "start": "2018-04-17T23:00:00+03:00",
+    "end": "2018-04-18T00:00:00+03:00",
+    "team": "Psykoosikissat",
+    "genre": "Psykedeelinen",
+    "image": "psykoosiradio.jpg"
   },
   {
     "id": "id",
-    "start": "2017-04-21T06:00:00+03:00",
-    "end": "2017-04-21T08:00:00+03:00",
-    "title": "Vapaa slotti",
-    "prod": "",
-    "desc": "",
-    "photo": "",
-    "thumb": ""
-  },
-  {
-    "id": "id",
-    "start": "2017-04-21T08:00:00+03:00",
-    "end": "2017-04-21T10:00:00+03:00",
-    "title": "Aamumouhot",
-    "prod": "",
-    "desc": "",
-    "photo": "",
-    "thumb": ""
-  },
-  {
-    "id": "id",
-    "start": "2017-04-21T10:00:00+03:00",
-    "end": "2017-04-21T11:00:00+03:00",
-    "title": "Vapaa slotti",
-    "prod": "",
-    "desc": "",
-    "photo": "",
-    "thumb": ""
-  },
-  {
-    "id": "id",
-    "start": "2017-04-21T11:00:00+03:00",
-    "end": "2017-04-21T13:00:00+03:00",
-    "title": "Where is the Jallu?",
-    "prod": "",
-    "desc": "",
-    "photo": "",
-    "thumb": ""
-  },
-  {
-    "id": "id",
-    "start": "2017-04-21T13:00:00+03:00",
-    "end": "2017-04-21T15:00:00+03:00",
-    "title": "ABB - pääyhteistyökumppani",
-    "prod": "",
-    "desc": "",
-    "photo": "",
-    "thumb": ""
-  },
-  {
-    "id": "id",
-    "start": "2017-04-21T15:00:00+03:00",
-    "end": "2017-04-21T16:00:00+03:00",
-    "title": "Teekkarispeksin vappuinen sinfonia",
-    "prod": "",
-    "desc": "",
-    "photo": "",
-    "thumb": ""
-  },
-  {
-    "id": "id",
-    "start": "2017-04-21T16:00:00+03:00",
-    "end": "2017-04-21T17:30:00+03:00",
-    "title": "Puoli Kiloa Päivässä",
-    "prod": "",
-    "desc": "",
-    "photo": "",
-    "thumb": ""
-  },
-  {
-    "id": "id",
-    "start": "2017-04-21T17:30:00+03:00",
-    "end": "2017-04-21T18:00:00+03:00",
-    "title": "Beetlejuice & Rönttönen: Murhamysteeri (Äänikirja)",
-    "prod": "",
-    "desc": "",
-    "photo": "",
-    "thumb": ""
-  },
-  {
-    "id": "id",
-    "start": "2017-04-21T17:30:00+03:00",
-    "end": "2017-04-21T18:00:00+03:00",
-    "title": "Huoltoradio",
-    "prod": "",
-    "desc": "",
-    "photo": "",
-    "thumb": ""
-  },
-  {
-    "id": "id",
-    "start": "2017-04-21T18:00:00+03:00",
-    "end": "2017-04-21T20:00:00+03:00",
-    "title": "Radio Jyytiset",
-    "prod": "",
-    "desc": "",
-    "photo": "",
-    "thumb": ""
-  },
-  {
-    "id": "id",
-    "start": "2017-04-21T20:00:00+03:00",
-    "end": "2017-04-21T22:00:00+03:00",
-    "title": "Coffee Club goes CAMP DEATH",
-    "prod": "",
-    "desc": "",
-    "photo": "",
-    "thumb": ""
-  },
-  {
-    "id": "id",
-    "start": "2017-04-21T22:00:00+03:00",
-    "end": "2017-04-22T00:00:00+03:00",
-    "title": "Antiwappu-trilogia I (21.4.) - Kansallisromanttinen Wappu",
-    "prod": "",
-    "desc": "",
-    "photo": "",
-    "thumb": ""
-  },
-  {
-    "id": "id",
-    "start": "2017-04-22T00:00:00+03:00",
-    "end": "2017-04-22T05:00:00+03:00",
-    "title": "Progressiivinen yö",
-    "prod": "",
-    "desc": "",
-    "photo": "",
-    "thumb": ""
-  },
-  {
-    "id": "id",
-    "start": "2017-04-22T05:00:00+03:00",
-    "end": "2017-04-22T07:00:00+03:00",
-    "title": "Sirren kylmä linja",
-    "prod": "",
-    "desc": "",
-    "photo": "",
-    "thumb": ""
-  },
-  {
-    "id": "id",
-    "start": "2017-04-22T07:00:00+03:00",
-    "end": "2017-04-22T08:00:00+03:00",
-    "title": "Laurin aamukalja",
-    "prod": "",
-    "desc": "",
-    "photo": "",
-    "thumb": ""
-  },
-  {
-    "id": "id",
-    "start": "2017-04-22T08:00:00+03:00",
-    "end": "2017-04-22T10:00:00+03:00",
-    "title": "Aamumouhot",
-    "prod": "",
-    "desc": "",
-    "photo": "",
-    "thumb": ""
-  },
-  {
-    "id": "id",
-    "start": "2017-04-22T10:00:00+03:00",
-    "end": "2017-04-22T11:00:00+03:00",
-    "title": "Tukkiraadio",
-    "prod": "",
-    "desc": "",
-    "photo": "",
-    "thumb": ""
-  },
-  {
-    "id": "id",
-    "start": "2017-04-22T11:00:00+03:00",
-    "end": "2017-04-22T12:00:00+03:00",
-    "title": "Huoltoradio",
-    "prod": "",
-    "desc": "",
-    "photo": "",
-    "thumb": ""
-  },
-  {
-    "id": "id",
-    "start": "2017-04-22T12:00:00+03:00",
-    "end": "2017-04-22T14:00:00+03:00",
-    "title": "Goatlife",
-    "prod": "",
-    "desc": "",
-    "photo": "",
-    "thumb": ""
-  },
-  {
-    "id": "id",
-    "start": "2017-04-22T14:00:00+03:00",
-    "end": "2017-04-22T16:00:00+03:00",
-    "title": "HankenES",
-    "prod": "",
-    "desc": "",
-    "photo": "",
-    "thumb": ""
-  },
-  {
-    "id": "id",
-    "start": "2017-04-22T16:00:00+03:00",
-    "end": "2017-04-22T18:00:00+03:00",
-    "title": "Wappupeli",
-    "prod": "",
-    "desc": "",
-    "photo": "",
-    "thumb": ""
-  },
-  {
-    "id": "id",
-    "start": "2017-04-22T18:00:00+03:00",
-    "end": "2017-04-22T20:00:00+03:00",
-    "title": "Club Après-ski Radio Show",
-    "prod": "",
-    "desc": "",
-    "photo": "",
-    "thumb": ""
-  },
-  {
-    "id": "id",
-    "start": "2017-04-22T20:00:00+03:00",
-    "end": "2017-04-22T22:00:00+03:00",
-    "title": "Yömyssyt",
-    "prod": "",
-    "desc": "",
-    "photo": "",
-    "thumb": ""
-  },
-  {
-    "id": "id",
-    "start": "2017-04-22T22:00:00+03:00",
-    "end": "2017-04-23T02:00:00+03:00",
-    "title": "Radio Porno",
-    "prod": "",
-    "desc": "",
-    "photo": "",
-    "thumb": ""
-  },
-  {
-    "id": "id",
-    "start": "2017-04-23T02:00:00+03:00",
-    "end": "2017-04-23T04:00:00+03:00",
-    "title": "Historiagramofoni",
-    "prod": "",
-    "desc": "",
-    "photo": "",
-    "thumb": ""
-  },
-  {
-    "id": "id",
-    "start": "2017-04-23T04:00:00+03:00",
-    "end": "2017-04-23T08:00:00+03:00",
-    "title": "Besisposse cumbäg",
-    "prod": "",
-    "desc": "",
-    "photo": "",
-    "thumb": ""
-  },
-  {
-    "id": "id",
-    "start": "2017-04-23T08:00:00+03:00",
-    "end": "2017-04-23T10:00:00+03:00",
-    "title": "Aamumouhot",
-    "prod": "",
-    "desc": "",
-    "photo": "",
-    "thumb": ""
-  },
-  {
-    "id": "id",
-    "start": "2017-04-23T10:00:00+03:00",
-    "end": "2017-04-23T14:00:00+03:00",
-    "title": "Sunnuntaiaamun ylösnousemus",
-    "prod": "",
-    "desc": "",
-    "photo": "",
-    "thumb": ""
-  },
-  {
-    "id": "id",
-    "start": "2017-04-23T14:00:00+03:00",
-    "end": "2017-04-23T16:00:00+03:00",
-    "title": "Lapsuusmuistot",
-    "prod": "",
-    "desc": "",
-    "photo": "",
-    "thumb": ""
-  },
-  {
-    "id": "id",
-    "start": "2017-04-23T16:00:00+03:00",
-    "end": "2017-04-23T18:00:00+03:00",
-    "title": "Ristin kilta: Syvä sanoma ",
-    "prod": "",
-    "desc": "",
-    "photo": "",
-    "thumb": ""
-  },
-  {
-    "id": "id",
-    "start": "2017-04-23T18:00:00+03:00",
-    "end": "2017-04-23T20:00:00+03:00",
-    "title": "ASS - Akateeminen Saatananpalvontaseura esittäytyy",
-    "prod": "",
-    "desc": "",
-    "photo": "",
-    "thumb": ""
-  },
-  {
-    "id": "id",
-    "start": "2017-04-23T20:00:00+03:00",
-    "end": "2017-04-23T22:00:00+03:00",
-    "title": "Sunnuntai-illan sulosoinnut",
-    "prod": "",
-    "desc": "",
-    "photo": "",
-    "thumb": ""
-  },
-  {
-    "id": "id",
-    "start": "2017-04-23T22:00:00+03:00",
-    "end": "2017-04-24T00:00:00+03:00",
-    "title": "Poikkitieteellisten Nuottaajien viinanmaisteluilta",
-    "prod": "",
-    "desc": "",
-    "photo": "",
-    "thumb": ""
-  },
-  {
-    "id": "id",
-    "start": "2017-04-24T00:00:00+03:00",
-    "end": "2017-04-24T02:00:00+03:00",
-    "title": "Olli Halmisen progeyö",
-    "prod": "",
-    "desc": "",
-    "photo": "",
-    "thumb": ""
-  },
-  {
-    "id": "id",
-    "start": "2017-04-24T02:00:00+03:00",
-    "end": "2017-04-24T08:00:00+03:00",
-    "title": "Musiikkiyö",
-    "prod": "",
-    "desc": "",
-    "photo": "",
-    "thumb": ""
-  },
-  {
-    "id": "id",
-    "start": "2017-04-24T08:00:00+03:00",
-    "end": "2017-04-24T10:00:00+03:00",
-    "title": "Terveisiä Tampereelta",
-    "prod": "",
-    "desc": "",
-    "photo": "",
-    "thumb": ""
-  },
-  {
-    "id": "id",
-    "start": "2017-04-24T10:00:00+03:00",
-    "end": "2017-04-24T12:00:00+03:00",
-    "title": "BYnthouse Stories",
-    "prod": "",
-    "desc": "",
-    "photo": "",
-    "thumb": ""
-  },
-  {
-    "id": "id",
-    "start": "2017-04-24T12:00:00+03:00",
-    "end": "2017-04-24T13:30:00+03:00",
-    "title": "Sylvia-tädin kutomis-kulma",
-    "prod": "",
-    "desc": "",
-    "photo": "",
-    "thumb": ""
-  },
-  {
-    "id": "id",
-    "start": "2017-04-24T13:30:00+03:00",
-    "end": "2017-04-24T14:00:00+03:00",
-    "title": "Huoltoradio",
-    "prod": "",
-    "desc": "",
-    "photo": "",
-    "thumb": ""
-  },
-  {
-    "id": "id",
-    "start": "2017-04-24T14:00:00+03:00",
-    "end": "2017-04-24T16:00:00+03:00",
-    "title": "ÄPY-Hour",
-    "prod": "",
-    "desc": "",
-    "photo": "",
-    "thumb": ""
-  },
-  {
-    "id": "id",
-    "start": "2017-04-24T16:00:00+03:00",
-    "end": "2017-04-24T17:00:00+03:00",
-    "title": "Jäynä 30",
-    "prod": "",
-    "desc": "",
-    "photo": "",
-    "thumb": ""
-  },
-  {
-    "id": "id",
-    "start": "2017-04-24T17:00:00+03:00",
-    "end": "2017-04-24T18:00:00+03:00",
-    "title": "Kivetkin kuuntelevat ",
-    "prod": "",
-    "desc": "",
-    "photo": "",
-    "thumb": ""
-  },
-  {
-    "id": "id",
-    "start": "2017-04-24T18:00:00+03:00",
-    "end": "2017-04-24T20:00:00+03:00",
-    "title": "Keskinkertaisen musiikin radio",
-    "prod": "",
-    "desc": "",
-    "photo": "",
-    "thumb": ""
-  },
-  {
-    "id": "id",
-    "start": "2017-04-24T20:00:00+03:00",
-    "end": "2017-04-24T22:00:00+03:00",
-    "title": "Wappupukin kuuma linja",
-    "prod": "",
-    "desc": "",
-    "photo": "",
-    "thumb": ""
-  },
-  {
-    "id": "id",
-    "start": "2017-04-24T22:00:00+03:00",
-    "end": "2017-04-25T00:00:00+03:00",
-    "title": "Antiwappu-trilogia II (24.4.) - Esoteerinen Wappu",
-    "prod": "",
-    "desc": "",
-    "photo": "",
-    "thumb": ""
-  },
-  {
-    "id": "id",
-    "start": "2017-04-25T00:00:00+03:00",
-    "end": "2017-04-25T02:00:00+03:00",
-    "title": "Kyykkykandi",
-    "prod": "",
-    "desc": "",
-    "photo": "",
-    "thumb": ""
-  },
-  {
-    "id": "id",
-    "start": "2017-04-25T02:00:00+03:00",
-    "end": "2017-04-25T03:00:00+03:00",
-    "title": "Wappuennustusradio",
-    "prod": "",
-    "desc": "",
-    "photo": "",
-    "thumb": ""
-  },
-  {
-    "id": "id",
-    "start": "2017-04-25T03:00:00+03:00",
-    "end": "2017-04-25T04:00:00+03:00",
-    "title": "Vapaa slotti",
-    "prod": "",
-    "desc": "",
-    "photo": "",
-    "thumb": ""
-  },
-  {
-    "id": "id",
-    "start": "2017-04-25T04:00:00+03:00",
-    "end": "2017-04-25T06:00:00+03:00",
-    "title": "talonmiehillä on asiaa",
-    "prod": "",
-    "desc": "",
-    "photo": "",
-    "thumb": ""
-  },
-  {
-    "id": "id",
-    "start": "2017-04-25T06:00:00+03:00",
-    "end": "2017-04-25T10:00:00+03:00",
-    "title": "ABBA-aamu",
-    "prod": "",
-    "desc": "",
-    "photo": "",
-    "thumb": ""
-  },
-  {
-    "id": "id",
-    "start": "2017-04-25T10:00:00+03:00",
-    "end": "2017-04-25T12:00:00+03:00",
-    "title": "Piirustuskerho",
-    "prod": "",
-    "desc": "",
-    "photo": "",
-    "thumb": ""
-  },
-  {
-    "id": "id",
-    "start": "2017-04-25T12:00:00+03:00",
-    "end": "2017-04-25T14:00:00+03:00",
-    "title": "Ristin kilta: Tätä natsit eivät toivoisi sinun kuulevan! ",
-    "prod": "",
-    "desc": "",
-    "photo": "",
-    "thumb": ""
-  },
-  {
-    "id": "id",
-    "start": "2017-04-25T14:00:00+03:00",
-    "end": "2017-04-25T15:00:00+03:00",
-    "title": "Huoltoradio",
-    "prod": "",
-    "desc": "",
-    "photo": "",
-    "thumb": ""
-  },
-  {
-    "id": "id",
-    "start": "2017-04-25T15:00:00+03:00",
-    "end": "2017-04-25T17:00:00+03:00",
-    "title": "Uudemman ranskalaisen torwimusiikin levyraati",
-    "prod": "",
-    "desc": "",
-    "photo": "",
-    "thumb": ""
-  },
-  {
-    "id": "id",
-    "start": "2017-04-25T17:00:00+03:00",
-    "end": "2017-04-25T18:00:00+03:00",
-    "title": "Kivetkin kuuntelevat feat. rietas täti",
-    "prod": "",
-    "desc": "",
-    "photo": "",
-    "thumb": ""
-  },
-  {
-    "id": "id",
-    "start": "2017-04-25T18:00:00+03:00",
-    "end": "2017-04-25T21:00:00+03:00",
-    "title": "Jalostajien olutradio",
-    "prod": "",
-    "desc": "",
-    "photo": "",
-    "thumb": ""
-  },
-  {
-    "id": "id",
-    "start": "2017-04-25T21:00:00+03:00",
-    "end": "2017-04-26T01:00:00+03:00",
-    "title": "PELMUn Rök-radio",
-    "prod": "",
-    "desc": "",
-    "photo": "",
-    "thumb": ""
-  },
-  {
-    "id": "id",
-    "start": "2017-04-26T01:00:00+03:00",
-    "end": "2017-04-26T02:00:00+03:00",
-    "title": "KUMPUKYLÄ",
-    "prod": "",
-    "desc": "",
-    "photo": "",
-    "thumb": ""
-  },
-  {
-    "id": "id",
-    "start": "2017-04-26T02:00:00+03:00",
-    "end": "2017-04-26T07:00:00+03:00",
-    "title": "Musiikkiyö",
-    "prod": "",
-    "desc": "",
-    "photo": "",
-    "thumb": ""
-  },
-  {
-    "id": "id",
-    "start": "2017-04-26T07:00:00+03:00",
-    "end": "2017-04-26T10:00:00+03:00",
-    "title": "Asiaintuntijain asioita ja tunteita",
-    "prod": "",
-    "desc": "",
-    "photo": "",
-    "thumb": ""
-  },
-  {
-    "id": "id",
-    "start": "2017-04-26T10:00:00+03:00",
-    "end": "2017-04-26T12:00:00+03:00",
-    "title": "Musiikkia ja triviaa",
-    "prod": "",
-    "desc": "",
-    "photo": "",
-    "thumb": ""
-  },
-  {
-    "id": "id",
-    "start": "2017-04-26T12:00:00+03:00",
-    "end": "2017-04-26T14:00:00+03:00",
-    "title": "KampusJumalat",
-    "prod": "",
-    "desc": "",
-    "photo": "",
-    "thumb": ""
-  },
-  {
-    "id": "id",
-    "start": "2017-04-26T14:00:00+03:00",
-    "end": "2017-04-26T16:00:00+03:00",
-    "title": "Hanhia, loskaa ja ilkeitä anoppeja",
-    "prod": "",
-    "desc": "",
-    "photo": "",
-    "thumb": ""
-  },
-  {
-    "id": "id",
-    "start": "2017-04-26T16:00:00+03:00",
-    "end": "2017-04-26T18:00:00+03:00",
-    "title": "Iltapäivän DI-vieras",
-    "prod": "",
-    "desc": "",
-    "photo": "",
-    "thumb": ""
-  },
-  {
-    "id": "id",
-    "start": "2017-04-26T18:00:00+03:00",
-    "end": "2017-04-26T20:00:00+03:00",
-    "title": "Aaltobassokerho Vol. 1 Side A deleted tracks",
-    "prod": "",
-    "desc": "",
-    "photo": "",
-    "thumb": ""
-  },
-  {
-    "id": "id",
-    "start": "2017-04-26T20:00:00+03:00",
-    "end": "2017-04-26T22:00:00+03:00",
-    "title": "\"Ei mul oo mitää nimee\" t.Satu",
-    "prod": "",
-    "desc": "",
-    "photo": "",
-    "thumb": ""
-  },
-  {
-    "id": "id",
-    "start": "2017-04-26T22:00:00+03:00",
-    "end": "2017-04-27T00:00:00+03:00",
-    "title": "Antiwappu-trilogia III (26.4.) - Nihilistinen Wappu",
-    "prod": "",
-    "desc": "",
-    "photo": "",
-    "thumb": ""
-  },
-  {
-    "id": "id",
-    "start": "2017-04-27T00:00:00+03:00",
-    "end": "2017-04-27T02:00:00+03:00",
-    "title": "GAYY",
-    "prod": "",
-    "desc": "",
-    "photo": "",
-    "thumb": ""
-  },
-  {
-    "id": "id",
-    "start": "2017-04-27T02:00:00+03:00",
-    "end": "2017-04-27T04:00:00+03:00",
-    "title": "Homosektori",
-    "prod": "",
-    "desc": "",
-    "photo": "",
-    "thumb": ""
-  },
-  {
-    "id": "id",
-    "start": "2017-04-27T04:00:00+03:00",
-    "end": "2017-04-27T08:00:00+03:00",
-    "title": "Musiikin yö",
-    "prod": "",
-    "desc": "",
-    "photo": "",
-    "thumb": ""
-  },
-  {
-    "id": "id",
-    "start": "2017-04-27T08:00:00+03:00",
-    "end": "2017-04-27T10:00:00+03:00",
-    "title": "GT paljastaa",
-    "prod": "",
-    "desc": "",
-    "photo": "",
-    "thumb": ""
-  },
-  {
-    "id": "id",
-    "start": "2017-04-27T10:00:00+03:00",
-    "end": "2017-04-27T10:30:00+03:00",
-    "title": "KUMPUKYLÄ",
-    "prod": "",
-    "desc": "",
-    "photo": "",
-    "thumb": ""
-  },
-  {
-    "id": "id",
-    "start": "2017-04-27T10:30:00+03:00",
-    "end": "2017-04-27T11:30:00+03:00",
-    "title": "Kuunnelkaa TEKin radiota",
-    "prod": "",
-    "desc": "",
-    "photo": "",
-    "thumb": ""
-  },
-  {
-    "id": "id",
-    "start": "2017-04-27T11:30:00+03:00",
-    "end": "2017-04-27T12:00:00+03:00",
-    "title": "Huoltoradio",
-    "prod": "",
-    "desc": "",
-    "photo": "",
-    "thumb": ""
-  },
-  {
-    "id": "id",
-    "start": "2017-04-27T12:00:00+03:00",
-    "end": "2017-04-27T14:00:00+03:00",
-    "title": "Historiabouneri",
-    "prod": "",
-    "desc": "",
-    "photo": "",
-    "thumb": ""
-  },
-  {
-    "id": "id",
-    "start": "2017-04-27T14:00:00+03:00",
-    "end": "2017-04-27T16:00:00+03:00",
-    "title": "Terävää analyysia terävistä asioista",
-    "prod": "",
-    "desc": "",
-    "photo": "",
-    "thumb": ""
-  },
-  {
-    "id": "id",
-    "start": "2017-04-27T16:00:00+03:00",
-    "end": "2017-04-27T18:00:00+03:00",
-    "title": "Wapun wapaat tyylit",
-    "prod": "",
-    "desc": "",
-    "photo": "",
-    "thumb": ""
-  },
-  {
-    "id": "id",
-    "start": "2017-04-27T18:00:00+03:00",
-    "end": "2017-04-27T20:00:00+03:00",
-    "title": "Farssiradio",
-    "prod": "",
-    "desc": "",
-    "photo": "",
-    "thumb": ""
-  },
-  {
-    "id": "id",
-    "start": "2017-04-27T20:00:00+03:00",
-    "end": "2017-04-27T22:00:00+03:00",
-    "title": "Tostai-illan Torsorakkautta",
-    "prod": "",
-    "desc": "",
-    "photo": "",
-    "thumb": ""
-  },
-  {
-    "id": "id",
-    "start": "2017-04-27T22:00:00+03:00",
-    "end": "2017-04-28T00:00:00+03:00",
-    "title": "Aalto Skaten Tumu-Torstai",
-    "prod": "",
-    "desc": "",
-    "photo": "",
-    "thumb": ""
-  },
-  {
-    "id": "id",
-    "start": "2017-04-28T00:00:00+03:00",
-    "end": "2017-04-28T03:00:00+03:00",
-    "title": "Jallupukin kylmälinja",
-    "prod": "",
-    "desc": "",
-    "photo": "",
-    "thumb": ""
-  },
-  {
-    "id": "id",
-    "start": "2017-04-28T03:00:00+03:00",
-    "end": "2017-04-28T06:00:00+03:00",
     "title": "Raidiokeskus",
-    "prod": "",
-    "desc": "",
-    "photo": "",
-    "thumb": ""
+    "description": "Ajankohtaista analyysiä nykytilasta ympärivöivissä maailmoissa ja niiden välitiloissa. Välissä myös musiikkia.",
+    "start": "2018-04-18T00:00:00+03:00",
+    "end": "2018-04-18T04:00:00+03:00",
+    "team": "Raikeskus (sis. Anttilan veljekset)",
+    "genre": "Asia(ton)ohjelma"
   },
   {
     "id": "id",
-    "start": "2017-04-28T06:00:00+03:00",
-    "end": "2017-04-28T08:00:00+03:00",
-    "title": "Neuvostoradio",
-    "prod": "",
-    "desc": "",
-    "photo": "",
-    "thumb": ""
+    "title": "Teknisesti hyvää huomenta",
+    "description": "Ajankohtaisohjelma",
+    "start": "2018-04-18T07:00:00+03:00",
+    "end": "2018-04-18T10:00:00+03:00",
+    "team": "Panu Lampi ja Onni Oksiala",
+    "genre": "Ajankohtaisohjelma",
+    "image": "teknisesti_hyvää_huomenta1.jpg"
   },
   {
     "id": "id",
-    "start": "2017-04-28T08:00:00+03:00",
-    "end": "2017-04-28T10:00:00+03:00",
-    "title": "Aamumouhot",
-    "prod": "",
-    "desc": "",
-    "photo": "",
-    "thumb": ""
+    "title": "HUOLTOTAUKO",
+    "start": "2018-04-18T10:00:00+03:00",
+    "end": "2018-04-18T10:45:00+03:00",
+    "team": ""
   },
   {
     "id": "id",
-    "start": "2017-04-28T10:00:00+03:00",
-    "end": "2017-04-28T10:30:00+03:00",
+    "title": "Beetlejuice & Rönttönen",
+    "description": "Äänikirjoja lasten saduista Otaniemi-twistillä",
+    "start": "2018-04-18T10:45:00+03:00",
+    "end": "2018-04-18T11:00:00+03:00",
+    "team": "B&R",
+    "genre": "Äänikirja"
+  },
+  {
+    "id": "id",
+    "title": "Keskinkertaisen musiikin keskipäivä",
+    "description": "Juontajaduomme on kuluneen vuoden vaeltanut yksinäisiä vuorireittejä ja aavikoita etsien eetteriisi timanttisimmat indiepoproklätyt tältä vuosituhannelta. Nyt he palaavat studioon tiputtamaan tiukimmat käsin kuratoidut timantit radioaalloille. Tämä parituntinen täynnä letkeää rokkia siivittää Wappuiltapäiväsi henkiseen Nirvanaan.",
+    "start": "2018-04-18T11:00:00+03:00",
+    "end": "2018-04-18T12:00:00+03:00",
+    "team": "Oskar ja Roope",
+    "genre": "Musiikkiohjelma"
+  },
+  {
+    "id": "id",
+    "title": "Sössöradio",
+    "description": "SIKin kiltalehti Sössö tuo uutta mediaa kuulotelevisioon nähtäväksi!",
+    "start": "2018-04-18T12:00:00+03:00",
+    "end": "2018-04-18T14:00:00+03:00",
+    "team": "Sössöradio",
+    "genre": "Talk, Komedia, Musiikki"
+  },
+  {
+    "id": "id",
+    "title": "LuTkun tyhjä matka",
+    "description": "Lukkaritoimikunta johdattaa kuulijat maailmaan, jossa kaikki tehdään mieluummin kuin hyvin.",
+    "start": "2018-04-18T14:00:00+03:00",
+    "end": "2018-04-18T16:00:00+03:00",
+    "team": "Lukkaritoimkunta",
+    "genre": "",
+    "image": "lutkun_tyhjä_matka2.jpg"
+  },
+  {
+    "id": "id",
+    "title": "Huomenta Santiago & päivän sää",
+    "description": "Lyhyt katsaus Latinalaiseen Amerikkaan ja sen varsin neitseellisen bisnesympäristön luomiin lukratiivisiin mahdollisuuksiin. Ohjelman edetessä vajotaan syvemmälle etelä-amerikkalaiseen sielunmaailman ja tutkaillaan, mikä meidät todellisuudessa erottaa toisistamme ihmisinä. Ja lopuksi päivän paikallinen sääennuste.",
+    "start": "2018-04-18T16:00:00+03:00",
+    "end": "2018-04-18T18:00:00+03:00",
+    "team": "KY Chilen filiaali",
+    "genre": "Tajunnanvirta"
+  },
+  {
+    "id": "id",
+    "title": "Herää oikealla puujalalla",
+    "description": "Puujalkavitsejä, musiikkia, ehkä joku satunnainen radiokuunnelma",
+    "start": "2018-04-18T18:00:00+03:00",
+    "end": "2018-04-18T20:00:00+03:00",
+    "team": "Antti Kangasrääsiö, Ville Tissari, Kaisa Hynynen, et al.",
+    "genre": "Hauska",
+    "image": "herää_oikealla_puujalalla.jpg"
+  },
+  {
+    "id": "id",
+    "title": "Valaistumisen suuri ohjelmanumero",
+    "description": "",
+    "start": "2018-04-18T20:00:00+03:00",
+    "end": "2018-04-18T21:00:00+03:00",
+    "team": "Talsin kultti"
+  },
+  {
+    "id": "id",
+    "title": "Bro Science Corner",
+    "description": "Miten maailma ja elämä oikeasti toimivat? Mitä tiedemaailma jättää kertomatta? Kuinka kääntää epämiellyttävät totuudet ja kuiva analyysi kansantajuiseksi suurtieteeksi? Äijäporukka ratkaisee nämä ongelmat tunnissa wappukansan kuullen.",
+    "start": "2018-04-18T21:00:00+03:00",
+    "end": "2018-04-18T22:00:00+03:00",
+    "team": "",
+    "genre": "Tiede",
+    "image": "bro_science_corner.jpg"
+  },
+  {
+    "id": "id",
+    "title": "ANTI-WAPPU TRILOGIA II",
+    "description": "Osa 1: Huumori. Huumori ja kaikenlainen hassuttelu kuuluu kiinteästi wappuiluun – siispä AWT:n avauslähetyksessä pureudutaan wappuisen huumorin platoniseen ideaan ja klenkataan lahoilla puujaloilla. Mikä keväinen huumorijulkaisu voittaa makutestin? Montako kertaa Andy Kaufman ehtii kääntyä haudassaan ennen lähetyksen loppua? Vaivaannuttavaa iltaa rytmittää valikoima ”parasta” ”huumori””musiikkia\" meiltä ja muualta.",
+    "start": "2018-04-18T22:00:00+03:00",
+    "end": "2018-04-19T00:00:00+03:00",
+    "team": "Herra O., Herra H. & Kumpp.",
+    "genre": "Sivistävä viihdeohjelma",
+    "image": "antiwapputrilogia1.jpg"
+  },
+  {
+    "id": "id",
+    "title": "Happoradio",
+    "description": "Ohjelma järjestetään erään sveitsiläisen tiedemiehen löydöksen 75-vuotismerkkipäivän kunniaksi. Ohjelmassa pohditaan filosofisia ja soitetaan psykedeelistä musiikkia.",
+    "start": "2018-04-19T00:00:00+03:00",
+    "end": "2018-04-19T02:00:00+03:00",
+    "team": "Henri Rosenqvist",
+    "genre": "",
+    "image": "happoradio.jpg"
+  },
+  {
+    "id": "id",
+    "title": "Teknisesti hyvää huomenta",
+    "description": "Ajankohtaisohjelma",
+    "start": "2018-04-19T07:00:00+03:00",
+    "end": "2018-04-19T10:00:00+03:00",
+    "team": "Panu Lampi ja Onni Oksiala",
+    "genre": "Ajankohtaisohjelma",
+    "image": "teknisesti_hyvää_huomenta1.jpg"
+  },
+  {
+    "id": "id",
+    "title": "HUOLTOTAUKO",
+    "start": "2018-04-19T10:00:00+03:00",
+    "end": "2018-04-19T10:45:00+03:00",
+    "team": ""
+  },
+  {
+    "id": "id",
+    "title": "Beetlejuice & Rönttönen",
+    "description": "Äänikirjoja lasten saduista Otaniemi-twistillä",
+    "start": "2018-04-19T10:45:00+03:00",
+    "end": "2018-04-19T11:00:00+03:00",
+    "team": "B&R",
+    "genre": "Äänikirja"
+  },
+  {
+    "id": "id",
+    "title": "AYY asiantuntijat: asioita ja tunteita",
+    "description": "Edellisvuosien kestosuosikki jossa AYY asiantuntijat kertovat työhönsä tai elämään yleisesti liittyvistä havannoistaan, ja lisäksi soittavat musiikkia.",
+    "start": "2018-04-19T12:00:00+03:00",
+    "end": "2018-04-19T14:00:00+03:00",
+    "team": "AYY asiantuntijat",
+    "genre": "Puheohjelma"
+  },
+  {
+    "id": "id",
+    "title": "Mitä mä täällä teen",
+    "description": "Ohjelma ottaa syvääluotavan ja lavean katsauksen vapaa-ajan mahdollastamiin elämyksiin.",
+    "start": "2018-04-19T14:00:00+03:00",
+    "end": "2018-04-19T15:00:00+03:00",
+    "team": "Suunpuhdistusolut",
+    "genre": "keskipäivän late night show"
+  },
+  {
+    "id": "id",
     "title": "KUMPUKYLÄ",
-    "prod": "",
-    "desc": "",
-    "photo": "",
-    "thumb": ""
+    "description": "Legendaarisen Kumpukylä-antologiakuunnelmatrilogian päätösosa.",
+    "start": "2018-04-19T15:00:00+03:00",
+    "end": "2018-04-19T16:00:00+03:00",
+    "team": "Kumpukylä production"
   },
   {
     "id": "id",
-    "start": "2017-04-28T10:30:00+03:00",
-    "end": "2017-04-28T12:00:00+03:00",
-    "title": "Perjantaiaamun luontoilta",
-    "prod": "",
-    "desc": "",
-    "photo": "",
-    "thumb": ""
+    "title": "Vuoden paras päivä",
+    "description": "",
+    "start": "2018-04-19T16:00:00+03:00",
+    "end": "2018-04-19T18:00:00+03:00",
+    "team": "Mika Korhonen, Mai Rauramaa",
+    "genre": "Keskustelu"
   },
   {
     "id": "id",
-    "start": "2017-04-28T12:00:00+03:00",
-    "end": "2017-04-28T15:30:00+03:00",
-    "title": "Ankkaradio",
-    "prod": "",
-    "desc": "",
-    "photo": "",
-    "thumb": ""
+    "title": "KYllä oluelle",
+    "description": "",
+    "start": "2018-04-19T18:00:00+03:00",
+    "end": "2018-04-19T20:00:00+03:00",
+    "team": "KYllä Oluelle",
+    "genre": "Olut"
   },
   {
     "id": "id",
-    "start": "2017-04-28T15:30:00+03:00",
-    "end": "2017-04-28T16:00:00+03:00",
-    "title": "Huoltoradio",
-    "prod": "",
-    "desc": "",
-    "photo": "",
-    "thumb": ""
+    "title": "Dinnerit",
+    "description": "Kaksi tuntia uskomattoman hyvää ruokaa, täydellisen oivallista juomaa ja myös seuraa. Etsitpä iltaasi intellektuellia kuunneltavaa tai taivaallisia dinnerivinkkejä, tämä ohjelma on sinua varten. Löydät meidät myös instagramista @limetwistil.",
+    "start": "2018-04-19T20:00:00+03:00",
+    "end": "2018-04-19T22:00:00+03:00",
+    "team": "Limetwistil",
+    "genre": "Lifestyle",
+    "image": "dinnerit.jpg"
   },
   {
     "id": "id",
-    "start": "2017-04-28T16:00:00+03:00",
-    "end": "2017-04-28T18:00:00+03:00",
-    "title": "Lasten runonurkkaus -purkkaus",
-    "prod": "",
-    "desc": "",
-    "photo": "",
-    "thumb": ""
+    "title": "Synteettisiä aaltovinyylejä",
+    "description": "Pyöritellään synteettisiä aaltovinyylejä neulan alta! Ohjelmassa synthwave musiikkia ja hieman muutakin elektronista suuntausta.",
+    "start": "2018-04-19T22:00:00+03:00",
+    "end": "2018-04-20T00:00:00+03:00",
+    "team": "Vilho & kaverit",
+    "genre": "Elektroninen"
   },
   {
     "id": "id",
-    "start": "2017-04-28T18:00:00+03:00",
-    "end": "2017-04-28T20:00:00+03:00",
-    "title": "Asian vierestä",
-    "prod": "",
-    "desc": "",
-    "photo": "",
-    "thumb": ""
+    "title": "Soitetaan musaa",
+    "description": "tekno, house",
+    "start": "2018-04-20T00:00:00+03:00",
+    "end": "2018-04-20T02:00:00+03:00",
+    "team": "Olaus Lintinen, Joonas Vataja",
+    "genre": "Musiikki",
+    "image": "soitetaan_musiikkia.jpg"
   },
   {
     "id": "id",
-    "start": "2017-04-28T20:00:00+03:00",
-    "end": "2017-04-28T22:00:00+03:00",
-    "title": "Kukan ja Niken päikkäriradio",
-    "prod": "",
-    "desc": "",
-    "photo": "",
-    "thumb": ""
+    "title": "Pörinää Perjantaiaamuna",
+    "description": "Kansainvälinen kannabispäivä startataan käyntiin aamuyöllä Metal Club Mökän toteuttamassa \"Pörinä\" -radiolähetyksessä, jossa sukelletaan stoner/doom metallin syviin sfääreihin. Lähetyksessä kuullaan jazztupakalla höystetyn subgenren keskeisiä klassikoita, rentoudutaan ambient tunnelmien parissa ja pohditaan elämän tärkeitä kysymyksiä.",
+    "start": "2018-04-20T03:00:00+03:00",
+    "end": "2018-04-20T06:00:00+03:00",
+    "team": "Mökä",
+    "genre": "Stoner Metal"
   },
   {
     "id": "id",
-    "start": "2017-04-28T22:00:00+03:00",
-    "end": "2017-04-29T00:00:00+03:00",
+    "title": "Teknisesti hyvää huomenta",
+    "description": "Ajankohtaisohjelma",
+    "start": "2018-04-20T07:00:00+03:00",
+    "end": "2018-04-20T10:00:00+03:00",
+    "team": "Panu Lampi ja Onni Oksiala",
+    "genre": "Ajankohtaisohjelma",
+    "image": "teknisesti_hyvää_huomenta1.jpg"
+  },
+  {
+    "id": "id",
+    "title": "HUOLTOTAUKO",
+    "start": "2018-04-20T10:00:00+03:00",
+    "end": "2018-04-20T11:00:00+03:00",
+    "team": ""
+  },
+  {
+    "id": "id",
+    "title": "Jäynäradio",
+    "description": "Kuuntele Jäynäradiota ja virittäydy Wapputunnelmaan! Radiosessioiden jälkeen päivä jatkuu Jäynäfinaalissa U2-salissa klo 16.",
+    "start": "2018-04-20T11:00:00+03:00",
+    "end": "2018-04-20T13:00:00+03:00",
+    "team": "Jäynäkilpailu",
+    "genre": "Jäynä",
+    "image": "jäynä.jpg"
+  },
+  {
+    "id": "id",
+    "title": "Ai Haiduk? (suomalaisia käännöskukkasia)",
+    "description": "Yes sir, alkaa polttaa! Suomen pophistoriaa on pitkään riivannut sairaus. Tämän sairauden nimi on p*skat käännöskappaleet. Tässä radio-ohjelmassa neljä surkuhupaisan musiikin asiantuntijaa porautuu syvälle iskelmä-Suomen historiaan, paljastaen yleisölle kamalista kamalimmat suomiversiot. Esimakua saat kuuntelemalla Frederikin Kumimies -kappaleen, josta myös ohjelman hassu nimi on johdettu.",
+    "start": "2018-04-20T13:00:00+03:00",
+    "end": "2018-04-20T15:00:00+03:00",
+    "team": "Adam Zeidan, Oskari Ojala, Elias Hyyryläinen, Matias Koivusalo",
+    "genre": "Suomipop, iskelmä",
+    "image": "ai-haiduk.jpg"
+  },
+  {
+    "id": "id",
+    "title": "Rekkaradio",
+    "start": "2018-04-20T15:00:00+03:00",
+    "end": "2018-04-20T17:00:00+03:00",
+    "team": ""
+  },
+  {
+    "id": "id",
+    "title": "Jyytiset",
+    "description": "Puimme \"ajankohtaisia\" \"uutis\"aiheita \"hyvän\" musiikin tahtiin.",
+    "start": "2018-04-20T17:00:00+03:00",
+    "end": "2018-04-20T20:00:00+03:00",
+    "team": "J-Mallaw Ltd.",
+    "genre": "Ajankohtaisohjelma"
+  },
+  {
+    "id": "id",
+    "title": "Stimulointiradio",
+    "description": "Stimuloiva lähes koko perheen radioshow!",
+    "start": "2018-04-20T20:00:00+03:00",
+    "end": "2018-04-20T22:00:00+03:00",
+    "team": "Stimulaatiotoimikunta",
+    "genre": ""
+  },
+  {
+    "id": "id",
     "title": "Yömyssyt",
-    "prod": "",
-    "desc": "",
-    "photo": "",
-    "thumb": ""
+    "description": "Tehdään tuttua huttua jo jokusen vuoden kokemuksella. Odotamme, että jallupullomme löytää lähetykseen. lähetyspäivää voidaan iteroida, mutta päätekijät ja vieraat ovat palkkatöiden ahdingossa, joka rajoittaa aikaresurssia.",
+    "start": "2018-04-20T22:00:00+03:00",
+    "end": "2018-04-21T00:00:00+03:00",
+    "team": "Jari Isaksson, Matias Korkka sekä vieraat",
+    "genre": "Keskustelu"
   },
   {
     "id": "id",
-    "start": "2017-04-29T00:00:00+03:00",
-    "end": "2017-04-29T02:00:00+03:00",
-    "title": "Pohojosen ohojelma 2 - Parempaa paskaa parempaan aikaan",
-    "prod": "",
-    "desc": "",
-    "photo": "",
-    "thumb": ""
+    "title": "b3sisposs3",
+    "description": "Wapun kovin myöhäisillan sportti-länkytys-show palaa jo kolmatta kertaa! Juontajien vuosikymmenien (yhdistetty) sporttitietämys ja kokemus radiotuotannosta takaa kevään keskeisimmät urheilu-uutiset sekä rautaisen ammattimaisen toteutuksen. Vakioaiheiden lisäksi kuuntelijoiden viihdykkeeksi on tänäkin vuonna luvassa ylläreitä ja sporttiaiheinen visailu, josta on tarjolla myös palkinto! Tune in!",
+    "start": "2018-04-21T00:00:00+03:00",
+    "end": "2018-04-21T04:00:00+03:00",
+    "team": "besisposse",
+    "genre": "Sportti-länkytys"
   },
   {
     "id": "id",
-    "start": "2017-04-29T02:00:00+03:00",
-    "end": "2017-04-29T05:00:00+03:00",
-    "title": "Avaruusmatka",
-    "prod": "",
-    "desc": "",
-    "photo": "",
-    "thumb": ""
+    "title": "AYY-alumnit: Ennen oli kaikki paremmin - vai oliko?",
+    "description": "AYY-alumnit reflektoivat Aallon opiskelijakultuurista ja miten se on muuttunut vuosien aikana. Paikalla on Juho Salmi, Piia Kuosmanen, Voitto Kangas ja Elina Kuutti.",
+    "start": "2018-04-21T09:00:00+03:00",
+    "end": "2018-04-21T11:00:00+03:00",
+    "team": "AYY-alumni",
+    "genre": "Keskustelu"
   },
   {
     "id": "id",
-    "start": "2017-04-29T05:00:00+03:00",
-    "end": "2017-04-29T07:00:00+03:00",
-    "title": "Puoli kiloa aamuyössä",
-    "prod": "",
-    "desc": "",
-    "photo": "",
-    "thumb": ""
+    "title": "Otaniemen sohvaperunat",
+    "description": "Otaniemen Tosi-TV:n Ystävät pitää sohvaperunat-idealla radio-ohjelmaa. Katsomme suomalaisen tosi-tv-sarjan jaksoa ja selostamme humoristisesti ohjelman kulkua mahtavien kommenttien kera.",
+    "start": "2018-04-21T11:00:00+03:00",
+    "end": "2018-04-21T12:00:00+03:00",
+    "team": "Otaniemen Tosi-TV:n Ystävät",
+    "genre": "Reality"
   },
   {
     "id": "id",
-    "start": "2017-04-29T07:00:00+03:00",
-    "end": "2017-04-29T09:00:00+03:00",
-    "title": "Raikas Kirkas Aamu",
-    "prod": "",
-    "desc": "",
-    "photo": "",
-    "thumb": ""
+    "title": "Humanistin valinta",
+    "description": "Mitä tapahtuu kun teekkarin ja humanistin maailmat kohtaavat? Kuka valitsee ja mitä, kuka johdattaa ja ketä? Musiikkia ja rakkauspedagogin neuvoja poikkitieteelliseen elämään!",
+    "start": "2018-04-21T12:00:00+03:00",
+    "end": "2018-04-21T13:00:00+03:00",
+    "team": "No woman is an island",
+    "genre": "Haastattelu & musiikki"
   },
   {
     "id": "id",
-    "start": "2017-04-29T09:00:00+03:00",
-    "end": "2017-04-29T11:00:00+03:00",
-    "title": "Kemistikillan houkutusanalyysi",
-    "prod": "",
-    "desc": "",
-    "photo": "",
-    "thumb": ""
+    "title": "TBA",
+    "start": "2018-04-21T13:00:00+03:00",
+    "end": "2018-04-21T15:00:00+03:00",
+    "team": ""
   },
   {
     "id": "id",
-    "start": "2017-04-29T11:00:00+03:00",
-    "end": "2017-04-29T13:00:00+03:00",
-    "title": "Perusmaanantaiklubi PerMa",
-    "prod": "",
-    "desc": "",
-    "photo": "",
-    "thumb": ""
+    "title": "Metal Club Mökä",
+    "description": "Katsaus 20v. täyttävän Metal Club Mökän historiaan.",
+    "start": "2018-04-21T15:00:00+03:00",
+    "end": "2018-04-21T17:00:00+03:00",
+    "team": "Metal Club Mökä",
+    "genre": "Musiikki",
+    "image": "metal_club_mökä.jpg"
   },
   {
     "id": "id",
-    "start": "2017-04-29T13:00:00+03:00",
-    "end": "2017-04-29T14:00:00+03:00",
-    "title": "Katsaus kotimaisen populaarimusiikin historiaan ja liftaukseen",
-    "prod": "",
-    "desc": "",
-    "photo": "",
-    "thumb": ""
+    "title": "Aaltobassokerho",
+    "description": "Korvien välisen kolinan innoittama rytmimusiikkiohjelma. Luvassa Aaltobassokerhon päräyttävimmät bängerit ja lässähtäneimmät lätinät. Ainiijoo, tää on räp-ohjelma.",
+    "start": "2018-04-21T17:00:00+03:00",
+    "end": "2018-04-21T19:00:00+03:00",
+    "team": "Aaltobassokerho",
+    "genre": "Rap",
+    "image": "aaltobassokerho.jpg"
   },
   {
     "id": "id",
-    "start": "2017-04-29T14:00:00+03:00",
-    "end": "2017-04-29T16:00:00+03:00",
-    "title": "J - Argon",
-    "prod": "",
-    "desc": "",
-    "photo": "",
-    "thumb": ""
+    "title": "Kulttuuria ja käkää",
+    "description": "Kulttuuriasiantuntijoiden jorinaa ajankohtaisista aiheista",
+    "start": "2018-04-21T19:00:00+03:00",
+    "end": "2018-04-21T20:00:00+03:00",
+    "team": "KY kulttuurivaliokunta KUVA",
+    "genre": "Bardi"
   },
   {
     "id": "id",
-    "start": "2017-04-29T16:00:00+03:00",
-    "end": "2017-04-29T17:30:00+03:00",
-    "title": "Itsensä paljustus",
-    "prod": "",
-    "desc": "",
-    "photo": "",
-    "thumb": ""
+    "title": "Kasettikorneri",
+    "description": "Iltaradion ehdottomasti eniten tarpeetonta nostalgiaa sisältävä ohjelma. Uutta ja vanhaa musiikkia, vaporwavea ja kasarirokkipoppia, suoraan c-kaseteilta. Studiossa löpinää aiheesta ja sen vierestä. Kuuntelijat voivat ehdottaa itselleen nostalgisimpia kappaleita.",
+    "start": "2018-04-21T20:00:00+03:00",
+    "end": "2018-04-21T22:00:00+03:00",
+    "team": "Emil Lehmonen ja Panu Oksiala",
+    "genre": "pling plong zzzsht",
+    "image": "kasetticorner.jpg"
   },
   {
     "id": "id",
-    "start": "2017-04-29T17:30:00+03:00",
-    "end": "2017-04-29T18:00:00+03:00",
-    "title": "Huoltoradio",
-    "prod": "",
-    "desc": "",
-    "photo": "",
-    "thumb": ""
+    "title": "ANTI-WAPPU TRILOGIA II",
+    "description": "Osa 2: Himo. Hauskaa triviaa: onko syntymäpäiväsi tammikuun lopussa? Sinut on siinä tapauksessa laitettu alulle wapputohinoissa! Kevät ja wapun iloinen tunnelma pistävät yhden jos toisenkin hormonit hyrräämään. Anti-Wappu Trilogian toinen osa penetroituu syvälle wapunajan eroottisiin, himokkaisiin ja mahlaisiin pohjavirtauksiin. Ohjelmassa luvassa mm. libidoa nostattavaa performanssimusiikkia.",
+    "start": "2018-04-21T22:00:00+03:00",
+    "end": "2018-04-22T00:00:00+03:00",
+    "team": "Herra O., Herra H. & Kumpp.",
+    "genre": "Sivistävä viihdeohjelma",
+    "image": "antiwapputrilogia2.jpg"
   },
   {
     "id": "id",
-    "start": "2017-04-29T18:00:00+03:00",
-    "end": "2017-04-29T22:00:00+03:00",
+    "title": "Progressiivinen yö, osa 2",
+    "description": "Progressiivinen yö sublimoituu radioeetterin kosmisille taajuuksille toistamiseen viime wapun suurmenestyksen siivittämänä. Luvassa on taas oivaltavia biisivalintoja sekä sofistikoitunutta svidduilua kuulijoiden musiikkimaulle. Progressiivista yötä seuraa regressiivinen aamu.",
+    "start": "2018-04-22T00:00:00+03:00",
+    "end": "2018-04-22T06:00:00+03:00",
+    "team": "Oskari Ojala, Matias Koivusalo, Elias Hyyryläinen, Adam Zeidan",
+    "genre": "Musiikki"
+  },
+  {
+    "id": "id",
+    "title": "Neuvoston aamiaisrappio",
+    "description": "Otaniemen puheenjohtajat jauhaavat ajankohtaista asiaa.",
+    "start": "2018-04-22T06:00:00+03:00",
+    "end": "2018-04-22T10:00:00+03:00",
+    "team": "Neuvosto 2018"
+  },
+  {
+    "id": "id",
+    "title": "Sunnuntain ylösnousemus",
+    "description": "",
+    "start": "2018-04-22T10:00:00+03:00",
+    "end": "2018-04-22T12:00:00+03:00",
+    "team": "Late ja Osku",
+    "genre": "Aamu ohjelma/musiikki/ehkä kokataan jotain etc."
+  },
+  {
+    "id": "id",
+    "title": "PerMa-radio",
+    "description": "Perusmaanantain viettoa radioaalloilla, enimmäkseen kuitenkin aallonpohjalla. Juontajat saattavat päästää suustaan (ja myös laittaa suuhunsa) ihan mitä tahansa ja soittaa ihan minkä tahansa musiikkikappaleen.",
+    "start": "2018-04-22T12:00:00+03:00",
+    "end": "2018-04-22T16:00:00+03:00",
+    "team": "Perusmaanantaiklubi PerMa",
+    "genre": "Kiusallinen huumori",
+    "image": "permaradio.jpg"
+  },
+  {
+    "id": "id",
+    "title": "Ristin kilta",
+    "description": "Kristillistä radio-ohjelmaa kaikille kiinnostuneille. 16-18:00 Kysy kristityltä. 18-19:00 Juhlisiko Jeesus Wappua?",
+    "start": "2018-04-22T16:00:00+03:00",
+    "end": "2018-04-22T19:00:00+03:00",
+    "team": "Joel, Jape, Anniina, Jyri, Siyan, Mika, Mai"
+  },
+  {
+    "id": "id",
+    "title": "Oletko aina haaveillut ISOmmasta?",
+    "description": "ISOmmat asiat voivat parantaa elämääsi.",
+    "start": "2018-04-22T19:00:00+03:00",
+    "end": "2018-04-22T20:00:00+03:00",
+    "team": "ITMK17",
+    "genre": "Paneelikeskustelu"
+  },
+  {
+    "id": "id",
+    "title": "UFOPORNOO!",
+    "description": "Tervetuloa tajuntaa laajentavalle matkalle herkän eroottisen avaruusmusiikin pariin.",
+    "start": "2018-04-22T20:00:00+03:00",
+    "end": "2018-04-22T21:00:00+03:00",
+    "team": "Mökä",
+    "genre": "Musiikki"
+  },
+  {
+    "id": "id",
+    "title": "PELMUn Rök-rädiö",
+    "description": "Musiikkiohjelma",
+    "start": "2018-04-22T21:00:00+03:00",
+    "end": "2018-04-22T23:00:00+03:00",
+    "team": "Pelmun hallitus 2018 ja vierailijoita",
+    "genre": "Musiikki"
+  },
+  {
+    "id": "id",
+    "title": "UFOPORNOO",
+    "description": "Tervetuloa tajuntaa laajentavalle matkalle herkän eroottisen avaruusmusiikin pariin.",
+    "start": "2018-04-22T23:00:00+03:00",
+    "end": "2018-04-23T00:00:00+03:00",
+    "team": "Mökä",
+    "genre": "Musiikki"
+  },
+  {
+    "id": "id",
+    "title": "Teknisesti hyvää huomenta",
+    "description": "Ajankohtaisohjelma",
+    "start": "2018-04-23T07:00:00+03:00",
+    "end": "2018-04-23T10:00:00+03:00",
+    "team": "Panu Lampi ja Onni Oksiala",
+    "genre": "Ajankohtaisohjelma",
+    "image": "teknisesti_hyvää_huomenta1.jpg"
+  },
+  {
+    "id": "id",
+    "title": "HUOLTOTAUKO",
+    "start": "2018-04-23T10:00:00+03:00",
+    "end": "2018-04-23T11:00:00+03:00",
+    "team": ""
+  },
+  {
+    "id": "id",
+    "title": "Vuorisaarna",
+    "description": "Yleistä keskustelua ja pohjatonta komediaa wappuun, elämään ja vuoreen liittyen.",
+    "start": "2018-04-23T11:00:00+03:00",
+    "end": "2018-04-23T13:00:00+03:00",
+    "team": "Vuorisedät",
+    "genre": "Viihde",
+    "image": "vuorisaarna.jpg"
+  },
+  {
+    "id": "id",
+    "title": "PoRa 50",
+    "description": "...",
+    "start": "2018-04-23T13:00:00+03:00",
+    "end": "2018-04-23T14:00:00+03:00",
+    "team": "Polyteknikkojen Raittiusseura",
+    "genre": "Raittius"
+  },
+  {
+    "id": "id",
+    "title": "Futurice culture show",
+    "description": "Bunch of easy going people, hard questions about culture and bad jokes - final program still TBA.",
+    "start": "2018-04-23T14:00:00+03:00",
+    "end": "2018-04-23T16:00:00+03:00",
+    "team": "Futurice",
+    "genre": "Yhteistyö",
+    "image": "ohjelma_futurice.png"
+  },
+  {
+    "id": "id",
+    "title": "Yömyssyt",
+    "description": "Klassikko jo vuodesta X! Nyt uusien vetäjien toimesta! Merisäätä sekä Elvistä, volyymit kaakossa.",
+    "start": "2018-04-23T16:00:00+03:00",
+    "end": "2018-04-23T18:00:00+03:00",
+    "team": "Radio-Heikki ja Ottopotto",
+    "genre": "Melko viihteellinen"
+  },
+  {
+    "id": "id",
+    "title": "Occultisti show",
+    "description": "Viittamiehet kerääntyvät yhteen kertomaan mystiikasta ja elämän syvisyä salaisuuksista ja tunnustuksista.",
+    "start": "2018-04-23T18:00:00+03:00",
+    "end": "2018-04-23T20:00:00+03:00",
+    "team": "Occultistit",
+    "genre": "Cheeki breeki"
+  },
+  {
+    "id": "id",
+    "title": "Väärinmmärrettyjen Rytmimusiikkitaiteilijoiden Ymmärrysseura!",
+    "description": "Väärinmmärrettyjen Rytmimusiikkitaiteilijoiden Ymmärrysseura eli VäyRYs! pyrkii edistämään musiikillisen kuuluvuusalueen laajentamista suuren yleisön väärinymmärryksen vuoksi syyttä suotta mainetta ja kunniaa vaille jääneiden rytmimusiikkitaiteilijoiden kohdalla!",
+    "start": "2018-04-23T20:00:00+03:00",
+    "end": "2018-04-23T23:00:00+03:00",
+    "team": "Väärinmmärrettyjen Rytmimusiikkitaiteilijoiden Ymmärrysseura!",
+    "genre": "Väärinymmärretty rytmimusiikki!"
+  },
+  {
+    "id": "id",
+    "title": "Ellenin Scooter yö",
+    "description": "Scooterin tuotantoa syväluotaava keskustelu- ja musiikkiohjelma 🍆",
+    "start": "2018-04-24T00:00:00+03:00",
+    "end": "2018-04-24T03:00:00+03:00",
+    "team": "Ellen Heikkilä + ehkä muita",
+    "genre": "Musiikki"
+  },
+  {
+    "id": "id",
+    "title": "Setämiehet proudly presents: Bäx Setäng",
+    "description": "Mystinen organisaatio Setämiehet julistavat ilosanomaansa näin Wapun alla setämäiseen tyyliinsä.",
+    "start": "2018-04-24T03:00:00+03:00",
+    "end": "2018-04-24T05:00:00+03:00",
+    "team": "Setämiehet",
+    "genre": "Ikinuoret"
+  },
+  {
+    "id": "id",
+    "title": "Teknisesti hyvää huomenta",
+    "description": "Ajankohtaisohjelma",
+    "start": "2018-04-24T07:00:00+03:00",
+    "end": "2018-04-24T10:00:00+03:00",
+    "team": "Panu Lampi ja Onni Oksiala",
+    "genre": "Ajankohtaisohjelma",
+    "image": "teknisesti_hyvää_huomenta1.jpg"
+  },
+  {
+    "id": "id",
+    "title": "HUOLTOTAUKO",
+    "start": "2018-04-24T10:00:00+03:00",
+    "end": "2018-04-24T10:45:00+03:00",
+    "team": ""
+  },
+  {
+    "id": "id",
+    "title": "Beetlejuice & Rönttönen",
+    "description": "Äänikirjoja lasten saduista Otaniemi-twistillä",
+    "start": "2018-04-24T10:45:00+03:00",
+    "end": "2018-04-24T11:00:00+03:00",
+    "team": "B&R",
+    "genre": "Äänikirja"
+  },
+  {
+    "id": "id",
+    "title": "Musiikillinen tiistaiaamupäivä",
+    "description": "Maisteri Heikkonen soittaa levyjä ja lausuu (toivottavasti) soitettavaan musiikkiin liittyviä mietteitään.",
+    "start": "2018-04-24T11:00:00+03:00",
+    "end": "2018-04-24T13:00:00+03:00",
+    "team": "Petri-Tapio Heikkonen",
+    "genre": "Musiikki",
+    "image": "musiikillinen_tiistaiaamupäivä.jpg"
+  },
+  {
+    "id": "id",
+    "title": "BYnthouse stories",
+    "description": "Jutustelua yhteisöllisestä asumisesta ja tarinoita BY:stä.",
+    "start": "2018-04-24T13:00:00+03:00",
+    "end": "2018-04-24T14:00:00+03:00",
+    "team": "Bratislawa Youghurt"
+  },
+  {
+    "id": "id",
+    "title": "PELMUn Rök-rädiö",
+    "description": "Musiikkiohjelma",
+    "start": "2018-04-24T14:00:00+03:00",
+    "end": "2018-04-24T16:00:00+03:00",
+    "team": "Pelmun hallitus 2018 ja vierailijoita",
+    "genre": "Musiikki"
+  },
+  {
+    "id": "id",
+    "title": "Mennään let's NAKS",
+    "description": "Kimble & Chill",
+    "start": "2018-04-24T16:00:00+03:00",
+    "end": "2018-04-24T18:00:00+03:00",
+    "team": "NAKS",
+    "genre": "Urheilu",
+    "image": "mennään_lets_naks.jpg"
+  },
+  {
+    "id": "id",
+    "title": "Iholla with Gäis & Norsu",
+    "description": "Iholla-ohjelmassa pääsemme hengästyttävän lähelle otaniemeläisten jokapäiväistä elämää. Heidän elämänsä on paljon muutakin kuin se mielikuva, mitä huolella otettujen pr-materiaalien ja perinteisten haastatteluiden kautta välittyy. Ohjelmassa juontajat itse kuvaavat ja avaavat tunteitaan, ajatuksiaan ja päästävät kuulijan myötäelämään myös vaikeita hetkiä.",
+    "start": "2018-04-24T18:00:00+03:00",
+    "end": "2018-04-24T20:00:00+03:00",
+    "team": "Gäis & Norsu",
+    "genre": "Lifestyle",
+    "image": "iholla_with_noora_and_gäis.jpg"
+  },
+  {
+    "id": "id",
+    "title": "Skipolin Aprés ski",
+    "description": "Aprés ski hittejä, alppi tarinoita, kirjeen vaihtajan kuulumiset ja parasta sekundaa.",
+    "start": "2018-04-24T20:00:00+03:00",
+    "end": "2018-04-24T23:00:00+03:00",
+    "team": "Skipolin hallitus",
+    "genre": "Sekava"
+  },
+  {
+    "id": "id",
+    "title": "Absintin maistelu",
+    "description": "Juodaan viinaa.",
+    "start": "2018-04-24T23:00:00+03:00",
+    "end": "2018-04-25T00:00:00+03:00",
+    "team": "AA-kerho",
+    "genre": "Erotiikka"
+  },
+  {
+    "id": "id",
+    "title": "Pohojoisen ohojelma vol 3",
+    "description": "Pohojosen ohojelma on jo perinteeksi muodostuva asiallisen asiaton keskusteluohjelma, jossa syvennytään kansallisen monikulttuurisuuden sisimpään. Virtaako Kiiminkijoki edelleen? Mennäänkö pahki vai törmätäänkö? Onko kaikki Kehä 3:n sisäpuolella Hesaa?",
+    "start": "2018-04-25T00:00:00+03:00",
+    "end": "2018-04-25T02:00:00+03:00",
+    "team": "Pohojosen ihimiset",
+    "genre": "Keskusteluohjelma",
+    "image": "pohjoisen_ohojelma.jpg"
+  },
+  {
+    "id": "id",
+    "title": "Lesbian Macintosh",
+    "start": "2018-04-25T03:00:00+03:00",
+    "end": "2018-04-25T04:00:00+03:00",
+    "team": ""
+  },
+  {
+    "id": "id",
+    "title": "Teknisesti hyvää huomenta",
+    "description": "Ajankohtaisohjelma",
+    "start": "2018-04-25T07:00:00+03:00",
+    "end": "2018-04-25T10:00:00+03:00",
+    "team": "Panu Lampi ja Onni Oksiala",
+    "genre": "Ajankohtaisohjelma",
+    "image": "teknisesti_hyvää_huomenta1.jpg"
+  },
+  {
+    "id": "id",
+    "title": "The Sangria lifestyle",
+    "description": "Oletko koira vai kissaihminen? Pidätkö oluesta vai siideristä, vai jostain ihan muusta? Meistä Teekkarikylän kaksi- ja nelijalkaisista asukeista on moneksi ja se tekee meistä niin siistin sekametelipoppoon! Liity seuraamme kun keskustelemme kevytmielisen ajankohtaisista aiheista, koirista, elämästä, koirista ja vaihtoehtojuomakulttuurista. BONUS: Tuo dogesi näytille kontille herkkuja vastaan!",
+    "start": "2018-04-25T10:00:00+03:00",
+    "end": "2018-04-25T12:00:00+03:00",
+    "team": "Sangrian Maistelijat",
+    "genre": "Talk show, lifestyle, komedia"
+  },
+  {
+    "id": "id",
+    "title": "International Committee - Night with Paavo and the SQUAD",
+    "description": "...",
+    "start": "2018-04-25T12:00:00+03:00",
+    "end": "2018-04-25T14:00:00+03:00",
+    "team": "KvTMK'17"
+  },
+  {
+    "id": "id",
+    "title": "Farssiradio",
+    "description": "Ohjelma sisältää ennenkuulumatonta musiikkia arkistojen kätköistä sekä muuta erikoisviihdettä niille joille ei tavallinen sellainen kelpaa. Tiedossa on myös muutama rykäys livemusiikkia.",
+    "start": "2018-04-25T16:00:00+03:00",
+    "end": "2018-04-25T18:00:00+03:00",
+    "team": "Teemu Laine",
+    "genre": "Musiikki"
+  },
+  {
+    "id": "id",
+    "title": "Homosektori",
+    "description": "Viime vuoden supersuosittu yöohjelma saa jatkoa! Homosektorissa keskustellaan elämästä ja ihmissuhteista bin ja lesbon näkökulmasta.",
+    "start": "2018-04-25T18:00:00+03:00",
+    "end": "2018-04-25T20:00:00+03:00",
+    "team": "Katariina Helin ja Noora Vänttinen",
+    "genre": "Puheohjelma",
+    "image": "homosektori.jpg"
+  },
+  {
+    "id": "id",
+    "title": "MR-808",
+    "description": "DJ Marjun musiikkimatka aina denimin tuoksuiselta 90-luvulta muoviroskan täyteiseen nykypäivään saakka. Inspiraationa underground, hedonismi, anarkia ja naiset.",
+    "start": "2018-04-25T20:00:00+03:00",
+    "end": "2018-04-25T22:00:00+03:00",
+    "team": "DJ Marju",
+    "genre": "Musiikki"
+  },
+  {
+    "id": "id",
+    "title": "ANTI-WAPPU TRILOGIA II",
+    "description": "Osa 3: Luonto. Mur mur. Wappuna luonto herää ja fauna kömpii ulos koloistaan. AWT:n luontospessussa hämyillään pakanallisen luontomystiikan sameissa vesissä, lähdetään ikimetsien helmaan telmimään eläinten kanssa, eräjormaillaan ja vieraannutaan luonnosta. Puhutaan wappuisesta luonnosta, kuunnellaan luonto- ja eläinaiheisia biisejä sekä löydetään sisäiset elukkamme.",
+    "start": "2018-04-25T22:00:00+03:00",
+    "end": "2018-04-26T00:00:00+03:00",
+    "team": "Herra O., Herra H. & Kumpp.",
+    "genre": "Sivistävä viihdeohjelma",
+    "image": "antiwapputrilogia3.jpg"
+  },
+  {
+    "id": "id",
+    "title": "Progeyö",
+    "description": "Progeyö olisi taas tulossa jos sen vain annetaan! Haussa olisi 4-5 tunnin slotti mieluusti hiukan puolenyön molemmin puolin (esimerkkinä 22-02) joko 25.4. tai 26.4. Mahdollisesti löytyy tuottaja, mahdollisesti kiinnostaa tuottajakoulutus ja mahdollisesti tarvitsemme tuottajan.",
+    "start": "2018-04-26T00:00:00+03:00",
+    "end": "2018-04-26T05:00:00+03:00",
+    "team": "Progen ystävät",
+    "genre": "Proge"
+  },
+  {
+    "id": "id",
+    "title": "Teknisesti hyvää huomenta",
+    "description": "Ajankohtaisohjelma",
+    "start": "2018-04-26T07:00:00+03:00",
+    "end": "2018-04-26T10:00:00+03:00",
+    "team": "Panu Lampi ja Onni Oksiala",
+    "genre": "Ajankohtaisohjelma",
+    "image": "teknisesti_hyvää_huomenta1.jpg"
+  },
+  {
+    "id": "id",
+    "title": "Yhteistyö: Vincit",
+    "description": "Yhteistyöohjelma Vincitin kanssa",
+    "start": "2018-04-26T10:00:00+03:00",
+    "end": "2018-04-26T12:00:00+03:00",
+    "team": "Vincit",
+    "genre": "Yhteistyö"
+  },
+  {
+    "id": "id",
+    "title": "HUOLTOTAUKO",
+    "start": "2018-04-26T12:00:00+03:00",
+    "end": "2018-04-26T13:00:00+03:00",
+    "team": ""
+  },
+  {
+    "id": "id",
+    "title": "Yhteistyö: TEK",
+    "description": "Tykki ja KYHit heittää laadukasta settiä.",
+    "start": "2018-04-26T13:00:00+03:00",
+    "end": "2018-04-26T15:00:00+03:00",
+    "team": "TEK",
+    "genre": "Hard bass"
+  },
+  {
+    "id": "id",
+    "title": "Jalostajien olutradio",
+    "description": "Jalostajien olutradio käy läpi mennyttä vuotta oluen ja siidereiden maailmassa. Mukana vieraita, hyvää musiikkia ja paskaa läppää.",
+    "start": "2018-04-26T15:00:00+03:00",
+    "end": "2018-04-26T18:00:00+03:00",
+    "team": "Jalostajat & Co.",
+    "genre": "Makasiiniohjelma"
+  },
+  {
+    "id": "id",
+    "title": "HUOLTOTAUKO",
+    "start": "2018-04-26T18:00:00+03:00",
+    "end": "2018-04-26T19:00:00+03:00",
+    "team": ""
+  },
+  {
+    "id": "id",
+    "title": "TBA",
+    "description": "Selviää myöhemmin",
+    "start": "2018-04-26T19:00:00+03:00",
+    "end": "2018-04-26T22:00:00+03:00",
+    "team": "???",
+    "genre": "Musiikki"
+  },
+  {
+    "id": "id",
+    "title": "Tumu-Torstai",
+    "description": "Polttavia puheenaiheita, artistivieraita ja tietysti livemusiikkia.",
+    "start": "2018-04-26T22:00:00+03:00",
+    "end": "2018-04-27T01:00:00+03:00",
+    "team": "Aalto Skate",
+    "genre": "Rap-musiikki & Punk-rokki"
+  },
+  {
+    "id": "id",
+    "title": "Horizontal Hold",
+    "description": "A radio experience that plays weird noise music and we chat about chatting.",
+    "start": "2018-04-27T01:00:00+03:00",
+    "end": "2018-04-27T02:00:00+03:00",
+    "team": "Mr. People",
+    "genre": "Normal Radio Show"
+  },
+  {
+    "id": "id",
+    "title": "#siksonnit",
+    "description": "Siksonnien PERINTEINEN ohjelma",
+    "start": "2018-04-27T02:00:00+03:00",
+    "end": "2018-04-27T04:00:00+03:00",
+    "team": "SIKsonnit",
+    "genre": ""
+  },
+  {
+    "id": "id",
+    "title": "Teknisesti hyvää huomenta",
+    "description": "Ajankohtaisohjelma",
+    "start": "2018-04-27T07:00:00+03:00",
+    "end": "2018-04-27T10:00:00+03:00",
+    "team": "Panu Lampi ja Onni Oksiala",
+    "genre": "Ajankohtaisohjelma",
+    "image": "teknisesti_hyvää_huomenta1.jpg"
+  },
+  {
+    "id": "id",
+    "title": "HUOLTOTAUKO",
+    "start": "2018-04-27T10:00:00+03:00",
+    "end": "2018-04-27T10:45:00+03:00",
+    "team": ""
+  },
+  {
+    "id": "id",
+    "title": "Beetlejuice & Rönttönen",
+    "description": "Äänikirjoja lasten saduista Otaniemi-twistillä",
+    "start": "2018-04-27T10:30:00+03:00",
+    "end": "2018-04-27T10:45:00+03:00",
+    "team": "B&R",
+    "genre": "Äänikirja"
+  },
+  {
+    "id": "id",
+    "title": "Vinyylibingo",
+    "description": "Mukana nippu kirpputoreilta ostettuja euron lp-levyjä. Arvuutellaan sisältöä kannen/nimen perusteella.",
+    "start": "2018-04-27T11:00:00+03:00",
+    "end": "2018-04-27T13:00:00+03:00",
+    "team": "Max, Joona, Mikael",
+    "genre": "Funk/Jazz/Proge/Sekalainen"
+  },
+  {
+    "id": "id",
+    "title": "RadioAava",
+    "description": "Yhteisöjaos Aava 2018 esittäytyy",
+    "start": "2018-04-27T13:00:00+03:00",
+    "end": "2018-04-27T14:00:00+03:00",
+    "team": "RadioAava",
+    "genre": "Hupiradio"
+  },
+  {
+    "id": "id",
+    "title": "GT:n ammattilaiset",
+    "description": "GT:n maistelua ja elämänfilosofiaa.",
+    "start": "2018-04-27T14:00:00+03:00",
+    "end": "2018-04-27T16:00:00+03:00",
+    "team": "GT:n ammattilaiset",
+    "genre": ""
+  },
+  {
+    "id": "id",
+    "title": "Pelkoradio",
+    "description": "Radiodiodissa soi myös hyvää musiikkia. Pelko-yhtyeen Saara ja Niilo lähettävät ääniaalloille parhaat indiehitit, vaihtoehtoräkäisyt ja tunnelmapalat, joita et tiennyt vielä rakastavasi. Ohjelma tuo Otaniemen aalloille suomalaista vaihtoehtorokkia ja yllätyksiä muualta. Pelko julkaisee esikoislevynsä 25.4. ja teekkaritaustaiset Niilo ja Saara haluavat juhlistaa tätä ilouutista tietysti Diodissa.",
+    "start": "2018-04-27T16:00:00+03:00",
+    "end": "2018-04-27T18:00:00+03:00",
+    "team": "Niilo Tenkanen ja Saara Kemppainen",
+    "genre": "Musiikkiohjelma",
+    "image": "pelkoradio.png"
+  },
+  {
+    "id": "id",
+    "title": "J-Argon",
+    "description": "J-Argon palaa jälleen tänäkin wappuna eeppisen rap battlen kera. Full show sisältää myös satunnaista höpöttelyä ja mahdollisten esiintyvien vieraiden haastattelua.",
+    "start": "2018-04-27T18:00:00+03:00",
+    "end": "2018-04-27T20:00:00+03:00",
+    "team": "Juho, Simo, Emilia",
+    "genre": "Talkshow",
+    "image": "j_argon.jpg"
+  },
+  {
+    "id": "id",
+    "title": " Tohtori Funkensteinin Diskoeputki",
+    "description": "Groovaavan rytmimusan genrefaasit saavat kyytiä kun tohtori Funkensteinin diskoeputkessa keitellään kasaan kolme tiukkaa tuntia vanhan liiton funkulaa, smootheinta sieluu ja tykeintä diskoo. Get rude with the moog!",
+    "start": "2018-04-27T20:00:00+03:00",
+    "end": "2018-04-27T23:00:00+03:00",
+    "team": "Tri. Funkenstein",
+    "genre": "Rytmimusiikkiohjelma",
+    "image": "tohtori_funkenstein.jpg"
+  },
+  {
+    "id": "id",
+    "title": "Akateeminen Avaruusseikkailuseura (AASS) Esittäytyy",
+    "description": "Oiotaan vääriä käsityksiä ajan rakenteesta.",
+    "start": "2018-04-27T23:00:00+03:00",
+    "end": "2018-04-28T01:00:00+03:00",
+    "team": "Harri Blotter",
+    "genre": "Talkshow & Goa-trance"
+  },
+  {
+    "id": "id",
+    "title": "Poikkitieteellisten nuottaajien pelihetki",
+    "description": "Palaamme kaljan pelien kulta-aikaan jolloin käyttöliittymissä ei grafiikkaa kaivattu.",
+    "start": "2018-04-28T01:00:00+03:00",
+    "end": "2018-04-28T04:00:00+03:00",
+    "team": "Henrik, Mikko, Milo",
+    "genre": "Let's play"
+  },
+  {
+    "id": "id",
+    "title": "Rytmisen puhelaulumusiikin radio",
+    "description": "Kattaus erityisesti kotimaisten artistien musiikillisia tuotoksia, jotka koostuvat pääosin rumpukonein ja samplein tuotettujen taustanauhojen päälle lausutuista lyriikoista.",
+    "start": "2018-04-28T09:00:00+03:00",
+    "end": "2018-04-28T11:00:00+03:00",
+    "team": "Saku & Sussu",
+    "genre": "Hip hop, rap, trap, grime"
+  },
+  {
+    "id": "id",
+    "title": "Kasvoradio",
+    "description": "Musaa kaikille ihmisille joiden kasvot vihertävät.",
+    "start": "2018-04-28T11:00:00+03:00",
+    "end": "2018-04-28T12:00:00+03:00",
+    "team": "Kasv0",
+    "genre": "Trash",
+    "image": "kasvi2.jpg"
+  },
+  {
+    "id": "id",
+    "title": "Historiamouhot",
+    "description": "Historiamouhot kerää studion täyteen amatöörihistorioitsioita kertomaan kiinnostavimmat knopit, laajat draamankaaret ja tapahtumaketjut menneiltä vuosisadoilta. Puheohjelma.",
+    "start": "2018-04-28T12:00:00+03:00",
+    "end": "2018-04-28T15:00:00+03:00",
+    "team": "Niemenoja/Huhtanen",
+    "genre": "Puheohjelma"
+  },
+  {
+    "id": "id",
     "title": "Vinyylimusavisa ja maailman musiikkia",
-    "prod": "",
-    "desc": "",
-    "photo": "",
-    "thumb": ""
+    "description": "Interaktiivinen vinyylimusavisa, vappularppi, vappupottuilu ja musiikkiesityksiä.Toivomus 4h slotti, koska ohjelmaa on paljon!",
+    "start": "2018-04-28T15:00:00+03:00",
+    "end": "2018-04-28T17:00:00+03:00",
+    "team": "Kaupa",
+    "genre": "Tyylikäs, luonnollinen",
+    "image": "vinyylimusavisa.jpg"
   },
   {
     "id": "id",
-    "start": "2017-04-29T22:00:00+03:00",
-    "end": "2017-04-30T06:00:00+03:00",
-    "title": "Humanistien yö",
-    "prod": "",
-    "desc": "",
-    "photo": "",
-    "thumb": ""
+    "title": "Ralliradio",
+    "description": "Liveseuranta Argentiinan MM-rallista höystettynä hyvällä musiikilla ja huonolla huumorilla.",
+    "start": "2018-04-28T17:00:00+03:00",
+    "end": "2018-04-28T19:00:00+03:00",
+    "team": "Kp -18",
+    "genre": "Urheilu"
   },
   {
     "id": "id",
-    "start": "2017-04-30T06:00:00+03:00",
-    "end": "2017-04-30T10:00:00+03:00",
-    "title": "Vapaa slotti",
-    "prod": "",
-    "desc": "",
-    "photo": "",
-    "thumb": ""
+    "title": "Teekkarimetsästäjät: Rosvopaisti",
+    "description": "Mitä niemenkärjessä tapahtuu? Kuka on Mäyrämies ja mitä se mouhoaa? Onko lammas paennut maan alle?",
+    "start": "2018-04-28T19:00:00+03:00",
+    "end": "2018-04-28T21:00:00+03:00",
+    "team": "Teekkarimetsästäjät ry",
+    "genre": "Luontokuvaelma"
   },
   {
     "id": "id",
-    "start": "2017-04-30T10:00:00+03:00",
-    "end": "2017-04-30T12:00:00+03:00",
+    "title": "ANTI-WAPPU TRILOGIA II",
+    "description": "Osa 4: Kataklysmi. Wappu ei lopu, mutta loppuuko maailma? Anti-Wappu Trilogian neljännessä ja viimeisessä osassa eskaloidaan wappu sen loogiseen päätökseen. Koventuva politiikka johtaa moraalin rappioon, rappio kaaokseen, kaaos kadotukseen ja kadotus lopulta hurmeiseen kataklysmiin. Löytyykö tunnelin päästä katarsis vai krapula? Tämä vuoristorata kärventää kuuloaistisi ja jättää kaikki lopulta kuolonkylmäksi.",
+    "start": "2018-04-28T21:00:00+03:00",
+    "end": "2018-04-28T23:00:00+03:00",
+    "team": "Herra O., Herra H. & Kumpp.",
+    "genre": "Sivistävä viihdeohjelma"
+  },
+  {
+    "id": "id",
+    "title": "Radio porno",
+    "description": "Riittääkö pusikon rantarasvaajalla aurinkorasva? Minne saksalainen isoäiti itseään koskettelee? Löytyykö pizzalaatikosta lihajööti? Pornoelokuvia urheiluselostuksella",
+    "start": "2018-04-28T23:00:00+03:00",
+    "end": "2018-04-29T00:00:00+03:00",
+    "team": "Rehtori, Kiima-Pete ja Emil",
+    "genre": "Urheilu"
+  },
+  {
+    "id": "id",
+    "title": "Radio porno",
+    "description": "Riittääkö pusikon rantarasvaajalla aurinkorasva? Minne saksalainen isoäiti itseään koskettelee? Löytyykö pizzalaatikosta lihajööti? Pornoelokuvia urheiluselostuksella",
+    "start": "2018-04-29T00:00:00+03:00",
+    "end": "2018-04-29T02:00:00+03:00",
+    "team": "Rehtori, Kiima-Pete ja Emil",
+    "genre": "Urheilu"
+  },
+  {
+    "id": "id",
+    "title": "Avaruusmatka",
+    "description": "Perinteeksi muodostunut avaruusmatka, on yöshow, jossa studioon tuodaan läjä erilaisia syntikoita ja muita päristimiä ja pöristimiä.\\nMusiikki tehdään improna paikanpäällä ja tyyli liikkuu astraaleista tunnelmista mahdollisesti myös psyykkeen muihin laitoihin. Tervetuloa avaruuden äärirajoille.",
+    "start": "2018-04-29T02:00:00+03:00",
+    "end": "2018-04-29T06:00:00+03:00",
+    "team": "Jesper & Jossu",
+    "genre": "Astraalitaso"
+  },
+  {
+    "id": "id",
+    "title": "Herää oikealla puujalalla",
+    "description": "Puujalkavitsejä, musiikkia, ehkä joku satunnainen radiokuunnelma",
+    "start": "2018-04-29T10:00:00+03:00",
+    "end": "2018-04-29T12:00:00+03:00",
+    "team": "Antti Kangasrääsiö, Ville Tissari, Kaisa Hynynen, et al.",
+    "genre": "Hauska",
+    "image": "herää_oikealla_puujalalla.jpg"
+  },
+  {
+    "id": "id",
+    "title": "W4K",
+    "description": "Wanha kunnon W4K-tiimi(FTMK16) radiossa taas. Aamupäivän aikana fiilistellään W4Kkäreiden voimin wapun menneitä ja tulevia tapahtumia, sekä muistellaan aikaisempien vuosien wappurientoja. All right!",
+    "start": "2018-04-29T12:00:00+03:00",
+    "end": "2018-04-29T15:00:00+03:00",
+    "team": "W4K",
+    "genre": "Mouh-Show",
+    "image": "w4k.jpg"
+  },
+  {
+    "id": "id",
+    "title": "Nörttikuorohetki",
+    "description": "",
+    "start": "2018-04-29T15:00:00+03:00",
+    "end": "2018-04-29T18:00:00+03:00",
+    "team": "Unreality-kuoro",
+    "genre": "Acapella peli-, anime- ja elokuvamusiikki",
+    "image": "unreality.png"
+  },
+  {
+    "id": "id",
+    "title": "Ääniä Mikkelistä",
+    "description": "Mikkeliläinen \"mies\" kertoo kaiken kaikesta yhdessä tunnissa. Tätä et halua jättää väliin!",
+    "start": "2018-04-29T18:00:00+03:00",
+    "end": "2018-04-29T19:00:00+03:00",
+    "team": "Juhana Kuumeri",
+    "genre": "dada"
+  },
+  {
+    "id": "id",
+    "title": "OTO X MONSU HYPE MIX",
+    "description": "Dipolin Wappun pääartistit DJ Monsu ja DJ Oto esiintyvät yhdessä EEPPISESSÄ HYPE MIXissä",
+    "start": "2018-04-29T19:00:00+03:00",
+    "end": "2018-04-29T21:00:00+03:00",
+    "team": "DJ OTO & DJ MONSU",
+    "genre": "Musiikki",
+    "image": "oto-monsu.png"
+  },
+  {
+    "id": "id",
+    "title": "Alikulkujakajaradio",
+    "description": "Sunnuntai-illan humpat",
+    "start": "2018-04-29T21:00:00+03:00",
+    "end": "2018-04-30T01:00:00+03:00",
+    "team": "Goaboys from Hell",
+    "genre": "Elektroninen"
+  },
+  {
+    "id": "id",
+    "title": "Jallupukin kuumat linjat",
+    "description": "Majasäätiön interventio radiotaajuuksille. Jäätävää menoa lämmittää Jaloviinatasting, kertomukset Sipoonkorvesta sekä Jallupukin kuumat linjat. Mitä ja miksi? Ei aavistustakaan.",
+    "start": "2018-04-30T01:00:00+03:00",
+    "end": "2018-04-30T05:00:00+03:00",
+    "team": "Arkkitehtuuriklubin Majasäätiö",
+    "genre": "",
+    "image": "jallupukki.jpg"
+  },
+  {
+    "id": "id",
     "title": "Wappurappu",
-    "prod": "",
-    "desc": "",
-    "photo": "",
-    "thumb": ""
+    "description": "Wappuaaton perinteinen hyvänmielen radioshow jo OUBSin ajoilta. Rentoa läpyskää ja musaa wappurientojen aloitteluun.",
+    "start": "2018-04-30T09:00:00+03:00",
+    "end": "2018-04-30T12:00:00+03:00",
+    "team": "Jesper & Jossu",
+    "genre": "puhe- soittoradio / sekalaista fiiliksen mukaan"
   },
   {
     "id": "id",
-    "start": "2017-04-30T12:00:00+03:00",
-    "end": "2017-04-30T14:00:00+03:00",
     "title": "Wappukenneli",
-    "prod": "",
-    "desc": "",
-    "photo": "",
-    "thumb": ""
+    "description": "Perinteinen wappukenneli yllättää jälleen viidettä kertaa. Koirakööri toistaa samat puheenaiheet joka vuosi tuoden asioiden uudet puolet esiin.",
+    "start": "2018-04-30T12:00:00+03:00",
+    "end": "2018-04-30T14:00:00+03:00",
+    "team": "Koirakööri",
+    "genre": "Doge"
   },
   {
     "id": "id",
-    "start": "2017-04-30T14:00:00+03:00",
-    "end": "2017-04-30T15:00:00+03:00",
-    "title": "Lähetys loppuu",
-    "prod": "",
-    "desc": "",
-    "photo": "",
-    "thumb": ""
+    "title": "Radiodiodi 2018 loppusanat",
+    "description": "Kaikki hyvä päättyy aikanaan, niin myös Radiodiodi. Toimitus ottaa viimeisen hetkensä parrasvaloissa ja päättää radiokauden 2018. Mihin kappaleeseen lähetys mahtaa loppua?",
+    "start": "2018-04-30T14:00:00+03:00",
+    "end": "2018-04-30T15:00:00+03:00",
+    "team": "Radiodiodin toimitus",
+    "genre": "Hyvästit"
   }
 ]
