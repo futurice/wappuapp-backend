@@ -124,13 +124,13 @@ function remove(req, res) {
   return checkExists(req, res)
     .then(exists => {
       if (exists) {
-        return
+        return;
       }
 
       return delImgVotes(req.params.id)
         .then(() => delImg(req.params.id))
         .then(() => {
-          res.sendStatus(200)
+          res.sendStatus(200);
         })
     })
 }
