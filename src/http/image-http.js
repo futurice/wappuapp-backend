@@ -114,6 +114,12 @@ function postImage(req, res) {
     });
 }
 
+/**
+ * Route handler for removing a single image
+ *
+ * @param {HttpRequest} req Client request
+ * @param {HttpResponse} res Client response
+ */
 function remove(req, res) {
   return checkExists(req, res)
     .then(exists => {
@@ -129,6 +135,15 @@ function remove(req, res) {
     })
 }
 
+/**
+ * Checks if image exists in database.
+ * Responds with 404 if it doesn't and returns true
+ *
+ * @param {HttpRequest} req Client request
+ * @param {HttpResponse} res Client response
+ *
+ * @returns {boolean} True if response was sent, false otherwise
+ */
 function checkExists(req, res) {
   return knex.raw(`
     SELECT *
@@ -145,7 +160,11 @@ function checkExists(req, res) {
   });
 }
 
-
+/**
+ * Deletes votes for an image with given id from database
+ *
+ * @param {string} id Image database ID
+ */
 function delImgVotes(id) {
   return knex.raw(`
     SELECT *
@@ -161,6 +180,11 @@ function delImgVotes(id) {
   })
 }
 
+/**
+ * Deletes an image with given id from database. Note: Does not remove image votes.
+ *
+ * @param {string} id Image database ID
+ */
 function delImg(id) {
   return knex.raw(`
     DELETE FROM images WHERE id = ${id}
