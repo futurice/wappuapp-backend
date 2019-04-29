@@ -346,6 +346,16 @@ Responses:
 * `404 Not found`
 
 
+### `POST /api/image/:id/delete`
+
+> Delete specific image
+
+Responses:
+
+* `200 OK`
+* `404 Not found`
+
+
 ### `DELETE /api/feed/:id`
 
 > Delete item from feed

@@ -33,6 +33,7 @@ function createRouter() {
   router.delete('/feed/:id', feedHttp.deleteFeedItem);
 
   router.get('/image/:id', imageHttp.getImage);
+  router.post("/image/:id/delete", imageHttp.remove);
 
   router.get('/announcements', announcementHttp.getAnnouncements);
 
