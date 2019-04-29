@@ -11,6 +11,7 @@ import * as imageCore from '../core/image-core';
 import {assert} from '../validation';
 import {decodeBase64Image} from '../util/base64';
 import { processImage } from '../util/image-processor';
+const {knex} = require('../util/database').connect();
 
 const logger = require('../util/logger')(__filename);
 const uuidV1 = require('uuid/v1');
@@ -111,9 +112,87 @@ function postImage(req, res) {
         client:    req.client
       }).then(rowsInserted => undefined);
     });
-};
+}
+
+/**
+ * Route handler for removing a single image
+ *
+ * @param {HttpRequest} req Client request
+ * @param {HttpResponse} res Client response
+ */
+function remove(req, res) {
+  return checkExists(req, res)
+    .then(exists => {
+      if (exists) {
+        return;
+      }
+
+      return delImgVotes(req.params.id)
+        .then(() => delImg(req.params.id))
+        .then(() => {
+          res.sendStatus(200);
+        })
+    })
+}
+
+/**
+ * Checks if image exists in database.
+ * Responds with 404 if it doesn't and returns true
+ *
+ * @param {HttpRequest} req Client request
+ * @param {HttpResponse} res Client response
+ *
+ * @returns {boolean} True if response was sent, false otherwise
+ */
+function checkExists(req, res) {
+  return knex.raw(`
+    SELECT *
+    FROM images
+    WHERE id = ${req.params.id}
+  `).then(rows => {
+    if (rows.rows.length === 0) {
+      res.sendStatus(404);
+
+      return true;
+    } else {
+      return false;
+    }
+  });
+}
+
+/**
+ * Deletes votes for an image with given id from database
+ *
+ * @param {string} id Image database ID
+ */
+function delImgVotes(id) {
+  return knex.raw(`
+    SELECT *
+    FROM votes
+    WHERE image_id = ${id}
+  `).then(rows => {
+    return Promise.all(rows.map(r => {
+      return knex.raw(`
+        DELETE FROM votes
+        WHERE id = ${r.id}
+      `)
+    }))
+  })
+}
+
+/**
+ * Deletes an image with given id from database. Note: Does not remove image votes.
+ *
+ * @param {string} id Image database ID
+ */
+function delImg(id) {
+  return knex.raw(`
+    DELETE FROM images WHERE id = ${id}
+  `);
+}
 
 export {
   getImage,
-  postImage
+  postImage,
+  remove
 };
